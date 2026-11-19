@@ -71,6 +71,11 @@ const cases: Case[] = [
   { name: "NL unknown word -> partial translation", direction: "nl-gkh", input: "Ik zie het ruimteschip", expectedOutput: "__PARTIAL__:ruimteschip" },
   { name: "GKH unknown word -> partial translation to EN", direction: "gkh-en", input: "ük selu blorzak", expectedOutput: "__PARTIAL__:blorzak" },
   { name: "completely empty input fails honestly", direction: "en-gkh", input: "", expectedOutput: "__FAIL__" },
+
+  // Grammatically well-formed but structurally unsupported (relative clause) —
+  // every word IS known, but no supported clause pattern matches, so this
+  // must fail with reason "unsupported-pattern", not be silently guessed.
+  { name: "unsupported pattern (relative clause) fails honestly", direction: "en-gkh", input: "the king who has strength", expectedOutput: "__FAIL__" },
 ];
 
 describe("translation regression suite (all 4 directions)", () => {
