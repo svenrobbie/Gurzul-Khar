@@ -1,177 +1,210 @@
-// Procedural SVG generator for the Khargûl script, implementing EXACTLY the
-// constructionPrinciples documented in data/orthography/alphabet.json, driven
-// by the place/manner/voicing fields of data/phonology/phonology.json.
-// No glyph shape in this file is hand-authored per letter: every visual
-// feature is derived from a phonological property. See DESIGN_DECISIONS.md D3.
+// Procedural SVG generator for the Khargûl script, v0.2.0 "Thornscript".
+// Implements EXACTLY the constructionPrinciples documented in
+// data/orthography/alphabet.json (spine + thorn geometry), driven by the
+// place/manner/voicing fields of data/phonology/phonology.json. No glyph
+// shape in this file is hand-authored per letter: every visual feature is
+// derived from a phonological property. See DESIGN_DECISIONS.md D3/D12.
+//
+// This replaces the v0.1.0 stem+attached-stroke geometry (dots/lines for
+// vowels, plain cross-strokes for manner) with the chosen Thornscript
+// design: a vertical spine with diagonal "thorns" branching off it at an
+// angle/zone/pattern set by place, manner, voicing and vowel quality, drawn
+// (conceptually) as one continuous pen stroke per alphabet.json's
+// `handwriting` section.
 import type { PhonemeToken } from "./phonemes.js";
 import type { Syllable } from "./syllabify.js";
 
-const CELL_W = 40;
+// alphabet.json constructionPrinciples.baseShape: "60x100 unit cell".
+const CELL_W = 60;
 const CELL_H = 100;
-const STEM_X = 20;
-const STEM_TOP = 10;
-const STEM_BOTTOM = 90;
+const SPINE_X = 30;
+const SPINE_TOP = 10;
+const SPINE_BOTTOM = 90;
+const THORN_LEN = 13;
 
-// alphabet.json placeOfArticulationRule: top/middle/bottom third of the stem.
-const ZONE_Y: Record<string, [number, number]> = {
-  top: [STEM_TOP, STEM_TOP + (STEM_BOTTOM - STEM_TOP) / 3],
-  middle: [STEM_TOP + (STEM_BOTTOM - STEM_TOP) / 3, STEM_TOP + (2 * (STEM_BOTTOM - STEM_TOP)) / 3],
-  bottom: [STEM_TOP + (2 * (STEM_BOTTOM - STEM_TOP)) / 3, STEM_BOTTOM],
-};
+// placeOfArticulationRule: three zones along the spine.
+const ZONE_Y: Record<"upper" | "middle" | "lower", number> = { upper: 21.5, middle: 47.5, lower: 67.5 };
 
-function zoneForPlace(place: string): "top" | "middle" | "bottom" {
-  if (place === "bilabial" || place === "labial-velar" || place === "labiodental") return "top";
+function zoneForPlace(place: string): "upper" | "middle" | "lower" {
+  if (place === "bilabial" || place === "labial-velar" || place === "labiodental") return "upper";
   if (place === "alveolar" || place === "postalveolar" || place === "palatal" || place === "dental") return "middle";
-  // velar, uvular, glottal
-  return "bottom";
+  return "lower"; // velar, uvular, glottal
 }
 
 function zoneCenterY(place: string): number {
-  const [y0, y1] = ZONE_Y[zoneForPlace(place)];
-  return (y0 + y1) / 2;
+  return ZONE_Y[zoneForPlace(place)];
 }
 
-// alphabet.json mannerOfArticulationRule.
-function strokeForManner(manner: string, cy: number, stemX: number): string {
-  const left = stemX - 12;
-  const right = stemX - 2;
+/** A single thorn: a straight line from (spineX, y) out to an angled tip. angleDeg is measured from horizontal, positive = upward. direction -1 = left, +1 = right. */
+function thorn(spineX: number, y: number, angleDeg: number, direction: 1 | -1, len: number = THORN_LEN): { tipX: number; tipY: number; path: string } {
+  const rad = (angleDeg * Math.PI) / 180;
+  const tipX = spineX + direction * len * Math.cos(rad);
+  const tipY = y - len * Math.sin(rad);
+  return { tipX, tipY, path: `<line x1="${spineX}" y1="${y}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />` };
+}
+
+/** Voicing tick: a short perpendicular stroke crossing the outer third of a thorn (mannerOfArticulationRule.voicingRule). */
+function voicingTick(spineX: number, y: number, angleDeg: number, direction: 1 | -1, len: number = THORN_LEN): string {
+  const rad = (angleDeg * Math.PI) / 180;
+  const outerT = 0.72; // outer third of the thorn, measured from the spine
+  const px = spineX + direction * outerT * len * Math.cos(rad);
+  const py = y - outerT * len * Math.sin(rad);
+  const perpRad = rad + Math.PI / 2;
+  const half = 3.5;
+  const x1 = px + half * Math.cos(perpRad);
+  const y1 = py - half * Math.sin(perpRad);
+  const x2 = px - half * Math.cos(perpRad);
+  const y2 = py + half * Math.sin(perpRad);
+  return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="currentColor" stroke-width="1.6" />`;
+}
+
+/** mannerOfArticulationRule: the thorn pattern at a given zone. Returns the SVG for the thorn(s) plus, if voiced, the voicing tick on the primary (first) thorn. */
+function strokesForManner(manner: string, y: number, spineX: number, voicing: string): string {
+  const voiced = voicing === "voiced";
   switch (manner) {
-    case "plosive":
-      // solid straight bar
-      return `<line x1="${left}" y1="${cy}" x2="${right}" y2="${cy}" stroke="currentColor" stroke-width="3" />`;
-    case "fricative": {
-      // wavy / zig-zag bar
-      const midY1 = cy - 4;
-      const midY2 = cy + 4;
-      return `<path d="M ${left} ${cy} L ${left + 3.5} ${midY1} L ${left + 7} ${midY2} L ${left + 10.5} ${midY1} L ${right} ${cy}" stroke="currentColor" stroke-width="2.5" fill="none" />`;
+    case "plosive": {
+      const t = thorn(spineX, y, 45, 1);
+      return t.path + (voiced ? voicingTick(spineX, y, 45, 1) : "");
     }
-    case "nasal":
-      // closed loop
-      return `<ellipse cx="${(left + right) / 2}" cy="${cy}" rx="6" ry="5" stroke="currentColor" stroke-width="2.5" fill="none" />`;
-    case "trill":
-    case "lateral":
-      // diagonal cross-stroke through the stem
-      return `<line x1="${left}" y1="${cy - 6}" x2="${right + 4}" y2="${cy + 6}" stroke="currentColor" stroke-width="2.5" />`;
-    case "approximant":
-      // short open hook
-      return `<path d="M ${left} ${cy + 5} Q ${left} ${cy - 6} ${right} ${cy - 4}" stroke="currentColor" stroke-width="2.5" fill="none" />`;
+    case "fricative": {
+      const t = thorn(spineX, y, 45, -1);
+      return t.path + (voiced ? voicingTick(spineX, y, 45, -1) : "");
+    }
+    case "nasal": {
+      const right = thorn(spineX, y, 45, 1);
+      const left = thorn(spineX, y, 45, -1);
+      return right.path + left.path + (voiced ? voicingTick(spineX, y, 45, 1) : "");
+    }
+    case "trill": {
+      const upper = thorn(spineX, y - 6, 45, 1);
+      const lower = thorn(spineX, y + 6, 45, 1);
+      return upper.path + lower.path + (voiced ? voicingTick(spineX, y - 6, 45, 1) : "");
+    }
+    case "lateral": {
+      // shallow-angled thorn to the left near the base of the spine.
+      const t = thorn(spineX, SPINE_BOTTOM - 4, 18, -1);
+      return t.path + (voiced ? voicingTick(spineX, SPINE_BOTTOM - 4, 18, -1) : "");
+    }
+    case "approximant": {
+      // two short thorns meeting at a point to the right (shallow "V" opening away from the spine)
+      const upper = thorn(spineX, y - 5, 20, 1, THORN_LEN * 0.8);
+      const lower = thorn(spineX, y + 5, -20, 1, THORN_LEN * 0.8);
+      return upper.path + lower.path + (voiced ? voicingTick(spineX, y - 5, 20, 1, THORN_LEN * 0.8) : "");
+    }
     default:
       return "";
   }
 }
 
-// alphabet.json voicingRule: filled dot to the right of the stem at stroke height.
-function voicingDot(voicing: string, cy: number, stemX: number): string {
-  if (voicing !== "voiced") return "";
-  return `<circle cx="${stemX + 6}" cy="${cy}" r="2.2" fill="currentColor" />`;
+function spinePath(x: number = SPINE_X, top = SPINE_TOP, bottom = SPINE_BOTTOM, thin = false): string {
+  return `<line x1="${x}" y1="${top}" x2="${x}" y2="${bottom}" stroke="currentColor" stroke-width="${thin ? 2 : 3}" stroke-linecap="round" />`;
 }
 
-function stem(x: number = STEM_X, thin = false): string {
-  return `<line x1="${x}" y1="${STEM_TOP}" x2="${x}" y2="${STEM_BOTTOM}" stroke="currentColor" stroke-width="${thin ? 1.5 : 3}" />`;
+// vowelRule: angle around the top of the spine, clockwise from vertical.
+// i = 0° (straight up), e = 30° upper-right, a = 60° upper-right,
+// o = -30° upper-left, u = -60° upper-left. Long vowels double the thorn.
+const VOWEL_ANGLE: Record<string, number> = { i: 0, e: 30, a: 60, o: -30, u: -60 };
+
+function baseVowelId(id: string): string {
+  return id.replace(/[âêîôû]/g, (ch) => ({ â: "a", ê: "e", î: "i", ô: "o", û: "u" }[ch] ?? ch));
 }
 
-// alphabet.json vowelRule: horizontal offset per vowel quality, relative to
-// the stem's quality-to-offset mapping a=0, e=-1, i=-2, o=+1, u=+2 "steps".
-const VOWEL_STEP: Record<string, number> = { a: 0, e: -1, i: -2, o: 1, u: 2 };
-const STEP_UNIT = 6;
-
-function vowelOffsetX(vowelId: string, stemX: number): number {
-  const base = vowelId.replace(/[âêîôû]/g, (ch) => ({ â: "a", ê: "e", î: "i", ô: "o", û: "u" }[ch] ?? ch));
-  const step = VOWEL_STEP[base] ?? 0;
-  return stemX + step * STEP_UNIT;
+/** One vowel thorn (or doubled, for a long vowel) anchored above the spine top, per vowelRule. `heightOffset` lifts stacked diphthong components. */
+function vowelThorn(token: { id: string; isLong?: boolean }, spineX: number, heightOffset = 0): string {
+  const base = baseVowelId(token.id);
+  const angleFromVertical = VOWEL_ANGLE[base] ?? 0;
+  // Convert "clockwise from vertical" to our horizontal-based angle convention:
+  // vertical (straight up) = 90° in our thorn() convention; clockwise rotation
+  // (toward the right for positive e/a, toward the left for negative o/u)
+  // subtracts from 90.
+  const angleDeg = 90 - angleFromVertical;
+  const direction: 1 | -1 = angleFromVertical >= 0 ? 1 : -1;
+  const y = SPINE_TOP - heightOffset;
+  const len = THORN_LEN * 0.8;
+  const first = thorn(spineX, y, angleDeg, direction, len);
+  if (!token.isLong) return first.path;
+  // Long vowel: a second, parallel thorn close to the first (doubled stroke).
+  const rad = (angleDeg * Math.PI) / 180;
+  const nx = direction * Math.sin(rad) * -1; // small perpendicular offset
+  const ny = Math.cos(rad) * -1;
+  const offset = 3;
+  const x1 = spineX + nx * offset;
+  const y1 = y + ny * offset;
+  const second = thorn(x1, y1, angleDeg, direction, len);
+  return first.path + second.path;
 }
 
-function vowelDiacritic(token: PhonemeToken, stemX: number, stackIndex = 0): string {
-  const y = STEM_TOP - 6 - stackIndex * 10;
-  const x = vowelOffsetX(token.id, stemX);
-  if (token.isLong) {
-    // short horizontal line above the stem
-    return `<line x1="${x - 4}" y1="${y}" x2="${x + 4}" y2="${y}" stroke="currentColor" stroke-width="2.5" />`;
-  }
-  // short vowel: dot above the stem
-  return `<circle cx="${x}" cy="${y}" r="2" fill="currentColor" />`;
-}
-
-/** Diphthongs combine two stacked vowel diacritics for their component vowels, per alphabet.json diphthongRule. */
+/** diphthongRule: two vowel-angle thorns stacked at two heights, bottom-to-top in pronunciation order. */
 const DIPHTHONG_COMPONENTS: Record<string, [string, string]> = {
   ai: ["a", "i"],
   au: ["a", "u"],
   oi: ["o", "i"],
 };
 
-function diphthongDiacritics(token: PhonemeToken, stemX: number): string {
-  const comps = DIPHTHONG_COMPONENTS[token.id];
-  if (!comps) return vowelDiacritic(token, stemX);
-  // bottom-to-top in pronunciation order: comps[0] is pronounced first -> lower.
-  const lower = vowelDiacritic({ ...token, id: comps[0], isLong: false } as PhonemeToken, stemX, 0);
-  const upper = vowelDiacritic({ ...token, id: comps[1], isLong: false } as PhonemeToken, stemX, 1);
-  return lower + upper;
+function renderVowel(token: PhonemeToken, spineX: number): string {
+  if (token.isDiphthong) {
+    const comps = DIPHTHONG_COMPONENTS[token.id];
+    if (!comps) return vowelThorn(token, spineX);
+    const lower = vowelThorn({ id: comps[0] }, spineX, 0);
+    const upper = vowelThorn({ id: comps[1] }, spineX, 11);
+    return lower + upper;
+  }
+  return vowelThorn(token, spineX);
 }
 
-function renderVowel(token: PhonemeToken, stemX: number): string {
-  return token.isDiphthong ? diphthongDiacritics(token, stemX) : vowelDiacritic(token, stemX);
-}
-
-function svgWrap(inner: string, width: number): string {
-  return `<svg viewBox="0 0 ${width} ${CELL_H}" xmlns="http://www.w3.org/2000/svg" class="khargul-glyph">${inner}</svg>`;
+function svgWrap(inner: string, width: number, height: number = CELL_H): string {
+  return `<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" class="khargul-glyph">${inner}</svg>`;
 }
 
 /** Renders a single consonant letter in isolation (used by the alphabet chart). */
 export function generateConsonantGlyph(consonant: { place: string; manner: string; voicing: string }): string {
-  const cy = zoneCenterY(consonant.place);
-  const inner = stem() + strokeForManner(consonant.manner, cy, STEM_X) + voicingDot(consonant.voicing, cy, STEM_X);
+  const y = zoneCenterY(consonant.place);
+  const inner = spinePath() + strokesForManner(consonant.manner, y, SPINE_X, consonant.voicing);
   return svgWrap(inner, CELL_W);
 }
 
-/** Renders a single vowel letter in isolation on the neutral "null-stem" carrier. */
+/** Renders a single vowel letter in isolation on the neutral short carrier spine (word-initial vowelRule). */
 export function generateVowelGlyph(vowel: { id: string; isLong?: boolean; isDiphthong?: boolean }): string {
-  const inner = stem(STEM_X, true) + renderVowel(vowel as PhonemeToken, STEM_X);
+  const inner = spinePath(SPINE_X, SPINE_TOP, SPINE_BOTTOM, true) + renderVowel(vowel as PhonemeToken, SPINE_X);
   return svgWrap(inner, CELL_W);
 }
 
 /**
- * Renders a full syllable block: onset consonant stem(s) carrying the nucleus
- * vowel diacritic on the last onset consonant (or on a null-stem carrier if
- * the syllable is vowel-initial), followed by coda consonant stem(s).
- * Each consonant in a cluster gets its own narrower sub-cell, laid left to
- * right, per alphabet.json syllableBlocking ("a consonant plus its following
- * vowel form a single visual block").
+ * Renders a full syllable block: a spine carrying the onset consonant
+ * thorn(s) partway down and the nucleus vowel thorn(s) at the top (or a
+ * neutral short carrier spine if the syllable is vowel-initial), followed by
+ * a second spine per coda consonant, per alphabet.json's syllableBlocking
+ * ("a consonant plus its following vowel form a single visual block").
  */
 export function generateSyllableGlyph(syllable: Syllable): string {
   const subCells: string[] = [];
   const consonants = [...syllable.onset];
-  const vowelCarrierIndex = consonants.length; // index (in subCells) that receives the vowel diacritic
 
   if (consonants.length === 0) {
-    // vowel-initial: null-stem carrier
-    subCells.push(stem(STEM_X, true) + renderVowel(syllable.nucleus, STEM_X));
+    subCells.push(spinePath(SPINE_X, SPINE_TOP, SPINE_BOTTOM, true) + renderVowel(syllable.nucleus, SPINE_X));
   } else {
     consonants.forEach((c, i) => {
-      const cy = zoneCenterY(c.place ?? "alveolar");
-      let cell = stem() + strokeForManner(c.manner ?? "plosive", cy, STEM_X) + voicingDot(c.voicing ?? "voiceless", cy, STEM_X);
+      const y = zoneCenterY(c.place ?? "alveolar");
+      let cell = spinePath() + strokesForManner(c.manner ?? "plosive", y, SPINE_X, c.voicing ?? "voiceless");
       if (i === consonants.length - 1) {
-        cell += renderVowel(syllable.nucleus, STEM_X);
+        cell += renderVowel(syllable.nucleus, SPINE_X);
       }
       subCells.push(cell);
     });
   }
 
   for (const c of syllable.coda) {
-    const cy = zoneCenterY(c.place ?? "alveolar");
-    subCells.push(stem() + strokeForManner(c.manner ?? "plosive", cy, STEM_X) + voicingDot(c.voicing ?? "voiceless", cy, STEM_X));
+    const y = zoneCenterY(c.place ?? "alveolar");
+    subCells.push(spinePath() + strokesForManner(c.manner ?? "plosive", y, SPINE_X, c.voicing ?? "voiceless"));
   }
 
-  const width = CELL_W * subCells.length;
-  const groups = subCells
-    .map((cell, i) => `<g transform="translate(${i * CELL_W}, 0)">${cell}</g>`)
-    .join("");
-  void vowelCarrierIndex;
-  return svgWrap(groups, width);
+  const groups = subCells.map((cell, i) => `<g transform="translate(${i * CELL_W}, 0)">${cell}</g>`).join("");
+  return svgWrap(groups, CELL_W * subCells.length);
 }
 
-/** Lays out a full word as a left-to-right run of syllable blocks separated by the word-boundary punctuation mark for in-sentence display (caller inserts separators between words, not within). */
+/** Lays out a full word as a left-to-right run of syllable blocks. Caller inserts word-boundary separators between words, not within. */
 export function generateWordGlyph(syllables: Syllable[]): string {
-  const blocks = syllables.map((s) => stripSvgWrapper(generateSyllableGlyph(s), CELL_W * widthFactor(s)));
+  const blocks = syllables.map((s) => stripSvgWrapper(generateSyllableGlyph(s)));
   let xOffset = 0;
   const groups: string[] = [];
   for (let i = 0; i < syllables.length; i++) {
@@ -187,7 +220,39 @@ function widthFactor(s: Syllable): number {
   return Math.max(1, s.onset.length + s.coda.length + (s.onset.length === 0 ? 1 : 0));
 }
 
-function stripSvgWrapper(svg: string, _fallbackWidth: number): string {
+function stripSvgWrapper(svg: string): string {
   const match = svg.match(/<svg[^>]*>([\s\S]*)<\/svg>/);
   return match ? match[1] : svg;
+}
+
+// --- Numerals (alphabet.json "numerals" section) -----------------------
+// base-10, built from the same spine+thorn system: 0 = bare spine, 1 = one
+// thorn, 2 = two thorns, ... 9 = spine fully crossed. Thorns are added
+// alternating right/left, descending the spine, so the count is visually
+// unambiguous at a glance.
+export function generateNumeralGlyph(digit: number): string {
+  const d = Math.max(0, Math.min(9, Math.floor(digit)));
+  let inner = spinePath();
+  const positions = [25, 35, 45, 55, 65, 75, 30, 50, 70];
+  for (let i = 0; i < d; i++) {
+    const y = positions[i] ?? 25 + i * 7;
+    const direction: 1 | -1 = i % 2 === 0 ? 1 : -1;
+    inner += thorn(SPINE_X, y, 45, direction, THORN_LEN * 0.7).path;
+  }
+  return svgWrap(inner, CELL_W);
+}
+
+// --- Punctuation (alphabet.json "punctuation"/"wordSeparation") --------
+// A vertical tick taller than the x-height; doubled/tripled for
+// clause-pause/sentence-end, hooked for a yes/no question.
+export function generatePunctuationGlyph(kind: "wordBoundary" | "clausePause" | "sentenceEnd" | "question"): string {
+  const tickX = (i: number) => 10 + i * 8;
+  const tick = (x: number, hook = false) =>
+    hook
+      ? `<path d="M ${x} 20 L ${x} 70 Q ${x + 8} 78 ${x + 2} 86" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" />`
+      : `<line x1="${x}" y1="20" x2="${x}" y2="80" stroke="currentColor" stroke-width="3" stroke-linecap="round" />`;
+  if (kind === "wordBoundary") return svgWrap(tick(20), 40);
+  if (kind === "clausePause") return svgWrap(tick(16) + tick(24), 40);
+  if (kind === "sentenceEnd") return svgWrap(tick(12) + tick(20) + tick(28), 44);
+  return svgWrap(tick(20, true), 40); // question hook
 }
