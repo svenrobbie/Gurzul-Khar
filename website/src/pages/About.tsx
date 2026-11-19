@@ -36,8 +36,11 @@ export default function About() {
       <section className="card" style={{ marginTop: "1rem" }}>
         <h2>Contributing</h2>
         <p>
-          See <code>docs/CONTRIBUTING.md</code> in the repository for how to propose new vocabulary, grammar
-          refinements, or lessons. All linguistic changes go through the <code>/data</code> JSON files.
+          Use the live <a href="#/propose">Propose a word</a> page to coin new vocabulary or ask the engine to suggest
+          a phonotactically valid candidate; pending proposals are reviewed on the{" "}
+          <a href="#/admin">review tool</a> (local dev server only — see BACKLOG.md §2). For grammar refinements or
+          lessons, see <code>docs/CONTRIBUTING.md</code> in the repository. All linguistic changes go through the{" "}
+          <code>/data</code> JSON files.
         </p>
         <p>
           Licensing approach: <code>docs/LICENSE_NOTES.md</code>.

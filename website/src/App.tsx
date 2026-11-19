@@ -9,12 +9,15 @@ import Learn from "./pages/Learn";
 import Lore from "./pages/Lore";
 import EngineDocs from "./pages/EngineDocs";
 import About from "./pages/About";
+import Propose from "./pages/Propose";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const NAV = [
   { to: "/", label: "Home", end: true },
   { to: "/translator", label: "Translator" },
   { to: "/dictionary", label: "Dictionary" },
+  { to: "/propose", label: "Propose a word" },
   { to: "/grammar", label: "Grammar" },
   { to: "/alphabet", label: "Alphabet" },
   { to: "/pronunciation", label: "Pronunciation" },
@@ -53,6 +56,8 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/translator" element={<Translator />} />
           <Route path="/dictionary" element={<Dictionary />} />
+          <Route path="/propose" element={<Propose />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/grammar" element={<Grammar />} />
           <Route path="/alphabet" element={<Alphabet />} />
           <Route path="/pronunciation" element={<Pronunciation />} />
