@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { phonology } from "@engine/data.js";
 import { ipaOfWord } from "@engine/translator/ipa.js";
+import { playRuleBasedPronunciation } from "../lib/audioSynth.js";
 
 function speak(text: string) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -14,6 +15,7 @@ function speak(text: string) {
 export default function Pronunciation() {
   const [practiceWord, setPracticeWord] = useState("khardûm");
   const [supported] = useState(() => typeof window !== "undefined" && "speechSynthesis" in window);
+  const [audioOk, setAudioOk] = useState<boolean | null>(null);
 
   return (
     <div>
@@ -122,10 +124,24 @@ export default function Pronunciation() {
             /{ipaOfWord(practiceWord)}/
           </p>
           <button type="button" onClick={() => speak(practiceWord)} disabled={!supported}>
-            ▶ Play (synthetic approximation)
+            ▶ Play (SpeechSynthesis approximation)
+          </button>{" "}
+          <button type="button" onClick={() => setAudioOk(playRuleBasedPronunciation(practiceWord))}>
+            ▶ Play (rule-based phoneme synthesis — experimental)
           </button>
           {!supported && <p className="notice">Your browser does not support speech synthesis.</p>}
+          {audioOk === false && (
+            <p className="notice">
+              Could not play the rule-based synthesis for this word (Web Audio API unavailable, or the word doesn't tokenize).
+            </p>
+          )}
         </div>
+        <p className="notice" style={{ marginTop: "0.5rem" }}>
+          The second button is a separate, genuinely offline prototype (Web Audio API oscillators/filtered noise per
+          phoneme, driven by each sound's own place/manner/voicing — see <code>website/src/lib/audioSynth.ts</code>).
+          It is NOT real speech and does not model coarticulation; it exists to explore whether a non-neural, rule-based
+          approximation is feasible at all, and is clearly experimental — see BACKLOG.md §6.
+        </p>
       </section>
     </div>
   );
