@@ -1,0 +1,87 @@
+{
+  "language": "Gurzûl Khar",
+  "version": "0.1.0",
+  "typology": {
+    "wordOrder": "SVO",
+    "morphologicalType": "mildly agglutinative / analytic",
+    "designNote": "SVO with postpositional phrases was chosen (AI design decision, project spec §18) to keep the engine's grammar deterministic and learnable while remaining distinct from both English and Dutch surface order inside noun phrases."
+  },
+  "pronouns": {
+    "subjectForms": {
+      "1sg": "ük", "2sg": "tû", "3sg": "zhâ",
+      "1pl": "ükûn", "2pl": "tûkûn", "3pl": "zhâkûn"
+    },
+    "possessiveSuffixes": {
+      "1sg": "-um", "2sg": "-ush", "3sg": "-az",
+      "1pl": "-nâk", "2pl": "-shûk", "3pl": "-zûk"
+    },
+    "demonstratives": { "this": "tar", "that": "dûr", "these": "tarûk", "those": "dûrûk" },
+    "interrogatives": { "who": "manu", "what": "kâsh", "where": "dorash", "when": "zûrash", "why": "ghâsh", "how": "pâlash" },
+    "reflexive": "suffix -ûm attached to the pronoun, e.g. 'zhâûm' = himself/herself/itself"
+  },
+  "nouns": {
+    "pluralSuffix": "-ûk",
+    "pluralRule": "Attach -ûk to the noun root; if the root already ends in -k, insert epenthetic -a- (-akûk) to avoid a geminate cluster.",
+    "definiteness": "No articles. Definiteness is contextual, as in many isolating languages; a noun is read as definite unless context or an explicit demonstrative marks it otherwise.",
+    "possession": {
+      "strategy": "postposition",
+      "marker": "ta",
+      "pattern": "[possessum] ta [possessor]",
+      "example": "khar ta shak = \"the king's strength\" (literally \"strength of king\")",
+      "pronominalAlternative": "A possessive suffix (see pronouns.possessiveSuffixes) may attach directly to the possessum instead of using 'ta' when the possessor is a pronoun: 'kharaz' = \"his/her/its strength\"."
+    },
+    "compounding": "Compound nouns are formed head-final: modifier + head, both roots joined directly, e.g. 'ghûl' (shadow) + 'dor' (land) = 'ghûldor' (shadowland)."
+  },
+  "verbs": {
+    "citationForm": "bare root (= infinitive)",
+    "tenseSuffixes": { "present": "-u", "past": "-ak", "future": "-âth" },
+    "imperative": "bare root, sentence-initial, no subject pronoun required",
+    "negation": { "particle": "na", "position": "immediately before the finite verb" },
+    "aspect": {
+      "habitual": "reduplicate the first consonant+vowel of the root before the tense suffix, e.g. 'khaur' (burn) -> 'khakhaurak' (used to burn / burned repeatedly)",
+      "progressive": "auxiliary 'ash' + root + '-u', e.g. 'ash khaur-u' = \"is burning\""
+    },
+    "mood": {
+      "indicative": "default, tense suffix only",
+      "imperative": "bare root",
+      "conditional": "particle 'ith' introduces the conditional clause; the result clause is unmarked, e.g. 'ith tû pâku, ük magâth' = \"if you go, I will follow\""
+    },
+    "auxiliaries": { "be": "ash", "have": "dûn", "can/be-able": "mâg" },
+    "personNumberMarking": "Verbs do not agree with person or number; the subject pronoun or noun phrase carries that information. This is a deliberate analytic design choice to keep the morphology regular and the translation engine fully deterministic.",
+    "irregulars": [
+      { "root": "ash", "gloss": "to be", "note": "present tense is 'ash' itself (zero further suffix); past 'ashak'; future 'ashâth'." }
+    ]
+  },
+  "adjectives": {
+    "position": "after the noun they modify",
+    "agreement": "none — adjectives are invariable",
+    "comparative": { "marker": "zan", "position": "before the adjective", "example": "zan khar = \"stronger\"" },
+    "superlative": { "marker": "suffix -gûl added to the adjective in addition to 'zan'", "example": "zan khargûl = \"strongest\"" },
+    "intensification": { "marker": "ghâr", "position": "before the adjective", "example": "ghâr khar = \"very strong\"" }
+  },
+  "adverbs": {
+    "formation": "derived from adjectives with the suffix -ith, e.g. 'khar' (strong) -> 'kharith' (strongly)",
+    "position": "typically follow the verb they modify"
+  },
+  "numerals": {
+    "cardinal": {
+      "1": "dush", "2": "tok", "3": "rem", "4": "quz", "5": "pâl",
+      "6": "sharn", "7": "vish", "8": "drol", "9": "nathu", "10": "ghazak"
+    },
+    "ordinalSuffix": "-ith (same surface form as the adverbial suffix, disambiguated by syntactic position directly before a noun)",
+    "position": "cardinal numerals precede the noun they quantify; ordinals also precede the noun"
+  },
+  "syntax": {
+    "declarative": "Subject - (Adverb) - Verb(+tense) - Object - (postpositional phrase)",
+    "negative": "Subject - na - Verb(+tense) - Object",
+    "yesNoQuestion": "Declarative word order + sentence-final particle 'ma'",
+    "contentQuestion": "Question word fronted to clause-initial position, remainder follows declarative order",
+    "imperative": "Verb(bare root) - Object  (no subject pronoun)",
+    "conditional": "'ith' + protasis clause + comma-equivalent pause + apodosis clause",
+    "relativeClause": "Formed with the relativiser 'kha' placed after the head noun: '[head noun] kha [clause]', e.g. 'shak kha khar dûnu' = \"the king who has strength\"",
+    "coordination": { "and": "ag", "or": "vo", "but": "nâth" },
+    "subordination": { "because": "ghâsha", "that (complementiser)": "sû", "if": "ith" },
+    "compoundSentenceExample": "ük pâku ag tû magu = \"I go and you follow\"",
+    "complexSentenceExample": "ük zûrak sû tû pâkâth = \"I know that you will go\""
+  }
+}

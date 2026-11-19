@@ -1,0 +1,36 @@
+{
+  "name": "Khargûl script",
+  "type": "abugida",
+  "version": "0.1.0",
+  "designPhilosophy": "An original angular, severe script evoking carved stone and iron rather than any existing real-world or Tolkien writing system (not Tengwar, not Cirth, not Angerthas, not the actual Black Speech ring-inscription glyphs). Every glyph is generated procedurally from the phoneme's own articulatory features defined in data/phonology/phonology.json, so the writing system is provably systematic rather than arbitrarily drawn.",
+  "constructionPrinciples": {
+    "baseShape": "Every consonant glyph shares a common vertical spine (the 'stem'), rendered in a 40x100 unit cell.",
+    "placeOfArticulationRule": "Place of articulation sets the vertical zone on the stem where the manner-stroke attaches: bilabial/labial-velar = top third; alveolar/postalveolar/palatal = middle third; velar/uvular/glottal = bottom third.",
+    "mannerOfArticulationRule": "Manner of articulation sets the shape of the attached stroke: plosive = solid straight bar; fricative = wavy/zig-zag bar; nasal = closed loop; trill/lateral (liquids) = diagonal cross-stroke; approximant = short open hook.",
+    "voicingRule": "Voiced consonants add a small filled dot to the right of the stem at the stroke's height; voiceless consonants have no dot.",
+    "vowelRule": "Gurzûl Khar is written as an abugida: a vowel is a diacritic attached to the consonant it follows, not an independent letter, except word-initially where a vowel carries a neutral 'null-stem' carrier glyph. Short vowels are marked by a dot placed above the stem; long vowels by a short horizontal line above the stem in the same horizontal position. The five vowel qualities (a/e/i/o/u) are distinguished by the diacritic's horizontal offset from the stem: a = centred, e = one step left, i = two steps left, o = one step right, u = two steps right.",
+    "diphthongRule": "Diphthongs combine two vowel diacritics stacked vertically above the stem, read bottom-to-top in the order the sounds are pronounced.",
+    "syllableBlocking": "A consonant plus its following vowel form a single visual block (stem + diacritic). Blocks are written left to right and separated by a small gap; a word is an unbroken run of blocks."
+  },
+  "wordSeparation": "A single vertical tick (˙) taller than the x-height separates words. A double tick (˙˙) functions as a comma-equivalent pause. A triple tick (˙˙˙) closes a sentence (full stop).",
+  "punctuation": {
+    "wordBoundary": "˙",
+    "clausePause": "˙˙",
+    "sentenceEnd": "˙˙˙",
+    "question": "a hooked tick (˥) replaces the sentence-end mark in a yes/no question, reflecting the rising intonation on 'ma'",
+    "quotation": "a pair of nested angle marks ⟨ ⟩ frame quoted or reported speech"
+  },
+  "capitalization": "The script has no case distinction. Proper names and sentence-initial words are instead marked by a short underline beneath the first block of the word.",
+  "numerals": {
+    "system": "base-10, distinct numeral glyphs 0-9 built from the same stem+stroke system as consonants, with strokes counting upward (0 = bare stem, 1 = one bottom stroke, 2 = two strokes, ... 9 = full stem cross-hatch); numerals are written most-significant digit first, left to right, exactly like Latin numerals.",
+    "exampleSpelling": "10 written as digit '1' then digit '0'"
+  },
+  "latinTransliteration": {
+    "principle": "One letter or digraph per phoneme, using the 'latin' field already defined for every sound in data/phonology/phonology.json as the single source of truth. No separate transliteration table is maintained to avoid divergence between script and romanisation.",
+    "roundTrip": "Because every digraph (gh, kh, sh, zh, ng) is phonotactically unambiguous in Gurzûl Khar (no vowel-less consonant sequence could be misparsed as one of these digraphs), Latin-to-native and native-to-Latin conversion is fully reversible without a lookahead grammar."
+  },
+  "rendering": {
+    "strategy": "Procedural SVG generation from phoneme features, implemented in engine/phonology as the single glyph generator used by both the Alphabet page and the Translator's native-script output.",
+    "fontStatus": "No OpenType/TrueType font file has been produced yet; this is tracked in the project backlog as a future enhancement. The current delivery renders native script as generated inline SVG, which is fully functional for the website but is not yet installable as a system font."
+  }
+}

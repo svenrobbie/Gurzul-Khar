@@ -1,0 +1,85 @@
+{
+  "language": "Gurzûl Khar",
+  "version": "0.1.0",
+  "consonants": [
+    { "id": "p",  "ipa": "p",  "latin": "p",  "place": "bilabial",     "manner": "plosive",    "voicing": "voiceless", "positions": ["initial","medial","final"], "example": "pâk (\"road\")" },
+    { "id": "b",  "ipa": "b",  "latin": "b",  "place": "bilabial",     "manner": "plosive",    "voicing": "voiced",    "positions": ["initial","medial","final"], "example": "bûr (\"stone\")" },
+    { "id": "t",  "ipa": "t",  "latin": "t",  "place": "alveolar",     "manner": "plosive",    "voicing": "voiceless", "positions": ["initial","medial","final"], "example": "tûl (\"hand\")" },
+    { "id": "d",  "ipa": "d",  "latin": "d",  "place": "alveolar",     "manner": "plosive",    "voicing": "voiced",    "positions": ["initial","medial","final"], "example": "dor (\"land\")" },
+    { "id": "k",  "ipa": "k",  "latin": "k",  "place": "velar",        "manner": "plosive",    "voicing": "voiceless", "positions": ["initial","medial","final"], "example": "khar (\"strength\")" },
+    { "id": "g",  "ipa": "g",  "latin": "g",  "place": "velar",        "manner": "plosive",    "voicing": "voiced",    "positions": ["initial","medial","final"], "example": "gurz (\"dark\")" },
+    { "id": "q",  "ipa": "q",  "latin": "q",  "place": "uvular",       "manner": "plosive",    "voicing": "voiceless", "positions": ["initial","medial"],        "example": "qâth (\"fire\")" },
+    { "id": "gh", "ipa": "ɣ",  "latin": "gh", "place": "velar",        "manner": "fricative",  "voicing": "voiced",    "positions": ["initial","medial","final"], "example": "ghûl (\"shadow\")" },
+    { "id": "kh", "ipa": "x",  "latin": "kh", "place": "velar",        "manner": "fricative",  "voicing": "voiceless", "positions": ["initial","medial","final"], "example": "khar (\"strength\")" },
+    { "id": "z",  "ipa": "z",  "latin": "z",  "place": "alveolar",     "manner": "fricative",  "voicing": "voiced",    "positions": ["initial","medial","final"], "example": "zûn (\"blood\")" },
+    { "id": "s",  "ipa": "s",  "latin": "s",  "place": "alveolar",     "manner": "fricative",  "voicing": "voiceless", "positions": ["initial","medial","final"], "example": "sarn (\"sword\")" },
+    { "id": "sh", "ipa": "ʃ",  "latin": "sh", "place": "postalveolar", "manner": "fricative",  "voicing": "voiceless", "positions": ["initial","medial","final"], "example": "shak (\"king\")" },
+    { "id": "zh", "ipa": "ʒ",  "latin": "zh", "place": "postalveolar", "manner": "fricative",  "voicing": "voiced",    "positions": ["medial","final"],          "example": "zhâ (\"he/she/it\")" },
+    { "id": "h",  "ipa": "h",  "latin": "h",  "place": "glottal",      "manner": "fricative",  "voicing": "voiceless", "positions": ["initial","medial"],        "example": "hask (\"fear\")" },
+    { "id": "m",  "ipa": "m",  "latin": "m",  "place": "bilabial",     "manner": "nasal",      "voicing": "voiced",    "positions": ["initial","medial","final"], "example": "mor (\"death\")" },
+    { "id": "n",  "ipa": "n",  "latin": "n",  "place": "alveolar",     "manner": "nasal",      "voicing": "voiced",    "positions": ["initial","medial","final"], "example": "nâz (\"name\")" },
+    { "id": "ng", "ipa": "ŋ",  "latin": "ng", "place": "velar",        "manner": "nasal",      "voicing": "voiced",    "positions": ["medial","final"],          "example": "durang (\"tower\")" },
+    { "id": "r",  "ipa": "ʀ",  "latin": "r",  "place": "uvular",       "manner": "trill",      "voicing": "voiced",    "positions": ["initial","medial","final"], "example": "rûk (\"army\")" },
+    { "id": "l",  "ipa": "l",  "latin": "l",  "place": "alveolar",     "manner": "lateral",    "voicing": "voiced",    "positions": ["initial","medial","final"], "example": "lug (\"word\")" },
+    { "id": "w",  "ipa": "w",  "latin": "w",  "place": "labial-velar", "manner": "approximant","voicing": "voiced",    "positions": ["initial","medial"],        "example": "waz (\"water\")" },
+    { "id": "y",  "ipa": "j",  "latin": "y",  "place": "palatal",      "manner": "approximant","voicing": "voiced",    "positions": ["initial","medial"],        "example": "yash (\"eye\")" }
+  ],
+  "vowels": {
+    "short": [
+      { "id": "a", "ipa": "a", "latin": "a" },
+      { "id": "e", "ipa": "ɛ", "latin": "e" },
+      { "id": "i", "ipa": "ɪ", "latin": "i" },
+      { "id": "o", "ipa": "ɔ", "latin": "o" },
+      { "id": "u", "ipa": "ʊ", "latin": "u" }
+    ],
+    "long": [
+      { "id": "â", "ipa": "aː", "latin": "â", "shortCounterpart": "a" },
+      { "id": "ê", "ipa": "eː", "latin": "ê", "shortCounterpart": "e" },
+      { "id": "î", "ipa": "iː", "latin": "î", "shortCounterpart": "i" },
+      { "id": "ô", "ipa": "oː", "latin": "ô", "shortCounterpart": "o" },
+      { "id": "û", "ipa": "uː", "latin": "û", "shortCounterpart": "u" }
+    ],
+    "diphthongs": [
+      { "id": "ai", "ipa": "aɪ̯", "latin": "ai", "example": "nairgh (\"cry out\")" },
+      { "id": "au", "ipa": "aʊ̯", "latin": "au", "example": "khaur (\"burn\", intransitive)" },
+      { "id": "oi", "ipa": "ɔɪ̯", "latin": "oi", "example": "droish (\"iron\")" }
+    ]
+  },
+  "phonotactics": {
+    "syllableTemplate": "(C)(C)V(V)(C)(C)",
+    "onsetClusters": {
+      "allowed": ["pr","br","tr","dr","kr","gr","kl","gl","shr","zhr","thr"],
+      "note": "Stop or fricative + liquid (r/l) only. No more than two consonants may open a syllable."
+    },
+    "codaClusters": {
+      "allowed": ["rk","lt","rn","zg","sht","rth","lk","ng"],
+      "note": "Liquid/nasal + obstruent, or obstruent + obstruent limited to the sibilant-first set. No more than two consonants may close a syllable."
+    },
+    "wordInitialRestrictions": [
+      "ng never occurs word-initially",
+      "zh never occurs word-initially",
+      "vowel-initial words are permitted but rare, mostly in borrowed/loan vocabulary"
+    ],
+    "wordFinalRestrictions": [
+      "q, w, y never occur word-finally",
+      "voiced fricatives (gh, zh) may close a word only after a long vowel"
+    ],
+    "loanwordAdaptation": [
+      "Consonant clusters not permitted by phonotactics are broken up with an epenthetic 'u' (e.g. a hypothetical loan 'Sv-' becomes 'Suv-').",
+      "Final consonants not permitted word-finally are devoiced or dropped, whichever preserves recognisability.",
+      "Vowels absent from the inventory are mapped to the nearest native vowel by height and backness."
+    ]
+  },
+  "stress": {
+    "defaultRule": "Stress falls on the penultimate syllable of the word.",
+    "exceptions": [
+      "If the final syllable contains a long vowel or diphthong, stress shifts to the final syllable.",
+      "Monosyllabic words are stressed on their single syllable."
+    ],
+    "sentenceStress": "The finite verb and the element it immediately precedes or follows carry the heaviest sentence-level stress in neutral declaratives.",
+    "questionIntonation": "Yes/no questions (marked by the final particle 'ma') carry a rising pitch on 'ma' itself; content questions keep falling intonation, with the fronted question word taking emphatic stress.",
+    "commandIntonation": "Imperatives carry a sharp falling pitch on the verb root, typically louder and shorter than declarative stress.",
+    "emphasis": "Emphasis is marked by lengthening the stressed vowel and, optionally, fronting the emphasised constituent."
+  },
+  "designNotes": "Consonant inventory favours uvular, velar and fricative sounds (q, gh, kh, r-uvular) to produce the harsh register associated with the project's Black-Speech-inspired aesthetic, while remaining a fully original inventory rather than a reproduction of Tolkien's actual phoneme set or vocabulary."
+}
