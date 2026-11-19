@@ -1,0 +1,6 @@
+{
+  "language": "Gurzûl Khar",
+  "version": "0.1.0",
+  "note": "Phase 2 vocabulary lifecycle store (DESIGN_DECISIONS.md D13). This file holds every PROPOSED word awaiting review and every DEPRECATED word retired from data/lexicon/lexicon.json. It is never the source of OFFICIAL vocabulary — lexicon.json alone is that single source of truth (spec §14) — but together they give the full lifecycle: official (lexicon.json) + proposed/deprecated (here) + unknown (not stored anywhere, just what the translator reports when nothing matches). Entries move between the two files by the local dev-only review API in website/devApi.ts; nothing here is picked up by the translator automatically.",
+  "proposals": []
+}

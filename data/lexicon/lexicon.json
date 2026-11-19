@@ -3,148 +3,1255 @@
   "version": "0.1.0",
   "note": "Initial seed lexicon (v0.1). Project target per Master Development Specification §6.2 is 500-1000 entries; this file currently holds a first working subset and is meant to grow entry by entry under the same schema, validated against data/phonology/phonology.json.",
   "derivationalAffixes": [
-    { "suffix": "-dûm", "function": "agent/characterised-by noun", "example": "khar (strength, n) -> khardûm (the mighty one, n)" },
-    { "suffix": "-ith", "function": "adjective -> adverb", "example": "khar (strong, adj) -> kharith (strongly, adv)" },
-    { "suffix": "-ûl", "function": "verb -> place-of-action noun", "example": "pâk (to go, v) -> pâkûl (road, n)" }
+    {
+      "suffix": "-dûm",
+      "function": "agent/characterised-by noun",
+      "example": "khar (strength, n) -> khardûm (the mighty one, n)"
+    },
+    {
+      "suffix": "-ith",
+      "function": "adjective -> adverb",
+      "example": "khar (strong, adj) -> kharith (strongly, adv)"
+    },
+    {
+      "suffix": "-ûl",
+      "function": "verb -> place-of-action noun",
+      "example": "pâk (to go, v) -> pâkûl (road, n)"
+    }
   ],
   "entries": [
-    { "id": "ukh-001", "gkh": "ük", "ipa": "ʊk", "pos": "pronoun", "en": "I", "nl": "ik", "domain": "everyday" },
-    { "id": "tuu-001", "gkh": "tû", "ipa": "tuː", "pos": "pronoun", "en": "you (sg.)", "nl": "jij", "domain": "everyday" },
-    { "id": "zha-001", "gkh": "zhâ", "ipa": "ʒaː", "pos": "pronoun", "en": "he/she/it", "nl": "hij/zij/het", "domain": "everyday" },
-    { "id": "ukn-001", "gkh": "ükûn", "ipa": "ʊkuːn", "pos": "pronoun", "en": "we", "nl": "wij", "domain": "everyday" },
-    { "id": "tkn-001", "gkh": "tûkûn", "ipa": "tuːkuːn", "pos": "pronoun", "en": "you (pl.)", "nl": "jullie", "domain": "everyday" },
-    { "id": "zkn-001", "gkh": "zhâkûn", "ipa": "ʒaːkuːn", "pos": "pronoun", "en": "they", "nl": "zij (mv.)", "domain": "everyday" },
-
-    { "id": "num-001", "gkh": "dush", "ipa": "dʊʃ", "pos": "numeral", "en": "one", "nl": "een", "domain": "everyday" },
-    { "id": "num-002", "gkh": "tok", "ipa": "tɔk", "pos": "numeral", "en": "two", "nl": "twee", "domain": "everyday" },
-    { "id": "num-003", "gkh": "rem", "ipa": "rɛm", "pos": "numeral", "en": "three", "nl": "drie", "domain": "everyday" },
-    { "id": "num-004", "gkh": "quz", "ipa": "quz", "pos": "numeral", "en": "four", "nl": "vier", "domain": "everyday" },
-    { "id": "num-005", "gkh": "pâl", "ipa": "paːl", "pos": "numeral", "en": "five", "nl": "vijf", "domain": "everyday" },
-    { "id": "num-006", "gkh": "sharn", "ipa": "ʃarn", "pos": "numeral", "en": "six", "nl": "zes", "domain": "everyday" },
-    { "id": "num-007", "gkh": "vish", "ipa": "vɪʃ", "pos": "numeral", "en": "seven", "nl": "zeven", "domain": "everyday" },
-    { "id": "num-008", "gkh": "drol", "ipa": "drɔl", "pos": "numeral", "en": "eight", "nl": "acht", "domain": "everyday" },
-    { "id": "num-009", "gkh": "nathu", "ipa": "naθʊ", "pos": "numeral", "en": "nine", "nl": "negen", "domain": "everyday" },
-    { "id": "num-010", "gkh": "ghazak", "ipa": "ɣazak", "pos": "numeral", "en": "ten", "nl": "tien", "domain": "everyday" },
-
-    { "id": "grt-001", "gkh": "nâzgam", "ipa": "naːzgam", "pos": "interjection", "en": "hail / greetings", "nl": "gegroet", "domain": "everyday" },
-    { "id": "grt-002", "gkh": "ash", "ipa": "aʃ", "pos": "particle/verb", "en": "yes / to be (aux.)", "nl": "ja / zijn", "domain": "everyday" },
-    { "id": "grt-003", "gkh": "na", "ipa": "na", "pos": "particle", "en": "no / not", "nl": "nee / niet", "domain": "everyday" },
-    { "id": "grt-004", "gkh": "ghâr", "ipa": "ɣaːr", "pos": "particle", "en": "very", "nl": "zeer", "domain": "everyday" },
-    { "id": "grt-005", "gkh": "zan", "ipa": "zan", "pos": "particle", "en": "more", "nl": "meer", "domain": "everyday" },
-    { "id": "grt-006", "gkh": "tar", "ipa": "tar", "pos": "determiner", "en": "this", "nl": "dit/deze", "domain": "everyday" },
-    { "id": "grt-007", "gkh": "dûr", "ipa": "duːr", "pos": "determiner", "en": "that", "nl": "dat/die", "domain": "everyday" },
-    { "id": "grt-008", "gkh": "izh", "ipa": "ɪʒ", "pos": "adverb", "en": "here", "nl": "hier", "domain": "everyday" },
-    { "id": "grt-009", "gkh": "dorizh", "ipa": "dɔrɪʒ", "pos": "adverb", "en": "there", "nl": "daar", "domain": "everyday" },
-    { "id": "grt-010", "gkh": "nûth", "ipa": "nuːθ", "pos": "adverb", "en": "now", "nl": "nu", "domain": "everyday" },
-    { "id": "grt-011", "gkh": "sâth", "ipa": "saːθ", "pos": "adverb", "en": "today", "nl": "vandaag", "domain": "everyday" },
-    { "id": "grt-012", "gkh": "ag", "ipa": "ag", "pos": "conjunction", "en": "and", "nl": "en", "domain": "everyday" },
-    { "id": "grt-013", "gkh": "vo", "ipa": "vɔ", "pos": "conjunction", "en": "or", "nl": "of", "domain": "everyday" },
-    { "id": "grt-014", "gkh": "nâth", "ipa": "naːθ", "pos": "conjunction", "en": "but", "nl": "maar", "domain": "everyday" },
-    { "id": "grt-015", "gkh": "ith", "ipa": "ɪθ", "pos": "conjunction", "en": "if", "nl": "als/indien", "domain": "everyday" },
-    { "id": "grt-016", "gkh": "ghâsha", "ipa": "ɣaːʃa", "pos": "conjunction", "en": "because", "nl": "omdat", "domain": "everyday" },
-    { "id": "grt-017", "gkh": "sû", "ipa": "suː", "pos": "conjunction", "en": "that (complementiser)", "nl": "dat (voegwoord)", "domain": "everyday" },
-    { "id": "grt-018", "gkh": "kha", "ipa": "xa", "pos": "pronoun", "en": "who/which (relative)", "nl": "die/dat (betr.)", "domain": "everyday" },
-    { "id": "grt-019", "gkh": "ma", "ipa": "ma", "pos": "particle", "en": "(yes/no question marker)", "nl": "(ja/nee-vraagpartikel)", "domain": "everyday" },
-    { "id": "grt-020", "gkh": "ta", "ipa": "ta", "pos": "postposition", "en": "of", "nl": "van", "domain": "everyday" },
-
-    { "id": "nou-001", "gkh": "dor", "ipa": "dɔr", "pos": "noun", "en": "land", "nl": "land", "domain": "nature" },
-    { "id": "nou-002", "gkh": "waz", "ipa": "waz", "pos": "noun", "en": "water", "nl": "water", "domain": "nature" },
-    { "id": "nou-003", "gkh": "qâth", "ipa": "qaːθ", "pos": "noun", "en": "fire", "nl": "vuur", "domain": "nature" },
-    { "id": "nou-004", "gkh": "bûr", "ipa": "buːr", "pos": "noun", "en": "stone", "nl": "steen", "domain": "nature" },
-    { "id": "nou-005", "gkh": "drol-oi", "ipa": "drɔlɔɪ̯", "pos": "noun", "en": "iron ore", "nl": "ijzererts", "domain": "nature", "notes": "poetic compound, not in everyday use" },
-    { "id": "nou-006", "gkh": "droish", "ipa": "drɔɪ̯ʃ", "pos": "noun", "en": "iron", "nl": "ijzer", "domain": "nature" },
-    { "id": "nou-007", "gkh": "yash", "ipa": "jaʃ", "pos": "noun", "en": "eye", "nl": "oog", "domain": "everyday" },
-    { "id": "nou-008", "gkh": "tûl", "ipa": "tuːl", "pos": "noun", "en": "hand", "nl": "hand", "domain": "everyday" },
-    { "id": "nou-009", "gkh": "zûn", "ipa": "zuːn", "pos": "noun", "en": "blood", "nl": "bloed", "domain": "everyday" },
-    { "id": "nou-010", "gkh": "mor", "ipa": "mɔr", "pos": "noun", "en": "death", "nl": "dood", "domain": "mordor" },
-    { "id": "nou-011", "gkh": "nâz", "ipa": "naːz", "pos": "noun", "en": "name", "nl": "naam", "domain": "everyday" },
-    { "id": "nou-012", "gkh": "lug", "ipa": "lʊg", "pos": "noun", "en": "word", "nl": "woord", "domain": "everyday" },
-    { "id": "nou-013", "gkh": "sarn", "ipa": "sarn", "pos": "noun", "en": "sword", "nl": "zwaard", "domain": "mordor" },
-    { "id": "nou-014", "gkh": "shak", "ipa": "ʃak", "pos": "noun", "en": "king", "nl": "koning", "domain": "mordor" },
-    { "id": "nou-015", "gkh": "durang", "ipa": "dʊraŋ", "pos": "noun", "en": "tower", "nl": "toren", "domain": "mordor" },
-    { "id": "nou-016", "gkh": "rûk", "ipa": "ruːk", "pos": "noun", "en": "army", "nl": "leger", "domain": "mordor" },
-    { "id": "nou-017", "gkh": "hask", "ipa": "hask", "pos": "noun", "en": "fear", "nl": "angst", "domain": "mordor" },
-    { "id": "nou-018", "gkh": "ghûl", "ipa": "ɣuːl", "pos": "noun", "en": "shadow", "nl": "schaduw", "domain": "mordor" },
-    { "id": "nou-019", "gkh": "ghûldor", "ipa": "ɣuːldɔr", "pos": "noun", "en": "shadowland", "nl": "schaduwland", "domain": "mordor", "root": "ghûl", "notes": "compound: ghûl (shadow) + dor (land)" },
-    { "id": "nou-020", "gkh": "khar", "ipa": "xar", "pos": "noun", "en": "strength / power", "nl": "kracht / macht", "domain": "mordor", "root": "khar" },
-    { "id": "nou-021", "gkh": "khardûm", "ipa": "xarduːm", "pos": "noun", "en": "the mighty one", "nl": "de machtige", "domain": "mordor", "root": "khar", "notes": "agent noun, khar + -dûm" },
-    { "id": "nou-022", "gkh": "magdûm", "ipa": "magduːm", "pos": "noun", "en": "servant / follower", "nl": "dienaar / volgeling", "domain": "mordor", "root": "mag", "notes": "agent noun, mag + -dûm" },
-    { "id": "nou-023", "gkh": "pâkûl", "ipa": "paːkuːl", "pos": "noun", "en": "road / path", "nl": "weg / pad", "domain": "everyday", "root": "pâk", "notes": "pâk (to go) + -ûl" },
-    { "id": "nou-024", "gkh": "zûrdûm", "ipa": "zuːrduːm", "pos": "noun", "en": "the knowing one / sage", "nl": "de wetende / wijze", "domain": "advanced", "root": "zûr", "notes": "agent noun, zûr + -dûm" },
-    { "id": "nou-025", "gkh": "enemdûm", "ipa": "ɛnɛmduːm", "pos": "noun", "en": "enemy", "nl": "vijand", "domain": "mordor" },
-    { "id": "nou-026", "gkh": "garn", "ipa": "garn", "pos": "noun", "en": "mountain", "nl": "berg", "domain": "nature" },
-    { "id": "nou-027", "gkh": "shelgh", "ipa": "ʃɛlɣ", "pos": "noun", "en": "sky", "nl": "lucht/hemel", "domain": "nature" },
-    { "id": "nou-028", "gkh": "thorn", "ipa": "θɔrn", "pos": "noun", "en": "wind", "nl": "wind", "domain": "nature" },
-    { "id": "nou-029", "gkh": "vel", "ipa": "vɛl", "pos": "noun", "en": "tree", "nl": "boom", "domain": "nature" },
-    { "id": "nou-030", "gkh": "krush", "ipa": "krʊʃ", "pos": "noun", "en": "beast", "nl": "beest", "domain": "nature" },
-    { "id": "nou-031", "gkh": "zherk", "ipa": "ʒɛrk", "pos": "noun", "en": "bird", "nl": "vogel", "domain": "nature" },
-    { "id": "nou-032", "gkh": "plâsh", "ipa": "plaːʃ", "pos": "noun", "en": "rain", "nl": "regen", "domain": "nature" },
-    { "id": "nou-033", "gkh": "niru", "ipa": "nɪrʊ", "pos": "noun", "en": "snow", "nl": "sneeuw", "domain": "nature" },
-    { "id": "nou-034", "gkh": "khauril", "ipa": "xaʊ̯rɪl", "pos": "noun", "en": "ash (cinder)", "nl": "as", "domain": "mordor", "root": "khaur" },
-    { "id": "nou-035", "gkh": "morith", "ipa": "mɔrɪθ", "pos": "noun", "en": "grave", "nl": "graf", "domain": "mordor", "root": "mor" },
-    { "id": "nou-036", "gkh": "nathdor", "ipa": "naθdɔr", "pos": "noun", "en": "home / dwelling", "nl": "thuis / woning", "domain": "everyday" },
-    { "id": "nou-037", "gkh": "shakdor", "ipa": "ʃakdɔr", "pos": "noun", "en": "kingdom", "nl": "koninkrijk", "domain": "mordor", "root": "shak", "notes": "compound: shak (king) + dor (land)" },
-    { "id": "nou-038", "gkh": "vathel", "ipa": "vaθɛl", "pos": "noun", "en": "city", "nl": "stad", "domain": "everyday" },
-    { "id": "nou-039", "gkh": "pelk", "ipa": "pɛlk", "pos": "noun", "en": "gate", "nl": "poort", "domain": "everyday" },
-    { "id": "nou-040", "gkh": "sharak", "ipa": "ʃarak", "pos": "noun", "en": "book / tablet", "nl": "boek / tablet", "domain": "advanced" },
-    { "id": "nou-041", "gkh": "nirdûm", "ipa": "nɪrduːm", "pos": "noun", "en": "friend", "nl": "vriend", "domain": "everyday" },
-    { "id": "nou-042", "gkh": "golm", "ipa": "gɔlm", "pos": "noun", "en": "gold", "nl": "goud", "domain": "nature" },
-    { "id": "nou-043", "gkh": "thasheth", "ipa": "θaʃɛθ", "pos": "noun", "en": "number", "nl": "getal", "domain": "advanced" },
-    { "id": "nou-044", "gkh": "varneth", "ipa": "varnɛθ", "pos": "noun", "en": "thought", "nl": "gedachte", "domain": "advanced" },
-    { "id": "nou-045", "gkh": "driveth", "ipa": "drɪvɛθ", "pos": "noun", "en": "machine / device", "nl": "machine / apparaat", "domain": "advanced" },
-
-    { "id": "vrb-001", "gkh": "dûn", "ipa": "duːn", "pos": "verb", "en": "to have", "nl": "hebben", "domain": "everyday" },
-    { "id": "vrb-002", "gkh": "mâg", "ipa": "maːg", "pos": "verb", "en": "to be able to / can", "nl": "kunnen", "domain": "everyday" },
-    { "id": "vrb-003", "gkh": "pâk", "ipa": "paːk", "pos": "verb", "en": "to go", "nl": "gaan", "domain": "everyday", "root": "pâk" },
-    { "id": "vrb-004", "gkh": "mag", "ipa": "mag", "pos": "verb", "en": "to follow / to serve", "nl": "volgen / dienen", "domain": "mordor", "root": "mag" },
-    { "id": "vrb-005", "gkh": "zûr", "ipa": "zuːr", "pos": "verb", "en": "to know", "nl": "weten", "domain": "everyday", "root": "zûr" },
-    { "id": "vrb-006", "gkh": "khaur", "ipa": "xaʊ̯r", "pos": "verb", "en": "to burn", "nl": "branden", "domain": "mordor", "root": "khaur" },
-    { "id": "vrb-007", "gkh": "khar", "ipa": "xar", "pos": "verb", "en": "to be strong", "nl": "sterk zijn", "domain": "mordor", "root": "khar" },
-    { "id": "vrb-008", "gkh": "ghûl", "ipa": "ɣuːl", "pos": "verb", "en": "to darken / to shadow", "nl": "verduisteren", "domain": "mordor", "root": "ghûl" },
-    { "id": "vrb-009", "gkh": "sel", "ipa": "sɛl", "pos": "verb", "en": "to see", "nl": "zien", "domain": "everyday" },
-    { "id": "vrb-010", "gkh": "varn", "ipa": "varn", "pos": "verb", "en": "to speak", "nl": "spreken", "domain": "everyday" },
-    { "id": "vrb-011", "gkh": "nash", "ipa": "naʃ", "pos": "verb", "en": "to eat", "nl": "eten", "domain": "everyday" },
-    { "id": "vrb-012", "gkh": "thul", "ipa": "θʊl", "pos": "verb", "en": "to drink", "nl": "drinken", "domain": "everyday" },
-    { "id": "vrb-013", "gkh": "drash", "ipa": "draʃ", "pos": "verb", "en": "to fight", "nl": "vechten", "domain": "mordor" },
-    { "id": "vrb-014", "gkh": "kûl", "ipa": "kuːl", "pos": "verb", "en": "to kill", "nl": "doden", "domain": "mordor" },
-    { "id": "vrb-015", "gkh": "garth", "ipa": "garθ", "pos": "verb", "en": "to build", "nl": "bouwen", "domain": "everyday" },
-    { "id": "vrb-016", "gkh": "rûkh", "ipa": "ruːx", "pos": "verb", "en": "to rule", "nl": "heersen", "domain": "mordor" },
-    { "id": "vrb-017", "gkh": "nirith", "ipa": "nɪrɪθ", "pos": "verb", "en": "to love", "nl": "liefhebben", "domain": "everyday" },
-    { "id": "vrb-018", "gkh": "haskith", "ipa": "haskɪθ", "pos": "verb", "en": "to hate", "nl": "haten", "domain": "mordor", "root": "hask" },
-    { "id": "vrb-019", "gkh": "gib", "ipa": "gɪb", "pos": "verb", "en": "to give", "nl": "geven", "domain": "everyday" },
-    { "id": "vrb-020", "gkh": "tok-ash", "ipa": "tɔkaʃ", "pos": "verb", "en": "to take", "nl": "nemen", "domain": "everyday" },
-    { "id": "vrb-021", "gkh": "varneth-u", "ipa": "varnɛθʊ", "pos": "verb", "en": "to want", "nl": "willen", "domain": "everyday" },
-    { "id": "vrb-022", "gkh": "garn-ash", "ipa": "garnaʃ", "pos": "verb", "en": "to live", "nl": "leven", "domain": "everyday" },
-    { "id": "vrb-023", "gkh": "pâkith", "ipa": "paːkɪθ", "pos": "verb", "en": "to walk", "nl": "lopen", "domain": "everyday", "root": "pâk" },
-    { "id": "vrb-024", "gkh": "drolith", "ipa": "drɔlɪθ", "pos": "verb", "en": "to run", "nl": "rennen", "domain": "everyday" },
-    { "id": "vrb-025", "gkh": "zherkith", "ipa": "ʒɛrkɪθ", "pos": "verb", "en": "to fly", "nl": "vliegen", "domain": "everyday", "root": "zherk" },
-    { "id": "vrb-026", "gkh": "driv", "ipa": "drɪv", "pos": "verb", "en": "to bring", "nl": "brengen", "domain": "everyday" },
-    { "id": "vrb-027", "gkh": "nairgh", "ipa": "naɪ̯rɣ", "pos": "verb", "en": "to cry out / to call", "nl": "roepen", "domain": "everyday" },
-    { "id": "vrb-028", "gkh": "shelm", "ipa": "ʃɛlm", "pos": "verb", "en": "to ask", "nl": "vragen", "domain": "everyday" },
-    { "id": "vrb-029", "gkh": "varnak", "ipa": "varnak", "pos": "verb", "en": "to answer", "nl": "antwoorden", "domain": "everyday", "root": "varn" },
-    { "id": "vrb-030", "gkh": "mordith", "ipa": "mɔrdɪθ", "pos": "verb", "en": "to die", "nl": "sterven", "domain": "everyday", "root": "mor" },
-
-    { "id": "adj-001", "gkh": "khar", "ipa": "xar", "pos": "adjective", "en": "strong", "nl": "sterk", "domain": "everyday", "root": "khar" },
-    { "id": "adj-002", "gkh": "kharith", "ipa": "xarɪθ", "pos": "adverb", "en": "strongly", "nl": "sterk (bijw.)", "domain": "everyday", "root": "khar", "notes": "khar + -ith" },
-    { "id": "adj-003", "gkh": "gurz", "ipa": "gʊrz", "pos": "adjective", "en": "dark", "nl": "donker", "domain": "everyday" },
-    { "id": "adj-004", "gkh": "shelath", "ipa": "ʃɛlaθ", "pos": "adjective", "en": "bright / light", "nl": "licht / helder", "domain": "everyday" },
-    { "id": "adj-005", "gkh": "gan", "ipa": "gan", "pos": "adjective", "en": "big", "nl": "groot", "domain": "everyday" },
-    { "id": "adj-006", "gkh": "pish", "ipa": "pɪʃ", "pos": "adjective", "en": "small", "nl": "klein", "domain": "everyday" },
-    { "id": "adj-007", "gkh": "ushen", "ipa": "ʊʃɛn", "pos": "adjective", "en": "good", "nl": "goed", "domain": "everyday" },
-    { "id": "adj-008", "gkh": "morgath", "ipa": "mɔrgaθ", "pos": "adjective", "en": "evil / bad", "nl": "slecht / kwaadaardig", "domain": "mordor" },
-    { "id": "adj-009", "gkh": "varak", "ipa": "varak", "pos": "adjective", "en": "old", "nl": "oud", "domain": "everyday" },
-    { "id": "adj-010", "gkh": "nivash", "ipa": "nɪvaʃ", "pos": "adjective", "en": "new", "nl": "nieuw", "domain": "everyday" },
-    { "id": "adj-011", "gkh": "drelk", "ipa": "drɛlk", "pos": "adjective", "en": "fast", "nl": "snel", "domain": "everyday" },
-    { "id": "adj-012", "gkh": "thuleth", "ipa": "θʊlɛθ", "pos": "adjective", "en": "slow", "nl": "langzaam", "domain": "everyday" },
-    { "id": "adj-013", "gkh": "zunath", "ipa": "zʊnaθ", "pos": "adjective", "en": "red", "nl": "rood", "domain": "everyday" },
-    { "id": "adj-014", "gkh": "ghulath", "ipa": "ɣʊlaθ", "pos": "adjective", "en": "black", "nl": "zwart", "domain": "everyday", "root": "ghûl" },
-    { "id": "adj-015", "gkh": "shelgath", "ipa": "ʃɛlgaθ", "pos": "adjective", "en": "white", "nl": "wit", "domain": "everyday" },
-    { "id": "adj-016", "gkh": "qathel", "ipa": "qaθɛl", "pos": "adjective", "en": "hot", "nl": "heet", "domain": "everyday", "root": "qâth" },
-    { "id": "adj-017", "gkh": "nirel", "ipa": "nɪrɛl", "pos": "adjective", "en": "cold", "nl": "koud", "domain": "everyday" },
-    { "id": "adj-018", "gkh": "burath", "ipa": "bʊraθ", "pos": "adjective", "en": "hard", "nl": "hard", "domain": "everyday", "root": "bûr" },
-    { "id": "adj-019", "gkh": "velath", "ipa": "vɛlaθ", "pos": "adjective", "en": "soft", "nl": "zacht", "domain": "everyday" },
-    { "id": "adj-020", "gkh": "zûrar", "ipa": "zuːrar", "pos": "adjective", "en": "wise", "nl": "wijs", "domain": "advanced", "root": "zûr" },
-    { "id": "adj-021", "gkh": "haskar", "ipa": "haskar", "pos": "adjective", "en": "fearsome / terrifying", "nl": "angstaanjagend", "domain": "mordor", "root": "hask" },
-    { "id": "adj-022", "gkh": "golmath", "ipa": "gɔlmaθ", "pos": "adjective", "en": "golden", "nl": "gouden", "domain": "everyday", "root": "golm" }
+    {
+      "id": "ukh-001",
+      "gkh": "ük",
+      "ipa": "ʊk",
+      "pos": "pronoun",
+      "en": "I",
+      "nl": "ik",
+      "domain": "everyday"
+    },
+    {
+      "id": "tuu-001",
+      "gkh": "tû",
+      "ipa": "tuː",
+      "pos": "pronoun",
+      "en": "you (sg.)",
+      "nl": "jij",
+      "domain": "everyday"
+    },
+    {
+      "id": "zha-001",
+      "gkh": "zhâ",
+      "ipa": "ʒaː",
+      "pos": "pronoun",
+      "en": "he/she/it",
+      "nl": "hij/zij/het",
+      "domain": "everyday"
+    },
+    {
+      "id": "ukn-001",
+      "gkh": "ükûn",
+      "ipa": "ʊkuːn",
+      "pos": "pronoun",
+      "en": "we",
+      "nl": "wij",
+      "domain": "everyday"
+    },
+    {
+      "id": "tkn-001",
+      "gkh": "tûkûn",
+      "ipa": "tuːkuːn",
+      "pos": "pronoun",
+      "en": "you (pl.)",
+      "nl": "jullie",
+      "domain": "everyday"
+    },
+    {
+      "id": "zkn-001",
+      "gkh": "zhâkûn",
+      "ipa": "ʒaːkuːn",
+      "pos": "pronoun",
+      "en": "they",
+      "nl": "zij (mv.)",
+      "domain": "everyday"
+    },
+    {
+      "id": "num-001",
+      "gkh": "dush",
+      "ipa": "dʊʃ",
+      "pos": "numeral",
+      "en": "one",
+      "nl": "een",
+      "domain": "everyday"
+    },
+    {
+      "id": "num-002",
+      "gkh": "tok",
+      "ipa": "tɔk",
+      "pos": "numeral",
+      "en": "two",
+      "nl": "twee",
+      "domain": "everyday"
+    },
+    {
+      "id": "num-003",
+      "gkh": "rem",
+      "ipa": "rɛm",
+      "pos": "numeral",
+      "en": "three",
+      "nl": "drie",
+      "domain": "everyday"
+    },
+    {
+      "id": "num-004",
+      "gkh": "quz",
+      "ipa": "quz",
+      "pos": "numeral",
+      "en": "four",
+      "nl": "vier",
+      "domain": "everyday"
+    },
+    {
+      "id": "num-005",
+      "gkh": "pâl",
+      "ipa": "paːl",
+      "pos": "numeral",
+      "en": "five",
+      "nl": "vijf",
+      "domain": "everyday"
+    },
+    {
+      "id": "num-006",
+      "gkh": "sharn",
+      "ipa": "ʃarn",
+      "pos": "numeral",
+      "en": "six",
+      "nl": "zes",
+      "domain": "everyday"
+    },
+    {
+      "id": "num-007",
+      "gkh": "vish",
+      "ipa": "vɪʃ",
+      "pos": "numeral",
+      "en": "seven",
+      "nl": "zeven",
+      "domain": "everyday"
+    },
+    {
+      "id": "num-008",
+      "gkh": "drol",
+      "ipa": "drɔl",
+      "pos": "numeral",
+      "en": "eight",
+      "nl": "acht",
+      "domain": "everyday"
+    },
+    {
+      "id": "num-009",
+      "gkh": "nathu",
+      "ipa": "naθʊ",
+      "pos": "numeral",
+      "en": "nine",
+      "nl": "negen",
+      "domain": "everyday"
+    },
+    {
+      "id": "num-010",
+      "gkh": "ghazak",
+      "ipa": "ɣazak",
+      "pos": "numeral",
+      "en": "ten",
+      "nl": "tien",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-001",
+      "gkh": "nâzgam",
+      "ipa": "naːzgam",
+      "pos": "interjection",
+      "en": "hail / greetings",
+      "nl": "gegroet",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-002",
+      "gkh": "ash",
+      "ipa": "aʃ",
+      "pos": "particle/verb",
+      "en": "yes / to be (aux.)",
+      "nl": "ja / zijn",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-003",
+      "gkh": "na",
+      "ipa": "na",
+      "pos": "particle",
+      "en": "no / not",
+      "nl": "nee / niet",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-004",
+      "gkh": "ghâr",
+      "ipa": "ɣaːr",
+      "pos": "particle",
+      "en": "very",
+      "nl": "zeer",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-005",
+      "gkh": "zan",
+      "ipa": "zan",
+      "pos": "particle",
+      "en": "more",
+      "nl": "meer",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-006",
+      "gkh": "tar",
+      "ipa": "tar",
+      "pos": "determiner",
+      "en": "this",
+      "nl": "dit/deze",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-007",
+      "gkh": "dûr",
+      "ipa": "duːr",
+      "pos": "determiner",
+      "en": "that",
+      "nl": "dat/die",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-008",
+      "gkh": "izh",
+      "ipa": "ɪʒ",
+      "pos": "adverb",
+      "en": "here",
+      "nl": "hier",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-009",
+      "gkh": "dorizh",
+      "ipa": "dɔrɪʒ",
+      "pos": "adverb",
+      "en": "there",
+      "nl": "daar",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-010",
+      "gkh": "nûth",
+      "ipa": "nuːθ",
+      "pos": "adverb",
+      "en": "now",
+      "nl": "nu",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-011",
+      "gkh": "sâth",
+      "ipa": "saːθ",
+      "pos": "adverb",
+      "en": "today",
+      "nl": "vandaag",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-012",
+      "gkh": "ag",
+      "ipa": "ag",
+      "pos": "conjunction",
+      "en": "and",
+      "nl": "en",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-013",
+      "gkh": "vo",
+      "ipa": "vɔ",
+      "pos": "conjunction",
+      "en": "or",
+      "nl": "of",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-014",
+      "gkh": "nâth",
+      "ipa": "naːθ",
+      "pos": "conjunction",
+      "en": "but",
+      "nl": "maar",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-015",
+      "gkh": "ith",
+      "ipa": "ɪθ",
+      "pos": "conjunction",
+      "en": "if",
+      "nl": "als/indien",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-016",
+      "gkh": "ghâsha",
+      "ipa": "ɣaːʃa",
+      "pos": "conjunction",
+      "en": "because",
+      "nl": "omdat",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-017",
+      "gkh": "sû",
+      "ipa": "suː",
+      "pos": "conjunction",
+      "en": "that (complementiser)",
+      "nl": "dat (voegwoord)",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-018",
+      "gkh": "kha",
+      "ipa": "xa",
+      "pos": "pronoun",
+      "en": "who/which (relative)",
+      "nl": "die/dat (betr.)",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-019",
+      "gkh": "ma",
+      "ipa": "ma",
+      "pos": "particle",
+      "en": "(yes/no question marker)",
+      "nl": "(ja/nee-vraagpartikel)",
+      "domain": "everyday"
+    },
+    {
+      "id": "grt-020",
+      "gkh": "ta",
+      "ipa": "ta",
+      "pos": "postposition",
+      "en": "of",
+      "nl": "van",
+      "domain": "everyday"
+    },
+    {
+      "id": "nou-001",
+      "gkh": "dor",
+      "ipa": "dɔr",
+      "pos": "noun",
+      "en": "land",
+      "nl": "land",
+      "domain": "nature"
+    },
+    {
+      "id": "nou-002",
+      "gkh": "waz",
+      "ipa": "waz",
+      "pos": "noun",
+      "en": "water",
+      "nl": "water",
+      "domain": "nature"
+    },
+    {
+      "id": "nou-003",
+      "gkh": "qâth",
+      "ipa": "qaːθ",
+      "pos": "noun",
+      "en": "fire",
+      "nl": "vuur",
+      "domain": "nature"
+    },
+    {
+      "id": "nou-004",
+      "gkh": "bûr",
+      "ipa": "buːr",
+      "pos": "noun",
+      "en": "stone",
+      "nl": "steen",
+      "domain": "nature"
+    },
+    {
+      "id": "nou-005",
+      "gkh": "drol-oi",
+      "ipa": "drɔlɔɪ̯",
+      "pos": "noun",
+      "en": "iron ore",
+      "nl": "ijzererts",
+      "domain": "nature",
+      "notes": "poetic compound, not in everyday use"
+    },
+    {
+      "id": "nou-006",
+      "gkh": "droish",
+      "ipa": "drɔɪ̯ʃ",
+      "pos": "noun",
+      "en": "iron",
+      "nl": "ijzer",
+      "domain": "nature"
+    },
+    {
+      "id": "nou-007",
+      "gkh": "yash",
+      "ipa": "jaʃ",
+      "pos": "noun",
+      "en": "eye",
+      "nl": "oog",
+      "domain": "everyday"
+    },
+    {
+      "id": "nou-008",
+      "gkh": "tûl",
+      "ipa": "tuːl",
+      "pos": "noun",
+      "en": "hand",
+      "nl": "hand",
+      "domain": "everyday"
+    },
+    {
+      "id": "nou-009",
+      "gkh": "zûn",
+      "ipa": "zuːn",
+      "pos": "noun",
+      "en": "blood",
+      "nl": "bloed",
+      "domain": "everyday"
+    },
+    {
+      "id": "nou-010",
+      "gkh": "mor",
+      "ipa": "mɔr",
+      "pos": "noun",
+      "en": "death",
+      "nl": "dood",
+      "domain": "mordor"
+    },
+    {
+      "id": "nou-011",
+      "gkh": "nâz",
+      "ipa": "naːz",
+      "pos": "noun",
+      "en": "name",
+      "nl": "naam",
+      "domain": "everyday"
+    },
+    {
+      "id": "nou-012",
+      "gkh": "lug",
+      "ipa": "lʊg",
+      "pos": "noun",
+      "en": "word",
+      "nl": "woord",
+      "domain": "everyday"
+    },
+    {
+      "id": "nou-013",
+      "gkh": "sarn",
+      "ipa": "sarn",
+      "pos": "noun",
+      "en": "sword",
+      "nl": "zwaard",
+      "domain": "mordor"
+    },
+    {
+      "id": "nou-014",
+      "gkh": "shak",
+      "ipa": "ʃak",
+      "pos": "noun",
+      "en": "king",
+      "nl": "koning",
+      "domain": "mordor"
+    },
+    {
+      "id": "nou-015",
+      "gkh": "durang",
+      "ipa": "dʊraŋ",
+      "pos": "noun",
+      "en": "tower",
+      "nl": "toren",
+      "domain": "mordor"
+    },
+    {
+      "id": "nou-016",
+      "gkh": "rûk",
+      "ipa": "ruːk",
+      "pos": "noun",
+      "en": "army",
+      "nl": "leger",
+      "domain": "mordor"
+    },
+    {
+      "id": "nou-017",
+      "gkh": "hask",
+      "ipa": "hask",
+      "pos": "noun",
+      "en": "fear",
+      "nl": "angst",
+      "domain": "mordor"
+    },
+    {
+      "id": "nou-018",
+      "gkh": "ghûl",
+      "ipa": "ɣuːl",
+      "pos": "noun",
+      "en": "shadow",
+      "nl": "schaduw",
+      "domain": "mordor"
+    },
+    {
+      "id": "nou-019",
+      "gkh": "ghûldor",
+      "ipa": "ɣuːldɔr",
+      "pos": "noun",
+      "en": "shadowland",
+      "nl": "schaduwland",
+      "domain": "mordor",
+      "root": "ghûl",
+      "notes": "compound: ghûl (shadow) + dor (land)"
+    },
+    {
+      "id": "nou-020",
+      "gkh": "khar",
+      "ipa": "xar",
+      "pos": "noun",
+      "en": "strength / power",
+      "nl": "kracht / macht",
+      "domain": "mordor",
+      "root": "khar"
+    },
+    {
+      "id": "nou-021",
+      "gkh": "khardûm",
+      "ipa": "xarduːm",
+      "pos": "noun",
+      "en": "the mighty one",
+      "nl": "de machtige",
+      "domain": "mordor",
+      "root": "khar",
+      "notes": "agent noun, khar + -dûm"
+    },
+    {
+      "id": "nou-022",
+      "gkh": "magdûm",
+      "ipa": "magduːm",
+      "pos": "noun",
+      "en": "servant / follower",
+      "nl": "dienaar / volgeling",
+      "domain": "mordor",
+      "root": "mag",
+      "notes": "agent noun, mag + -dûm"
+    },
+    {
+      "id": "nou-023",
+      "gkh": "pâkûl",
+      "ipa": "paːkuːl",
+      "pos": "noun",
+      "en": "road / path",
+      "nl": "weg / pad",
+      "domain": "everyday",
+      "root": "pâk",
+      "notes": "pâk (to go) + -ûl"
+    },
+    {
+      "id": "nou-024",
+      "gkh": "zûrdûm",
+      "ipa": "zuːrduːm",
+      "pos": "noun",
+      "en": "the knowing one / sage",
+      "nl": "de wetende / wijze",
+      "domain": "advanced",
+      "root": "zûr",
+      "notes": "agent noun, zûr + -dûm"
+    },
+    {
+      "id": "nou-025",
+      "gkh": "enemdûm",
+      "ipa": "ɛnɛmduːm",
+      "pos": "noun",
+      "en": "enemy",
+      "nl": "vijand",
+      "domain": "mordor"
+    },
+    {
+      "id": "nou-026",
+      "gkh": "garn",
+      "ipa": "garn",
+      "pos": "noun",
+      "en": "mountain",
+      "nl": "berg",
+      "domain": "nature"
+    },
+    {
+      "id": "nou-027",
+      "gkh": "shelgh",
+      "ipa": "ʃɛlɣ",
+      "pos": "noun",
+      "en": "sky",
+      "nl": "lucht/hemel",
+      "domain": "nature"
+    },
+    {
+      "id": "nou-028",
+      "gkh": "thorn",
+      "ipa": "θɔrn",
+      "pos": "noun",
+      "en": "wind",
+      "nl": "wind",
+      "domain": "nature"
+    },
+    {
+      "id": "nou-029",
+      "gkh": "vel",
+      "ipa": "vɛl",
+      "pos": "noun",
+      "en": "tree",
+      "nl": "boom",
+      "domain": "nature"
+    },
+    {
+      "id": "nou-030",
+      "gkh": "krush",
+      "ipa": "krʊʃ",
+      "pos": "noun",
+      "en": "beast",
+      "nl": "beest",
+      "domain": "nature"
+    },
+    {
+      "id": "nou-031",
+      "gkh": "zherk",
+      "ipa": "ʒɛrk",
+      "pos": "noun",
+      "en": "bird",
+      "nl": "vogel",
+      "domain": "nature"
+    },
+    {
+      "id": "nou-032",
+      "gkh": "plâsh",
+      "ipa": "plaːʃ",
+      "pos": "noun",
+      "en": "rain",
+      "nl": "regen",
+      "domain": "nature"
+    },
+    {
+      "id": "nou-033",
+      "gkh": "niru",
+      "ipa": "nɪrʊ",
+      "pos": "noun",
+      "en": "snow",
+      "nl": "sneeuw",
+      "domain": "nature"
+    },
+    {
+      "id": "nou-034",
+      "gkh": "khauril",
+      "ipa": "xaʊ̯rɪl",
+      "pos": "noun",
+      "en": "ash (cinder)",
+      "nl": "as",
+      "domain": "mordor",
+      "root": "khaur"
+    },
+    {
+      "id": "nou-035",
+      "gkh": "morith",
+      "ipa": "mɔrɪθ",
+      "pos": "noun",
+      "en": "grave",
+      "nl": "graf",
+      "domain": "mordor",
+      "root": "mor"
+    },
+    {
+      "id": "nou-036",
+      "gkh": "nathdor",
+      "ipa": "naθdɔr",
+      "pos": "noun",
+      "en": "home / dwelling",
+      "nl": "thuis / woning",
+      "domain": "everyday"
+    },
+    {
+      "id": "nou-037",
+      "gkh": "shakdor",
+      "ipa": "ʃakdɔr",
+      "pos": "noun",
+      "en": "kingdom",
+      "nl": "koninkrijk",
+      "domain": "mordor",
+      "root": "shak",
+      "notes": "compound: shak (king) + dor (land)"
+    },
+    {
+      "id": "nou-038",
+      "gkh": "vathel",
+      "ipa": "vaθɛl",
+      "pos": "noun",
+      "en": "city",
+      "nl": "stad",
+      "domain": "everyday"
+    },
+    {
+      "id": "nou-039",
+      "gkh": "pelk",
+      "ipa": "pɛlk",
+      "pos": "noun",
+      "en": "gate",
+      "nl": "poort",
+      "domain": "everyday"
+    },
+    {
+      "id": "nou-040",
+      "gkh": "sharak",
+      "ipa": "ʃarak",
+      "pos": "noun",
+      "en": "book / tablet",
+      "nl": "boek / tablet",
+      "domain": "advanced"
+    },
+    {
+      "id": "nou-041",
+      "gkh": "nirdûm",
+      "ipa": "nɪrduːm",
+      "pos": "noun",
+      "en": "friend",
+      "nl": "vriend",
+      "domain": "everyday"
+    },
+    {
+      "id": "nou-042",
+      "gkh": "golm",
+      "ipa": "gɔlm",
+      "pos": "noun",
+      "en": "gold",
+      "nl": "goud",
+      "domain": "nature"
+    },
+    {
+      "id": "nou-043",
+      "gkh": "thasheth",
+      "ipa": "θaʃɛθ",
+      "pos": "noun",
+      "en": "number",
+      "nl": "getal",
+      "domain": "advanced"
+    },
+    {
+      "id": "nou-044",
+      "gkh": "varneth",
+      "ipa": "varnɛθ",
+      "pos": "noun",
+      "en": "thought",
+      "nl": "gedachte",
+      "domain": "advanced"
+    },
+    {
+      "id": "nou-045",
+      "gkh": "driveth",
+      "ipa": "drɪvɛθ",
+      "pos": "noun",
+      "en": "machine / device",
+      "nl": "machine / apparaat",
+      "domain": "advanced"
+    },
+    {
+      "id": "vrb-001",
+      "gkh": "dûn",
+      "ipa": "duːn",
+      "pos": "verb",
+      "en": "to have",
+      "nl": "hebben",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-002",
+      "gkh": "mâg",
+      "ipa": "maːg",
+      "pos": "verb",
+      "en": "to be able to / can",
+      "nl": "kunnen",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-003",
+      "gkh": "pâk",
+      "ipa": "paːk",
+      "pos": "verb",
+      "en": "to go",
+      "nl": "gaan",
+      "domain": "everyday",
+      "root": "pâk"
+    },
+    {
+      "id": "vrb-004",
+      "gkh": "mag",
+      "ipa": "mag",
+      "pos": "verb",
+      "en": "to follow / to serve",
+      "nl": "volgen / dienen",
+      "domain": "mordor",
+      "root": "mag"
+    },
+    {
+      "id": "vrb-005",
+      "gkh": "zûr",
+      "ipa": "zuːr",
+      "pos": "verb",
+      "en": "to know",
+      "nl": "weten",
+      "domain": "everyday",
+      "root": "zûr"
+    },
+    {
+      "id": "vrb-006",
+      "gkh": "khaur",
+      "ipa": "xaʊ̯r",
+      "pos": "verb",
+      "en": "to burn",
+      "nl": "branden",
+      "domain": "mordor",
+      "root": "khaur"
+    },
+    {
+      "id": "vrb-007",
+      "gkh": "khar",
+      "ipa": "xar",
+      "pos": "verb",
+      "en": "to be strong",
+      "nl": "sterk zijn",
+      "domain": "mordor",
+      "root": "khar"
+    },
+    {
+      "id": "vrb-008",
+      "gkh": "ghûl",
+      "ipa": "ɣuːl",
+      "pos": "verb",
+      "en": "to darken / to shadow",
+      "nl": "verduisteren",
+      "domain": "mordor",
+      "root": "ghûl"
+    },
+    {
+      "id": "vrb-009",
+      "gkh": "sel",
+      "ipa": "sɛl",
+      "pos": "verb",
+      "en": "to see",
+      "nl": "zien",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-010",
+      "gkh": "varn",
+      "ipa": "varn",
+      "pos": "verb",
+      "en": "to speak",
+      "nl": "spreken",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-011",
+      "gkh": "nash",
+      "ipa": "naʃ",
+      "pos": "verb",
+      "en": "to eat",
+      "nl": "eten",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-012",
+      "gkh": "thul",
+      "ipa": "θʊl",
+      "pos": "verb",
+      "en": "to drink",
+      "nl": "drinken",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-013",
+      "gkh": "drash",
+      "ipa": "draʃ",
+      "pos": "verb",
+      "en": "to fight",
+      "nl": "vechten",
+      "domain": "mordor"
+    },
+    {
+      "id": "vrb-014",
+      "gkh": "kûl",
+      "ipa": "kuːl",
+      "pos": "verb",
+      "en": "to kill",
+      "nl": "doden",
+      "domain": "mordor"
+    },
+    {
+      "id": "vrb-015",
+      "gkh": "garth",
+      "ipa": "garθ",
+      "pos": "verb",
+      "en": "to build",
+      "nl": "bouwen",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-016",
+      "gkh": "rûkh",
+      "ipa": "ruːx",
+      "pos": "verb",
+      "en": "to rule",
+      "nl": "heersen",
+      "domain": "mordor"
+    },
+    {
+      "id": "vrb-017",
+      "gkh": "nirith",
+      "ipa": "nɪrɪθ",
+      "pos": "verb",
+      "en": "to love",
+      "nl": "liefhebben",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-018",
+      "gkh": "haskith",
+      "ipa": "haskɪθ",
+      "pos": "verb",
+      "en": "to hate",
+      "nl": "haten",
+      "domain": "mordor",
+      "root": "hask"
+    },
+    {
+      "id": "vrb-019",
+      "gkh": "gib",
+      "ipa": "gɪb",
+      "pos": "verb",
+      "en": "to give",
+      "nl": "geven",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-020",
+      "gkh": "tok-ash",
+      "ipa": "tɔkaʃ",
+      "pos": "verb",
+      "en": "to take",
+      "nl": "nemen",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-021",
+      "gkh": "varneth-u",
+      "ipa": "varnɛθʊ",
+      "pos": "verb",
+      "en": "to want",
+      "nl": "willen",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-022",
+      "gkh": "garn-ash",
+      "ipa": "garnaʃ",
+      "pos": "verb",
+      "en": "to live",
+      "nl": "leven",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-023",
+      "gkh": "pâkith",
+      "ipa": "paːkɪθ",
+      "pos": "verb",
+      "en": "to walk",
+      "nl": "lopen",
+      "domain": "everyday",
+      "root": "pâk"
+    },
+    {
+      "id": "vrb-024",
+      "gkh": "drolith",
+      "ipa": "drɔlɪθ",
+      "pos": "verb",
+      "en": "to run",
+      "nl": "rennen",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-025",
+      "gkh": "zherkith",
+      "ipa": "ʒɛrkɪθ",
+      "pos": "verb",
+      "en": "to fly",
+      "nl": "vliegen",
+      "domain": "everyday",
+      "root": "zherk"
+    },
+    {
+      "id": "vrb-026",
+      "gkh": "driv",
+      "ipa": "drɪv",
+      "pos": "verb",
+      "en": "to bring",
+      "nl": "brengen",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-027",
+      "gkh": "nairgh",
+      "ipa": "naɪ̯rɣ",
+      "pos": "verb",
+      "en": "to cry out / to call",
+      "nl": "roepen",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-028",
+      "gkh": "shelm",
+      "ipa": "ʃɛlm",
+      "pos": "verb",
+      "en": "to ask",
+      "nl": "vragen",
+      "domain": "everyday"
+    },
+    {
+      "id": "vrb-029",
+      "gkh": "varnak",
+      "ipa": "varnak",
+      "pos": "verb",
+      "en": "to answer",
+      "nl": "antwoorden",
+      "domain": "everyday",
+      "root": "varn"
+    },
+    {
+      "id": "vrb-030",
+      "gkh": "mordith",
+      "ipa": "mɔrdɪθ",
+      "pos": "verb",
+      "en": "to die",
+      "nl": "sterven",
+      "domain": "everyday",
+      "root": "mor"
+    },
+    {
+      "id": "adj-001",
+      "gkh": "khar",
+      "ipa": "xar",
+      "pos": "adjective",
+      "en": "strong",
+      "nl": "sterk",
+      "domain": "everyday",
+      "root": "khar"
+    },
+    {
+      "id": "adj-002",
+      "gkh": "kharith",
+      "ipa": "xarɪθ",
+      "pos": "adverb",
+      "en": "strongly",
+      "nl": "sterk (bijw.)",
+      "domain": "everyday",
+      "root": "khar",
+      "notes": "khar + -ith"
+    },
+    {
+      "id": "adj-003",
+      "gkh": "gurz",
+      "ipa": "gʊrz",
+      "pos": "adjective",
+      "en": "dark",
+      "nl": "donker",
+      "domain": "everyday"
+    },
+    {
+      "id": "adj-004",
+      "gkh": "shelath",
+      "ipa": "ʃɛlaθ",
+      "pos": "adjective",
+      "en": "bright / light",
+      "nl": "licht / helder",
+      "domain": "everyday"
+    },
+    {
+      "id": "adj-005",
+      "gkh": "gan",
+      "ipa": "gan",
+      "pos": "adjective",
+      "en": "big",
+      "nl": "groot",
+      "domain": "everyday"
+    },
+    {
+      "id": "adj-006",
+      "gkh": "pish",
+      "ipa": "pɪʃ",
+      "pos": "adjective",
+      "en": "small",
+      "nl": "klein",
+      "domain": "everyday"
+    },
+    {
+      "id": "adj-007",
+      "gkh": "ushen",
+      "ipa": "ʊʃɛn",
+      "pos": "adjective",
+      "en": "good",
+      "nl": "goed",
+      "domain": "everyday"
+    },
+    {
+      "id": "adj-008",
+      "gkh": "morgath",
+      "ipa": "mɔrgaθ",
+      "pos": "adjective",
+      "en": "evil / bad",
+      "nl": "slecht / kwaadaardig",
+      "domain": "mordor"
+    },
+    {
+      "id": "adj-009",
+      "gkh": "varak",
+      "ipa": "varak",
+      "pos": "adjective",
+      "en": "old",
+      "nl": "oud",
+      "domain": "everyday"
+    },
+    {
+      "id": "adj-010",
+      "gkh": "nivash",
+      "ipa": "nɪvaʃ",
+      "pos": "adjective",
+      "en": "new",
+      "nl": "nieuw",
+      "domain": "everyday"
+    },
+    {
+      "id": "adj-011",
+      "gkh": "drelk",
+      "ipa": "drɛlk",
+      "pos": "adjective",
+      "en": "fast",
+      "nl": "snel",
+      "domain": "everyday"
+    },
+    {
+      "id": "adj-012",
+      "gkh": "thuleth",
+      "ipa": "θʊlɛθ",
+      "pos": "adjective",
+      "en": "slow",
+      "nl": "langzaam",
+      "domain": "everyday"
+    },
+    {
+      "id": "adj-013",
+      "gkh": "zunath",
+      "ipa": "zʊnaθ",
+      "pos": "adjective",
+      "en": "red",
+      "nl": "rood",
+      "domain": "everyday"
+    },
+    {
+      "id": "adj-014",
+      "gkh": "ghulath",
+      "ipa": "ɣʊlaθ",
+      "pos": "adjective",
+      "en": "black",
+      "nl": "zwart",
+      "domain": "everyday",
+      "root": "ghûl"
+    },
+    {
+      "id": "adj-015",
+      "gkh": "shelgath",
+      "ipa": "ʃɛlgaθ",
+      "pos": "adjective",
+      "en": "white",
+      "nl": "wit",
+      "domain": "everyday"
+    },
+    {
+      "id": "adj-016",
+      "gkh": "qathel",
+      "ipa": "qaθɛl",
+      "pos": "adjective",
+      "en": "hot",
+      "nl": "heet",
+      "domain": "everyday",
+      "root": "qâth"
+    },
+    {
+      "id": "adj-017",
+      "gkh": "nirel",
+      "ipa": "nɪrɛl",
+      "pos": "adjective",
+      "en": "cold",
+      "nl": "koud",
+      "domain": "everyday"
+    },
+    {
+      "id": "adj-018",
+      "gkh": "burath",
+      "ipa": "bʊraθ",
+      "pos": "adjective",
+      "en": "hard",
+      "nl": "hard",
+      "domain": "everyday",
+      "root": "bûr"
+    },
+    {
+      "id": "adj-019",
+      "gkh": "velath",
+      "ipa": "vɛlaθ",
+      "pos": "adjective",
+      "en": "soft",
+      "nl": "zacht",
+      "domain": "everyday"
+    },
+    {
+      "id": "adj-020",
+      "gkh": "zûrar",
+      "ipa": "zuːrar",
+      "pos": "adjective",
+      "en": "wise",
+      "nl": "wijs",
+      "domain": "advanced",
+      "root": "zûr"
+    },
+    {
+      "id": "adj-021",
+      "gkh": "haskar",
+      "ipa": "haskar",
+      "pos": "adjective",
+      "en": "fearsome / terrifying",
+      "nl": "angstaanjagend",
+      "domain": "mordor",
+      "root": "hask"
+    },
+    {
+      "id": "adj-022",
+      "gkh": "golmath",
+      "ipa": "gɔlmaθ",
+      "pos": "adjective",
+      "en": "golden",
+      "nl": "gouden",
+      "domain": "everyday",
+      "root": "golm"
+    }
   ]
 }

@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "node:path";
+import { lexiconDevApiPlugin } from "./devApi.js";
 
 // GitHub Pages serves this site from https://<user>.github.io/gurzul-khar/ — a non-root path.
 // We use react-router's HashRouter (see src/main.tsx) specifically so that deep links and page
@@ -9,7 +10,7 @@ import path from "node:path";
 // Engine docs page. `base` only needs to point relative asset URLs (JS/CSS/data) at the right
 // subpath; it does not affect in-app routing.
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), lexiconDevApiPlugin()],
   base: process.env.GITHUB_PAGES === "true" ? "/gurzul-khar/" : "/",
   server: {
     fs: {

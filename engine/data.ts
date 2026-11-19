@@ -5,6 +5,7 @@ import phonologyData from "../data/phonology/phonology.json";
 import alphabetData from "../data/orthography/alphabet.json";
 import grammarData from "../data/morphology/grammar.json";
 import lexiconData from "../data/lexicon/lexicon.json";
+import proposalsData from "../data/lexicon/proposals.json";
 
 export interface ConsonantDef {
   id: string;
@@ -73,7 +74,31 @@ export interface LexiconData {
   entries: LexiconEntry[];
 }
 
+/** Vocabulary lifecycle states — see DESIGN_DECISIONS.md D13 and BACKLOG.md §2.
+ * "official" entries live only in lexicon.json; "unknown" is never stored, it
+ * is just what the translator reports when nothing matches either file. */
+export type VocabStatus = "proposed" | "deprecated" | "rejected";
+
+export interface ProposalEntry extends Omit<LexiconEntry, "id"> {
+  id: string;
+  status: VocabStatus;
+  origin: "manual" | "suggested";
+  submittedAt: string;
+  reviewedAt?: string;
+  reviewNote?: string;
+  /** For a deprecated entry, the lexicon.json id it was moved out of. */
+  originalLexiconId?: string;
+}
+
+export interface ProposalsData {
+  language: string;
+  version: string;
+  note: string;
+  proposals: ProposalEntry[];
+}
+
 export const phonology = phonologyData as PhonologyData;
 export const alphabet = alphabetData as any;
 export const grammar = grammarData as any;
 export const lexicon = lexiconData as LexiconData;
+export const proposals = proposalsData as ProposalsData;
