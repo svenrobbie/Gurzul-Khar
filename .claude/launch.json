@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "gurzul-khar-website",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "--prefix", "website", "dev", "--", "--host"],
+      "port": 5173
+    }
+  ]
+}
