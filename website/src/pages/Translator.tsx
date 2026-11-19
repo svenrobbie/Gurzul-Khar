@@ -81,6 +81,21 @@ export default function Translator() {
           <strong>Output</strong>
           {result?.ok ? (
             <div className="card" style={{ marginTop: "0.5rem", background: "var(--bg-ash-raised)" }}>
+              {result.partial && (
+                <div className="error-box" style={{ marginBottom: "0.5rem" }}>
+                  <strong>Partial translation — unrecognized word{result.unknownWords && result.unknownWords.length > 1 ? "s" : ""}:</strong>{" "}
+                  {result.unknownWords?.map((w) => (
+                    <code key={w} style={{ marginRight: "0.4rem" }}>
+                      {w}
+                    </code>
+                  ))}
+                  <p style={{ marginTop: "0.3rem" }}>
+                    The recognized words below were translated word-for-word; grammar (tense, plural, word order) was not
+                    reliably applied for this sentence. You can{" "}
+                    <a href="#/propose">propose a Gurzûl Khar word</a> for the unrecognized term(s).
+                  </p>
+                </div>
+              )}
               <p style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>{result.output}</p>
               {result.pronunciation && (
                 <p className="pill" style={{ fontFamily: "var(--font-mono)" }}>

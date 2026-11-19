@@ -64,8 +64,13 @@ const cases: Case[] = [
   // between grammar.json's illustrative gloss and its own suffix table.
   { name: "GKH->EN complex sentence", direction: "gkh-en", input: "ük zûrak sû tû pâkâth", expectedOutput: "I knew that you will go." },
 
-  // Unknown word handling (spec §7.3): must fail honestly, not guess.
-  { name: "unknown word fails honestly", direction: "en-gkh", input: "I see the spaceship", expectedOutput: "__FAIL__" },
+  // Unknown word handling (Phase 2 brief §2): never silently dropped. The
+  // unrecognized word is reported and the rest of the sentence is still
+  // translated, honestly marked partial rather than guessed.
+  { name: "unknown word -> partial translation, not silently dropped", direction: "en-gkh", input: "I see the spaceship", expectedOutput: "__PARTIAL__:spaceship" },
+  { name: "NL unknown word -> partial translation", direction: "nl-gkh", input: "Ik zie het ruimteschip", expectedOutput: "__PARTIAL__:ruimteschip" },
+  { name: "GKH unknown word -> partial translation to EN", direction: "gkh-en", input: "ük selu blorzak", expectedOutput: "__PARTIAL__:blorzak" },
+  { name: "completely empty input fails honestly", direction: "en-gkh", input: "", expectedOutput: "__FAIL__" },
 ];
 
 describe("translation regression suite (all 4 directions)", () => {
@@ -74,6 +79,15 @@ describe("translation regression suite (all 4 directions)", () => {
       const result = translate(c.input, c.direction);
       if (c.expectedOutput === "__FAIL__") {
         expect(result.ok).toBe(false);
+        return;
+      }
+      if (typeof c.expectedOutput === "string" && c.expectedOutput.startsWith("__PARTIAL__:")) {
+        const expectedUnknown = c.expectedOutput.slice("__PARTIAL__:".length);
+        expect(result.ok).toBe(true);
+        if (result.ok) {
+          expect(result.partial).toBe(true);
+          expect(result.unknownWords).toContain(expectedUnknown);
+        }
         return;
       }
       expect(result.ok).toBe(true);

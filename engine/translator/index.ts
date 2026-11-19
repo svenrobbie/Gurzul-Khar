@@ -6,7 +6,7 @@
 import type { Direction, TranslationResult, TranslationExplanation, WordAnalysis } from "./types.js";
 import { tokenizeSentence } from "../morphology/tokenizer.js";
 import { analyzeWord } from "../morphology/analyzer.js";
-import { findByEnglish, findByDutch } from "./lexiconLookup.js";
+import { findByEnglish, findByDutch, findByGkh } from "./lexiconLookup.js";
 import {
   parseNaturalClause,
   renderClauseNatural,
@@ -73,11 +73,77 @@ function explainGkh(words: string[]): WordAnalysis[] {
   });
 }
 
+/**
+ * Phase 2 unknown-word handling (brief §2): a sentence is never silently
+ * dropped just because one word is unrecognized. When the real grammatical
+ * parser fails specifically because of an unknown word, this builds a
+ * word-for-word best-effort translation instead: every recognized word is
+ * looked up directly (no grammatical transformation — tense/plural/word
+ * order are NOT reliably applied in this fallback, which is why `partial`
+ * is always set so the caller can say so honestly), and every unrecognized
+ * word is kept, bracketed, in its original surface form so nothing
+ * disappears. This is a deliberate, documented simplification — see
+ * DESIGN_DECISIONS.md D14 — not a second grammar engine.
+ */
+function partialEnNlToGkh(words: string[], lang: Lang): { outputWords: string[]; unknown: string[] } {
+  const unknown: string[] = [];
+  const outputWords = words.map((w) => {
+    const entry = lang === "en" ? findByEnglish(w) : findByDutch(w);
+    if (entry) return entry.gkh;
+    unknown.push(w);
+    return `⟦${w}⟧`;
+  });
+  return { outputWords, unknown };
+}
+
+function partialGkhToNatural(words: string[], lang: Lang): { outputWords: string[]; unknown: string[] } {
+  const unknown: string[] = [];
+  const outputWords = words.map((w) => {
+    const a = analyzeWord(w);
+    const entry = a.entry ?? findByGkh(w);
+    if (entry) return lang === "en" ? entry.en : entry.nl;
+    unknown.push(w);
+    return `⟦${w}⟧`;
+  });
+  return { outputWords, unknown };
+}
+
 function splitOnTopLevelWord(words: string[], markers: Record<string, string>): { left: string[]; marker: string; right: string[] } | null {
   for (let i = 1; i < words.length - 1; i++) {
     if (markers[words[i]]) return { left: words.slice(0, i), marker: markers[words[i]], right: words.slice(i + 1) };
   }
   return null;
+}
+
+function respondToEnNlFailure(
+  f: ParseFailure | GkhParseFailure,
+  input: string,
+  direction: Direction,
+  explanation: TranslationExplanation,
+  words: string[],
+  lang: Lang
+): TranslationResult {
+  if (f.reason === "unknown-word") {
+    const { outputWords, unknown } = partialEnNlToGkh(words, lang);
+    explanation.transformations.push(
+      `Grammatical parsing failed because of unrecognized word(s): ${unknown.map((u) => `"${u}"`).join(", ")}. ` +
+        `Falling back to a word-for-word gloss for the words that ARE known; tense, plural and word order are not reliably applied in this fallback (see DESIGN_DECISIONS.md D14).`
+    );
+    const outputText = outputWords.join(" ");
+    const knownOnly = outputWords.filter((w) => !w.startsWith("⟦")).join(" ");
+    let nativeScript: string | undefined;
+    let pronunciation: string | undefined;
+    try {
+      if (knownOnly.trim()) {
+        nativeScript = latinToNative(knownOnly).nativeSvg;
+        pronunciation = ipaOfSentence(knownOnly);
+      }
+    } catch {
+      /* best effort only */
+    }
+    return { ok: true, input, direction, output: outputText, nativeScript, pronunciation, explanation, partial: true, unknownWords: unknown };
+  }
+  return { ok: false, input, direction, ...describeFailure(f), explanation };
 }
 
 function toGkh(input: string, lang: Lang): TranslationResult {
@@ -99,8 +165,8 @@ function toGkh(input: string, lang: Lang): TranslationResult {
     const subWords = words.slice(complementiserIdx + 1);
     const main = parseNaturalClause(mainWords, lang, false);
     const sub = parseNaturalClause(subWords, lang, isQuestion);
-    if (isFailure(main)) return { ok: false, input, direction, ...describeFailure(main), explanation };
-    if (isFailure(sub)) return { ok: false, input, direction, ...describeFailure(sub), explanation };
+    if (isFailure(main)) return respondToEnNlFailure(main, input, direction, explanation, words, lang);
+    if (isFailure(sub)) return respondToEnNlFailure(sub, input, direction, explanation, words, lang);
     explanation.transformations.push("Parsed as a complex sentence: main clause + complementiser + subordinate clause.");
     gkhTokens = [...renderClauseGkh(main), GKH_COMPLEMENTISER, ...renderClauseGkh(sub)];
   } else {
@@ -108,8 +174,8 @@ function toGkh(input: string, lang: Lang): TranslationResult {
     if (split) {
       const left = parseNaturalClause(split.left, lang, false);
       const right = parseNaturalClause(split.right, lang, isQuestion);
-      if (isFailure(left)) return { ok: false, input, direction, ...describeFailure(left), explanation };
-      if (isFailure(right)) return { ok: false, input, direction, ...describeFailure(right), explanation };
+      if (isFailure(left)) return respondToEnNlFailure(left, input, direction, explanation, words, lang);
+      if (isFailure(right)) return respondToEnNlFailure(right, input, direction, explanation, words, lang);
       explanation.transformations.push(`Parsed as two coordinated clauses joined by "${split.marker}".`);
       gkhTokens = [...renderClauseGkh(left), split.marker, ...renderClauseGkh(right)];
     } else {
@@ -119,7 +185,7 @@ function toGkh(input: string, lang: Lang): TranslationResult {
         gkhTokens = renderNP(npOnly.np);
       } else {
         const clause = parseNaturalClause(words, lang, isQuestion);
-        if (isFailure(clause)) return { ok: false, input, direction, ...describeFailure(clause), explanation };
+        if (isFailure(clause)) return respondToEnNlFailure(clause, input, direction, explanation, words, lang);
         explanation.transformations.push(...describeClauseTransforms(clause));
         gkhTokens = renderClauseGkh(clause);
       }
@@ -156,6 +222,35 @@ function describeClauseTransforms(clause: Clause): string[] {
   return t;
 }
 
+function respondToGkhFailure(
+  f: ParseFailure | GkhParseFailure,
+  input: string,
+  direction: Direction,
+  explanation: TranslationExplanation,
+  words: string[],
+  lang: Lang
+): TranslationResult {
+  if (f.reason === "unknown-word") {
+    const { outputWords, unknown } = partialGkhToNatural(words, lang);
+    explanation.transformations.push(
+      `Grammatical parsing failed because of unrecognized Gurzûl Khar word(s): ${unknown.map((u) => `"${u}"`).join(", ")}. ` +
+        `Falling back to a word-for-word gloss for the words that ARE known; natural EN/NL grammar (word order, conjugation) is not reliably applied in this fallback (see DESIGN_DECISIONS.md D14).`
+    );
+    const outputText = outputWords.join(" ");
+    return {
+      ok: true,
+      input,
+      direction,
+      output: outputText,
+      pronunciation: ipaOfSentence(input),
+      explanation,
+      partial: true,
+      unknownWords: unknown,
+    };
+  }
+  return { ok: false, input, direction, ...describeFailure(f), explanation };
+}
+
 function fromGkh(input: string, lang: Lang): TranslationResult {
   const direction: Direction = lang === "en" ? "gkh-en" : "gkh-nl";
   const { words } = tokenizeSentence(input);
@@ -172,8 +267,8 @@ function fromGkh(input: string, lang: Lang): TranslationResult {
   if (sûIdx > 0 && sûIdx < words.length - 1) {
     const main = parseGkhClause(words.slice(0, sûIdx));
     const sub = parseGkhClause(words.slice(sûIdx + 1));
-    if (isFailure(main)) return { ok: false, input, direction, ...describeFailure(main), explanation };
-    if (isFailure(sub)) return { ok: false, input, direction, ...describeFailure(sub), explanation };
+    if (isFailure(main)) return respondToGkhFailure(main, input, direction, explanation, words, lang);
+    if (isFailure(sub)) return respondToGkhFailure(sub, input, direction, explanation, words, lang);
     explanation.transformations.push("Parsed as a complex sentence: main clause + complementiser + subordinate clause.");
     const complementiser = lang === "en" ? EN_COMPLEMENTISER : NL_COMPLEMENTISER;
     const mainText = decapitalizeClause(renderClauseNatural(main as Clause, lang));
@@ -187,8 +282,8 @@ function fromGkh(input: string, lang: Lang): TranslationResult {
       const rightWords = words.slice(markerIdx + 1);
       const leftClause = parseGkhClause(leftWords);
       const rightClause = parseGkhClause(rightWords);
-      if (isFailure(leftClause)) return { ok: false, input, direction, ...describeFailure(leftClause), explanation };
-      if (isFailure(rightClause)) return { ok: false, input, direction, ...describeFailure(rightClause), explanation };
+      if (isFailure(leftClause)) return respondToGkhFailure(leftClause, input, direction, explanation, words, lang);
+      if (isFailure(rightClause)) return respondToGkhFailure(rightClause, input, direction, explanation, words, lang);
       explanation.transformations.push(`Parsed as two coordinated clauses joined by "${words[markerIdx]}".`);
       const leftText = decapitalizeClause(renderClauseNatural(leftClause as Clause, lang));
       const rightText = decapitalizeClause(renderClauseNatural(rightClause as Clause, lang));
@@ -201,7 +296,7 @@ function fromGkh(input: string, lang: Lang): TranslationResult {
         sentence = renderNPNatural(npOnly.np, lang, npOnly.np.kind === "noun");
       } else {
         const clause = parseGkhClause(words);
-        if (isFailure(clause)) return { ok: false, input, direction, ...describeFailure(clause), explanation };
+        if (isFailure(clause)) return respondToGkhFailure(clause, input, direction, explanation, words, lang);
         explanation.transformations.push(...describeClauseTransforms(clause as Clause));
         sentence = renderClauseNatural(clause as Clause, lang);
       }
