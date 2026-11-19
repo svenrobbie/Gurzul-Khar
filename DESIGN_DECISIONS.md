@@ -52,6 +52,14 @@ This log records original linguistic and architectural decisions made under the 
 **Decision:** Rendering a GKH clause back into English or Dutch prose (`engine/translator/naturalLanguage.ts`) uses: a closed, explicit list of English/Dutch irregular past-tense and Dutch irregular-stem verb forms covering only the verbs that occur in this project's lexicon/tests; a regular-pattern fallback (`-ed`, `-s`, strip final `-en`, add `-t`) everywhere else; and analytic "more X" / "most X" comparative and superlative forms in both languages rather than attempting `-er`/`-est` or Dutch vowel-lengthening spelling changes.
 **Rationale:** English/Dutch are the *interface* languages, not the conlang itself — spec §14's single-source-of-truth mandate applies to Gurzûl Khar's own grammar, not to how precisely the translator reproduces every irregular English/Dutch verb form. This is called out explicitly (here and in BACKLOG.md) rather than silently presented as complete EN/NL grammatical coverage.
 
+## 2026-11-19 — Phase 2: alphabet redesign
+
+### D12. Khargûl script redesigned as "Thornscript" (v0.2.0), replacing the v0.1 stem+stroke system
+**Decision:** Following explicit Phase 2 direction that the v0.1 letterforms were visually unsatisfactory, three independent visual concepts were designed and shown to the project owner: Stonecarve (angular wedge strokes crossing a spine), Black iron (solid blocky shapes, no shared spine), and Thornscript (thin diagonal "thorns" branching off a spine, drawable in one continuous pen stroke). The owner selected Thornscript.
+**Rationale:** Thornscript was recommended and chosen specifically because spec §4.1/§4.4 require the script to be realistically handwritable and to support stroke-order lessons; Stonecarve and Black iron both require the pen to lift and restart for most letters, while Thornscript's spine-then-thorns-then-back-to-spine path is a single stroke by construction.
+**What changed:** `data/orthography/alphabet.json` bumped to v0.2.0 with new `constructionPrinciples` (spine + thorn geometry, place → zone, manner → thorn pattern, voicing → tick, vowel → thorn angle) and a new `handwriting` section (stroke order, handwritten-variant allowance). The procedural-generation philosophy from D3 is preserved — only the geometry the generator draws has changed, not the principle that glyphs are derived from phonological features rather than hand-drawn per letter. `engine/phonology/glyphGenerator.ts` is being rewritten to this spec.
+**Impact:** Every previously-rendered v0.1 glyph is visually replaced; no change to Latin transliteration, phonology, or grammar.
+
 ## Open questions for the project owner (non-blocking — current defaults stand until revisited)
 - Whether Gurzûl Khar should eventually gain a grammatical case system beyond the current postposition-based strategy.
 - Whether regional/historical dialect variants (spec §10.8) should diverge phonologically or only lexically.

@@ -1,16 +1,23 @@
 {
   "name": "Khargûl script",
+  "displayName": "Thornscript",
   "type": "abugida",
-  "version": "0.1.0",
-  "designPhilosophy": "An original angular, severe script evoking carved stone and iron rather than any existing real-world or Tolkien writing system (not Tengwar, not Cirth, not Angerthas, not the actual Black Speech ring-inscription glyphs). Every glyph is generated procedurally from the phoneme's own articulatory features defined in data/phonology/phonology.json, so the writing system is provably systematic rather than arbitrarily drawn.",
+  "version": "0.2.0",
+  "designHistory": "v0.1.0 used a stem+attached-stroke system judged visually unsatisfactory in Phase 2 review. v0.2.0 (this version) replaces it with Thornscript, chosen by the project owner from three distinct concepts (Stonecarve, Black iron, Thornscript) explicitly for being the most realistically handwritable: every glyph is a single continuous pen stroke along the spine with thorns branching off it, rather than an assembly of separately-drawn parts.",
+  "designPhilosophy": "An original, severe script — a vertical spine with diagonal 'thorns' branching from it — evoking claws, brambles and iron barbs rather than any existing real-world or Tolkien writing system (not Tengwar, not Cirth, not Angerthas, not the actual Black Speech ring-inscription glyphs). Every glyph is generated procedurally from the phoneme's own articulatory features defined in data/phonology/phonology.json, so the writing system is provably systematic rather than arbitrarily drawn, while the thorn-on-spine geometry keeps every letter writable in one continuous stroke.",
   "constructionPrinciples": {
-    "baseShape": "Every consonant glyph shares a common vertical spine (the 'stem'), rendered in a 40x100 unit cell.",
-    "placeOfArticulationRule": "Place of articulation sets the vertical zone on the stem where the manner-stroke attaches: bilabial/labial-velar/labiodental = top third; alveolar/postalveolar/palatal/dental = middle third; velar/uvular/glottal = bottom third.",
-    "mannerOfArticulationRule": "Manner of articulation sets the shape of the attached stroke: plosive = solid straight bar; fricative = wavy/zig-zag bar; nasal = closed loop; trill/lateral (liquids) = diagonal cross-stroke; approximant = short open hook.",
-    "voicingRule": "Voiced consonants add a small filled dot to the right of the stem at the stroke's height; voiceless consonants have no dot.",
-    "vowelRule": "Gurzûl Khar is written as an abugida: a vowel is a diacritic attached to the consonant it follows, not an independent letter, except word-initially where a vowel carries a neutral 'null-stem' carrier glyph. Short vowels are marked by a dot placed above the stem; long vowels by a short horizontal line above the stem in the same horizontal position. The five vowel qualities (a/e/i/o/u) are distinguished by the diacritic's horizontal offset from the stem: a = centred, e = one step left, i = two steps left, o = one step right, u = two steps right.",
-    "diphthongRule": "Diphthongs combine two vowel diacritics stacked vertically above the stem, read bottom-to-top in the order the sounds are pronounced.",
-    "syllableBlocking": "A consonant plus its following vowel form a single visual block (stem + diacritic). Blocks are written left to right and separated by a small gap; a word is an unbroken run of blocks."
+    "baseShape": "Every consonant glyph is a single vertical spine, rendered top to bottom in a 60x100 unit cell, with one or more diagonal 'thorns' branching from it. The spine and its thorns are drawn as one continuous path wherever possible — the defining handwriting constraint of this design.",
+    "placeOfArticulationRule": "Place of articulation sets the vertical zone on the spine where the thorn(s) attach: bilabial/labial-velar/labiodental = upper third (y≈18-25); alveolar/postalveolar/palatal/dental = middle third (y≈40-55); velar/uvular/glottal = lower third (y≈60-75).",
+    "mannerOfArticulationRule": "Manner of articulation sets the thorn pattern at that zone: plosive = one short thorn to the right; fricative = one short thorn to the left; nasal = two thorns, one right and one left, meeting the spine at the same point (a full cross); trill = two right-pointing thorns at two adjacent heights; lateral = one short, shallow-angled thorn to the left near the base of the spine; approximant = two short thorns meeting at a point to the right (a shallow 'V' opening away from the spine).",
+    "voicingRule": "Voiced consonants add a short perpendicular tick crossing the outer third of the primary thorn; voiceless consonants leave the thorn plain.",
+    "vowelRule": "Gurzûl Khar is written as an abugida: a vowel is a diacritic thorn attached above the consonant's spine, not an independent letter, except word-initially where a vowel carries a neutral short carrier spine. Vowel quality is encoded by the angle of the thorn around the top of the spine, read clockwise from vertical: i = straight up (0°), e = upper-right shallow (30°), a = upper-right steep (60°), o = upper-left shallow (-30°), u = upper-left steep (-60°). Long vowels double the thorn (two parallel strokes at the same angle, close together) instead of changing the angle, so long/short pairs are visually related rather than arbitrary.",
+    "diphthongRule": "Diphthongs stack two vowel-angle thorns at two heights above the spine, read bottom-to-top in the order the sounds are pronounced.",
+    "syllableBlocking": "A consonant plus its following vowel form a single visual block: one spine carrying both the consonant thorn(s) partway down and the vowel thorn(s) at the top. Blocks are written left to right and separated by a small gap; a word is an unbroken run of blocks."
+  },
+  "handwriting": {
+    "strokeOrder": "1. Draw the spine top to bottom in one stroke. 2. Without lifting the pen, flick out to each thorn and back to the spine before continuing downward (so the whole glyph is drawn as a single zigzag path, spine-thorn-spine-thorn...). 3. Voicing ticks and vowel diacritics are the only strokes added after the pen lifts, since they sit away from the main spine path.",
+    "handwrittenVariant": "In fast handwriting the return-to-spine segment of each thorn may be omitted, leaving a slightly open zigzag; this is a recognised informal variant, not an error, as long as the thorn angles and zone heights are preserved.",
+    "digitalVsHandwritten": "The digital (typeset) form keeps thorns straight and the spine perfectly vertical. The handwritten form allows the spine to lean and thorns to curve slightly, exactly as Latin cursive relaxes the strict verticals of a printed typeface."
   },
   "wordSeparation": "A single vertical tick (˙) taller than the x-height separates words. A double tick (˙˙) functions as a comma-equivalent pause. A triple tick (˙˙˙) closes a sentence (full stop).",
   "punctuation": {
@@ -22,7 +29,7 @@
   },
   "capitalization": "The script has no case distinction. Proper names and sentence-initial words are instead marked by a short underline beneath the first block of the word.",
   "numerals": {
-    "system": "base-10, distinct numeral glyphs 0-9 built from the same stem+stroke system as consonants, with strokes counting upward (0 = bare stem, 1 = one bottom stroke, 2 = two strokes, ... 9 = full stem cross-hatch); numerals are written most-significant digit first, left to right, exactly like Latin numerals.",
+    "system": "base-10, distinct numeral glyphs 0-9 built from the same spine+thorn system as consonants, with thorns counting upward (0 = bare spine, 1 = one thorn, 2 = two thorns, ... 9 = spine fully crossed); numerals are written most-significant digit first, left to right, exactly like Latin numerals.",
     "exampleSpelling": "10 written as digit '1' then digit '0'"
   },
   "latinTransliteration": {
