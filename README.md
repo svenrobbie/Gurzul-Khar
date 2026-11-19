@@ -25,18 +25,25 @@ Current status / what is and isn't done: [BACKLOG.md](BACKLOG.md)
 
 ```powershell
 npm install
-npm run dev
+npm install --prefix website
+npm run dev          # starts the website's Vite dev server
 ```
 
 ```powershell
-npm test
+npm test             # engine + data tests (Vitest)
+npm run validate     # linguistic data validation report
 ```
 
 ```powershell
-npm run build
+npm run build        # typechecks the engine, then builds the website
 ```
 
-Deployment to GitHub Pages runs automatically on push to `main` via `.github/workflows/deploy.yml`, once this repository has a GitHub remote. That push has not been performed from this environment — see BACKLOG.md.
+The website uses React Router's `HashRouter` (URLs like `/#/translator`), a deliberate choice so the site works
+correctly on GitHub Pages' static hosting — deep links and page refreshes resolve without needing a 404.html
+SPA-redirect trick or a base-path-aware browser router. See `website/vite.config.ts` and the Engine docs page.
+
+Deployment to GitHub Pages runs automatically on push to `main` via `.github/workflows/deploy.yml`, once this
+repository has a GitHub remote. That push has not been performed from this environment — see BACKLOG.md.
 
 ## Contributing
 

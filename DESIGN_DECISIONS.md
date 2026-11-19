@@ -27,6 +27,31 @@ This log records original linguistic and architectural decisions made under the 
 **Decision:** `/data/*.json` are the only place grammatical rules, phonemes, and lexical entries are defined. The engine, the grammar reference page, and the dictionary page all read the same files; none of them hard-codes a duplicate copy of a rule.
 **Rationale:** Spec §14 explicitly forbids manually duplicating language rules across website components.
 
+## 2026-11-19 — Engine implementation (phonology/morphology/translator)
+
+### D6. Added missing consonants "v" and "th" to the phonology inventory
+**Decision:** `data/phonology/phonology.json` is extended with `v` (voiced labiodental fricative) and `th` (voiceless dental fricative, /θ/). Both already appeared constantly in `data/lexicon/lexicon.json` (e.g. "varn" to speak, "vel" tree, and the phonology file's own earlier example word "qâth" "fire") but were never declared as phonemes, so the tokenizer could not parse roughly a third of the lexicon.
+**Rationale:** Spec §18's "smallest consistent extension" clause — the lexicon's own data already assumed these sounds existed; the phonology table was simply incomplete, not contradicted. Added full IPA/place/manner/voicing/position metadata consistent with the existing inventory's format. `v` is zoned to the glyph generator's "top" stem region (with bilabial/labial-velar) and `th` to "middle" (with alveolar/postalveolar/palatal), per `alphabet.json`'s placeOfArticulationRule, updated accordingly.
+
+### D7. "ü" (diaeresis) recognised as a written variant of "û"
+**Decision:** The long vowel `û` entry in phonology.json gains a `writtenVariants: ["ü"]` field. `grammar.json`'s own pronoun paradigm (`ük`, `ükûn`, 1sg/1pl subject forms) and the lexicon's matching entries use "ü", a grapheme phonology.json's vowel table never declared. Rather than rewrite the core pronoun paradigm (used throughout both grammar.json and lexicon.json consistently), the written variant is now explicitly documented as orthographically identical in sound to "û".
+**Rationale:** Minimal, additive, and keeps every existing data file's spelling valid rather than picking one file to "win" over the other.
+
+### D8. Plural epenthetic allomorph is literally "-akûk", not "root + a + ûk"
+**Decision:** For roots ending in -k, the plural suffix allomorph is the fixed string "akûk" appended after the root (e.g. "rûk" -> "rûkakûk"), matching the literal parenthetical example already written in `grammar.json`'s `nouns.pluralRule` ("-akûk"), rather than a compositional "insert -a- then add -ûk" reading (which would yield "rûkaûk").
+**Rationale:** grammar.json's own prose names the resulting allomorph explicitly; the engine follows that literal string so the generated form matches the one documented example to the letter.
+
+### D9. GKH predicate/attributive adjective resolution is POS-disambiguated
+**Decision:** Several Gurzûl Khar roots are deliberately homophonous/homographic across word classes by design (e.g. "khar" is simultaneously the noun "strength", the verb "to be strong", and the adjective "strong" — all legitimate word-family members of one root, per spec §6.3). When the translator needs an adjective specifically (predicate adjectives after "ash", attributive adjectives following a noun), it looks up the lexicon entry filtered to `pos: "adjective"` rather than taking whichever entry happens to be listed first for that surface form.
+**Rationale:** Without this, "the king is stronger" (shak ash zan khar) rendered as "the king is more strength" because the generic lookup returned the noun entry. This is an engine-side disambiguation rule, not a change to any linguistic fact in `/data`.
+
+### D10. Discovered inconsistency: grammar.json's complexSentenceExample gloss vs. its own tense suffix
+**Finding (not changed, flagged):** `grammar.json`'s `syntax.complexSentenceExample` is `"ük zûrak sû tû pâkâth" = "I know that you will go"`. The word "zûrak" is root "zûr" + the *past*-tense suffix "-ak" (per `verbs.tenseSuffixes.past`), so the only translation consistent with the language's own documented morphology is "I **knew** that you will go" — the free English gloss in the example disagrees with the word's own suffix. The engine trusts the morphological suffix (the actual GKH data) over the explanatory prose gloss, and this regression test (`tests/regression.test.ts`, "GKH->EN complex sentence") is pinned to "I knew that you will go." This is logged here rather than silently "corrected" in grammar.json, since the example's intent (illustrating the complementiser `sû`) is unaffected either way.
+
+### D11. EN/NL surface generation is a documented, non-exhaustive simplification
+**Decision:** Rendering a GKH clause back into English or Dutch prose (`engine/translator/naturalLanguage.ts`) uses: a closed, explicit list of English/Dutch irregular past-tense and Dutch irregular-stem verb forms covering only the verbs that occur in this project's lexicon/tests; a regular-pattern fallback (`-ed`, `-s`, strip final `-en`, add `-t`) everywhere else; and analytic "more X" / "most X" comparative and superlative forms in both languages rather than attempting `-er`/`-est` or Dutch vowel-lengthening spelling changes.
+**Rationale:** English/Dutch are the *interface* languages, not the conlang itself — spec §14's single-source-of-truth mandate applies to Gurzûl Khar's own grammar, not to how precisely the translator reproduces every irregular English/Dutch verb form. This is called out explicitly (here and in BACKLOG.md) rather than silently presented as complete EN/NL grammatical coverage.
+
 ## Open questions for the project owner (non-blocking — current defaults stand until revisited)
 - Whether Gurzûl Khar should eventually gain a grammatical case system beyond the current postposition-based strategy.
 - Whether regional/historical dialect variants (spec §10.8) should diverge phonologically or only lexically.

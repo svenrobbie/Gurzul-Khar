@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  test-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install root dependencies
+        run: npm install
+
+      - name: Install website dependencies
+        run: npm install
+        working-directory: website
+
+      - name: Validate linguistic data
+        run: npm run validate
+
+      - name: Run engine test suite
+        run: npm test
+
+      - name: Typecheck engine
+        run: npx tsc -p tsconfig.json
+
+      - name: Typecheck + build website
+        run: npm run build
+        working-directory: website

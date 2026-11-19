@@ -1,0 +1,21 @@
+{
+  "name": "gurzul-khar",
+  "version": "0.1.0",
+  "private": true,
+  "description": "GURZÛL KHAR — constructed language engine, data and learning/translation platform.",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run --prefix website dev",
+    "build": "npm run build:engine && npm run --prefix website build",
+    "build:engine": "tsc -p tsconfig.json --noEmit false --outDir dist/engine",
+    "test": "vitest run",
+    "validate": "tsx tests/validateData.ts",
+    "install:all": "npm install && npm install --prefix website"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4",
+    "tsx": "^4.19.1",
+    "@types/node": "^22.9.0"
+  }
+}

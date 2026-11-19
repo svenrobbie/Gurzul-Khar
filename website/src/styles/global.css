@@ -1,0 +1,269 @@
+:root {
+  --bg-obsidian: #0b0b0d;
+  --bg-charcoal: #141416;
+  --bg-ash: #1c1c1f;
+  --bg-ash-raised: #232326;
+  --border-subtle: #332e2e;
+  --text-primary: #e7e3df;
+  --text-muted: #a6a09b;
+  --accent-red: #b3362c;
+  --accent-red-bright: #d1483c;
+  --accent-red-dim: #7a2721;
+  --focus-ring: #e08a7f;
+  --font-display: "Georgia", "Iowan Old Style", serif;
+  --font-body: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "Consolas", "SFMono-Regular", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-obsidian);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--accent-red-bright);
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--focus-ring);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--accent-red);
+  color: white;
+  padding: 0.5rem 1rem;
+  z-index: 1000;
+}
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
+.site-header {
+  background: linear-gradient(180deg, var(--bg-charcoal), var(--bg-obsidian));
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.site-header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  letter-spacing: 0.08em;
+}
+
+.brand:hover {
+  color: var(--accent-red-bright);
+}
+
+nav.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+nav.site-nav a {
+  text-decoration: none;
+  color: var(--text-muted);
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.92rem;
+}
+
+nav.site-nav a.active,
+nav.site-nav a:hover {
+  color: var(--text-primary);
+  background: var(--bg-ash-raised);
+}
+
+main {
+  flex: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+  width: 100%;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  text-align: center;
+  padding: 1.25rem 1rem;
+  font-size: 0.85rem;
+}
+
+.card {
+  background: var(--bg-ash);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+button,
+select,
+input,
+textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text-primary);
+  background: var(--bg-ash-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
+}
+
+button {
+  cursor: pointer;
+  background: var(--accent-red-dim);
+  border-color: var(--accent-red);
+}
+
+button:hover {
+  background: var(--accent-red);
+}
+
+button.secondary {
+  background: var(--bg-ash-raised);
+  border-color: var(--border-subtle);
+}
+
+button.secondary:hover {
+  background: var(--bg-charcoal);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid var(--border-subtle);
+  padding: 0.45rem 0.6rem;
+  text-align: left;
+  font-size: 0.92rem;
+}
+
+th {
+  background: var(--bg-ash-raised);
+}
+
+.pill {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--bg-ash-raised);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.error-box {
+  border: 1px solid var(--accent-red);
+  background: rgba(179, 54, 44, 0.12);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+}
+
+.khargul-glyph {
+  height: 2.6rem;
+  width: auto;
+  color: var(--text-primary);
+}
+
+.glyph-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.notice {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  border-left: 3px solid var(--accent-red-dim);
+  padding-left: 0.75rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+@media (max-width: 600px) {
+  nav.site-nav a {
+    padding: 0.35rem 0.45rem;
+    font-size: 0.85rem;
+  }
+}

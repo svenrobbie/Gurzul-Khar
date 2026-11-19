@@ -22,7 +22,9 @@
     { "id": "r",  "ipa": "ʀ",  "latin": "r",  "place": "uvular",       "manner": "trill",      "voicing": "voiced",    "positions": ["initial","medial","final"], "example": "rûk (\"army\")" },
     { "id": "l",  "ipa": "l",  "latin": "l",  "place": "alveolar",     "manner": "lateral",    "voicing": "voiced",    "positions": ["initial","medial","final"], "example": "lug (\"word\")" },
     { "id": "w",  "ipa": "w",  "latin": "w",  "place": "labial-velar", "manner": "approximant","voicing": "voiced",    "positions": ["initial","medial"],        "example": "waz (\"water\")" },
-    { "id": "y",  "ipa": "j",  "latin": "y",  "place": "palatal",      "manner": "approximant","voicing": "voiced",    "positions": ["initial","medial"],        "example": "yash (\"eye\")" }
+    { "id": "y",  "ipa": "j",  "latin": "y",  "place": "palatal",      "manner": "approximant","voicing": "voiced",    "positions": ["initial","medial"],        "example": "yash (\"eye\")" },
+    { "id": "v",  "ipa": "v",  "latin": "v",  "place": "labiodental",  "manner": "fricative",  "voicing": "voiced",    "positions": ["initial","medial","final"], "example": "vel (\"tree\")" },
+    { "id": "th", "ipa": "θ",  "latin": "th", "place": "dental",       "manner": "fricative",  "voicing": "voiceless", "positions": ["initial","medial","final"], "example": "qâth (\"fire\")" }
   ],
   "vowels": {
     "short": [
@@ -37,7 +39,7 @@
       { "id": "ê", "ipa": "eː", "latin": "ê", "shortCounterpart": "e" },
       { "id": "î", "ipa": "iː", "latin": "î", "shortCounterpart": "i" },
       { "id": "ô", "ipa": "oː", "latin": "ô", "shortCounterpart": "o" },
-      { "id": "û", "ipa": "uː", "latin": "û", "shortCounterpart": "u" }
+      { "id": "û", "ipa": "uː", "latin": "û", "shortCounterpart": "u", "writtenVariants": ["ü"], "note": "ü (diaeresis) is an accepted alternate written form of this same long vowel, used in the core pronoun paradigm (ük, ükûn) inherited from the project's earliest drafting; phonologically and phonetically identical to û." }
     ],
     "diphthongs": [
       { "id": "ai", "ipa": "aɪ̯", "latin": "ai", "example": "nairgh (\"cry out\")" },
