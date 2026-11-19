@@ -92,6 +92,9 @@ describe("translation regression suite (all 4 directions)", () => {
         if (result.ok) {
           expect(result.partial).toBe(true);
           expect(result.unknownWords).toContain(expectedUnknown);
+          // Articles are not vocabulary gaps (Gurzûl Khar has none at all) — never flagged.
+          expect(result.unknownWords).not.toContain("the");
+          expect(result.unknownWords).not.toContain("het");
         }
         return;
       }

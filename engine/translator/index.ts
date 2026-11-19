@@ -85,14 +85,18 @@ function explainGkh(words: string[]): WordAnalysis[] {
  * disappears. This is a deliberate, documented simplification — see
  * DESIGN_DECISIONS.md D14 — not a second grammar engine.
  */
+const ARTICLES: Record<Lang, string[]> = { en: ["the", "a", "an"], nl: ["de", "het", "een"] };
+
 function partialEnNlToGkh(words: string[], lang: Lang): { outputWords: string[]; unknown: string[] } {
   const unknown: string[] = [];
-  const outputWords = words.map((w) => {
-    const entry = lang === "en" ? findByEnglish(w) : findByDutch(w);
-    if (entry) return entry.gkh;
-    unknown.push(w);
-    return `⟦${w}⟧`;
-  });
+  const outputWords = words
+    .filter((w) => !ARTICLES[lang].includes(w.toLowerCase())) // GKH has no articles (no change to definiteness marking); dropping them here matches real translation rather than falsely flagging them as unknown vocabulary.
+    .map((w) => {
+      const entry = lang === "en" ? findByEnglish(w) : findByDutch(w);
+      if (entry) return entry.gkh;
+      unknown.push(w);
+      return `⟦${w}⟧`;
+    });
   return { outputWords, unknown };
 }
 
