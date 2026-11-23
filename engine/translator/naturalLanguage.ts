@@ -3,7 +3,7 @@
 // English or Dutch. All GKH-side vocabulary/grammar facts still come only
 // from engine/data.ts; this file only contains ordinary EN/NL surface
 // patterns needed to drive that mapping.
-import { findByEnglish, findByDutch } from "./lexiconLookup.js";
+import { findByEnglish, findByDutch, findByGkh } from "./lexiconLookup.js";
 import {
   type Clause,
   type NP,
@@ -39,7 +39,228 @@ function resolveEnglishVerbEntry(word: string): LexiconEntry | null {
   return null;
 }
 
+/**
+ * Dutch spells the same stem differently depending on what follows it, so a
+ * surface form often cannot be matched against a dictionary entry character for
+ * character. These two helpers undo the three regular alternations that matter
+ * most, and are used only as a LAST resort inside resolveContentWord(): each
+ * returns candidate spellings to look up, never a claim about the language.
+ *
+ *   closed/open syllable   draag -> dragen,  loop -> lopen,  pak -> pakken
+ *   final devoicing        huis  -> huizen,  wolf -> wolven, lees -> lezen
+ */
+const NL_VOWELS = "aeiou";
+
+/**
+ * Dutch 3rd-person singular present forms that are not stem + -t. Used in both
+ * directions, so parsing "heeft" and rendering "heeft" cannot disagree.
+ */
+const NL_PRESENT_3SG_IRREGULAR: Record<string, string> = {
+  hebben: "heeft",
+  zijn: "is",
+  kunnen: "kan",
+  mogen: "mag",
+  moeten: "moet",
+  willen: "wil",
+  zullen: "zal",
+  weten: "weet",
+  doen: "doet",
+};
+
+function dutchVerbInfinitives(stem: string): string[] {
+  const out = new Set<string>([stem + "en", stem.slice(0, -1) + "en"]);
+
+  // Irregular stems, read back out of the table the renderer already uses, so
+  // the two directions cannot disagree: "ga" must find "gaan", "ben" "zijn".
+  for (const [infinitive, irregular] of Object.entries(NL_IRREGULAR_STEM)) {
+    if (irregular === stem) out.add(infinitive);
+  }
+  const voiced = stem.replace(/s$/, "z").replace(/f$/, "v");
+  if (voiced !== stem) out.add(voiced + "en");
+
+  // Doubled vowel in a closed syllable collapses when the syllable opens:
+  // draag + en -> dragen, loop + en -> lopen, lees + en -> lezen.
+  // A doubled vowel at the very end collapses too: "gaa" (from "gaat") -> "ga",
+  // which the irregular table then turns into "gaan".
+  const openCollapsed = stem.replace(/([aeou])\1$/, "$1");
+  if (openCollapsed !== stem) {
+    out.add(openCollapsed + "en");
+    for (const [infinitive, irregular] of Object.entries(NL_IRREGULAR_STEM)) {
+      if (irregular === openCollapsed) out.add(infinitive);
+    }
+  }
+
+  const degeminated = stem.replace(/([aeou])\1([bcdfgklmnprstvz]+)$/, "$1$2");
+  if (degeminated !== stem) {
+    out.add(degeminated + "en");
+    const degeminatedVoiced = degeminated.replace(/s$/, "z").replace(/f$/, "v");
+    if (degeminatedVoiced !== degeminated) out.add(degeminatedVoiced + "en");
+  }
+
+  // Short vowel in an open syllable doubles its consonant: pak + en -> pakken.
+  const last = stem.at(-1) ?? "";
+  const beforeLast = stem.at(-2) ?? "";
+  if (NL_VOWELS.includes(beforeLast) && last && !NL_VOWELS.includes(last)) out.add(stem + last + "en");
+
+  return [...out];
+}
+
+function dutchNounSingulars(plural: string): string[] {
+  const out = new Set<string>();
+  if (plural.endsWith("en") && plural.length > 4) {
+    const stem = plural.slice(0, -2);
+    out.add(stem);
+    // huizen -> huis, wolven -> wolf: the singular devoices.
+    out.add(stem.replace(/z$/, "s").replace(/v$/, "f"));
+    // mannen -> man: the doubled consonant was only there to keep the vowel short.
+    const undoubled = stem.replace(/([bcdfgklmnprstvz])\1$/, "$1");
+    if (undoubled !== stem) out.add(undoubled);
+    // dagen -> dag: the vowel was long because the syllable was open.
+    const redoubled = stem.replace(/([aeou])([bcdfgklmnprstvz])$/, "$1$1$2");
+    if (redoubled !== stem) out.add(redoubled);
+  }
+  if (plural.endsWith("s") && plural.length > 3) out.add(plural.slice(0, -1));
+  return [...out];
+}
+
+/**
+ * Prepositions in EN/NL become POSTpositions in Gurzûl Khar: "to the tower"
+ * is "durang dûl". The gkh column is the lexicon spelling, so renaming one of
+ * those entries is a data change, not a code change.
+ */
+export const ADPOSITIONS: { gkh: string; en: string[]; nl: string[] }[] = [
+  { gkh: "dûl", en: ["to", "toward", "towards", "into"], nl: ["naar", "tot"] },
+  { gkh: "mâsh", en: ["with"], nl: ["met"] },
+  { gkh: "thûl", en: ["in", "inside", "within"], nl: ["in", "binnen"] },
+  { gkh: "lan", en: ["from", "out"], nl: ["vanaf", "uit"] }, // "van" is left out deliberately: in Dutch it is overwhelmingly the possessive ("de kracht van de koning"), and the possessive reading has to win.
+  { gkh: "et", en: ["at", "by", "beside"], nl: ["bij", "aan"] },
+  { gkh: "zâm", en: ["on", "upon", "onto"], nl: ["op"] },
+  { gkh: "nûd", en: ["under", "beneath", "below"], nl: ["onder"] },
+];
+
+const ADPOSITION_BY_SURFACE: Record<Lang, Record<string, string>> = {
+  en: Object.fromEntries(ADPOSITIONS.flatMap((a) => a.en.map((w) => [w, a.gkh]))),
+  nl: Object.fromEntries(ADPOSITIONS.flatMap((a) => a.nl.map((w) => [w, a.gkh]))),
+};
+
+export const GKH_POSTPOSITIONS = new Set(ADPOSITIONS.map((a) => a.gkh));
+
+/** The EN/NL preposition to use when rendering a Gurzûl Khar postposition back out. */
+export function adpositionSurface(gkh: string, lang: Lang): string | null {
+  const hit = ADPOSITIONS.find((a) => a.gkh === gkh);
+  return hit ? hit[lang][0] : null;
+}
+
+/**
+ * Modal verbs. The gkh column is a lexicon spelling; the surface lists are the
+ * inflected forms a user actually types. "will" is deliberately absent: it is
+ * already handled as the future tense auxiliary.
+ */
+export const MODALS: { gkh: string; en: string[]; nl: string[]; enSurface: string; nlSurface: string }[] = [
+  { gkh: "dâk", en: ["must", "shall"], nl: ["moet", "moeten", "moest", "moesten"], enSurface: "must", nlSurface: "moet" },
+  { gkh: "mâg", en: ["can", "could", "may", "might"], nl: ["kan", "kunnen", "kun", "kon", "mag", "mogen"], enSurface: "can", nlSurface: "kan" },
+];
+
+const MODAL_BY_SURFACE: Record<Lang, Record<string, string>> = {
+  en: Object.fromEntries(MODALS.flatMap((m) => m.en.map((w) => [w, m.gkh]))),
+  nl: Object.fromEntries(MODALS.flatMap((m) => m.nl.map((w) => [w, m.gkh]))),
+};
+
+export const GKH_MODALS = new Set(MODALS.map((m) => m.gkh));
+
+export function modalSurface(gkh: string, lang: Lang): string | null {
+  const hit = MODALS.find((m) => m.gkh === gkh);
+  return hit ? (lang === "en" ? hit.enSurface : hit.nlSurface) : null;
+}
+
 export type Lang = "en" | "nl";
+
+/**
+ * Last-resort lexicon resolution for a single surface word, using exactly the
+ * same inflection heuristics the clause parser uses above — never a second
+ * copy of them (spec §14 / DESIGN_DECISIONS.md D5).
+ *
+ * The word-for-word fallback in the translator calls this BEFORE handing a
+ * word to the coiner, because coining a form for a word the lexicon already
+ * knows would invent vocabulary that already exists: "Ik zie het ruimteschip"
+ * must coin a word for "ruimteschip" only, not for "zie", which is simply an
+ * inflected form of "zien".
+ *
+ * Returns null only when the lexicon genuinely has nothing for the word.
+ */
+export function resolveContentWord(word: string, lang: Lang): LexiconEntry | null {
+  const direct = lang === "en" ? findByEnglish(word) : findByDutch(word);
+  if (direct) return direct;
+
+  // Copula forms. Without this the word-for-word fallback coins a brand-new
+  // word for "is", which is both wrong and jarring: the language has "ash".
+  const copulaForms = lang === "en" ? ["is", "are", "am", "was", "were", "be", "been"] : ["is", "ben", "bent", "zijn", "was", "waren", "geweest"];
+  if (copulaForms.includes(word)) {
+    const copula = lang === "en" ? findByEnglish("to be") : findByDutch("zijn");
+    if (copula) return copula;
+  }
+
+  // Plural / singular.
+  const { base } = singularize(word, lang);
+  const singular = lang === "en" ? findByEnglish(base) : findByDutch(base);
+  if (singular) return singular;
+  if (lang === "nl") {
+    for (const candidate of dutchNounSingulars(word)) {
+      const hit = findByDutch(candidate);
+      if (hit) return hit;
+    }
+  }
+
+  // Verb inflection.
+  if (lang === "en") {
+    const asVerb = resolveEnglishVerbEntry(word);
+    if (asVerb) return asVerb;
+    // Irregular 3sg present, read back out of the table the renderer uses:
+    // "has" -> "have", "does" -> "do". Without this, "the king who has
+    // strength" has no verb and the relative clause cannot be parsed.
+    for (const [infinitive, third] of Object.entries(EN_PRESENT_3SG_IRREGULAR)) {
+      if (third === word) {
+        const entry = findByEnglish(infinitive);
+        if (entry) return entry;
+      }
+    }
+    const past = Object.entries(EN_PAST_FORMS).find(([, form]) => form === word);
+    if (past) {
+      const entry = findByEnglish(past[0]);
+      if (entry) return entry;
+    }
+  } else {
+    for (const [infinitive, third] of Object.entries(NL_PRESENT_3SG_IRREGULAR)) {
+      if (third === word) {
+        const entry = findByDutch(infinitive);
+        if (entry) return entry;
+      }
+    }
+    // The clause parser's two candidates ("zien" from "zie" via the second,
+    // "lopen" from "loop" via the first), plus 2nd/3rd-person -t stripping, so
+    // "ziet" resolves too. Without that last step the fallback would coin a
+    // brand-new word for an inflected form of "zien".
+    const stems = [word, ...(word.endsWith("t") && word.length > 2 ? [word.slice(0, -1)] : [])];
+    const dutchVerb = stems
+      .flatMap((stem) => dutchVerbInfinitives(stem).map((infinitive) => findByDutch(infinitive)))
+      .find((hit): hit is LexiconEntry => Boolean(hit)) ?? null;
+    if (dutchVerb) return dutchVerb;
+    const past = Object.entries(NL_PAST_FORMS).find(([, form]) => form === word);
+    if (past) {
+      const entry = findByDutch(past[0]);
+      if (entry) return entry;
+    }
+  }
+
+  // Comparative / superlative.
+  const { base: degreeBase } = detectDegreeFromWord(word, lang);
+  if (degreeBase !== word) {
+    const adjective = lang === "en" ? findByEnglish(degreeBase) : findByDutch(degreeBase);
+    if (adjective) return adjective;
+  }
+
+  return null;
+}
 
 const PERSON_TO_EN: Record<Person, string> = { "1sg": "I", "2sg": "you", "3sg": "he", "1pl": "we", "2pl": "you all", "3pl": "they" };
 const PERSON_TO_NL: Record<Person, string> = { "1sg": "ik", "2sg": "jij", "3sg": "hij", "1pl": "wij", "2pl": "jullie", "3pl": "zij" };
@@ -99,9 +320,14 @@ function lookupNounOrPronoun(word: string, lang: Lang): NP | ParseFailure {
     return { kind: "pronoun", person: pronounMap[word], root: word };
   }
   const { base, plural } = singularize(word, lang);
-  const entry = lang === "en" ? findByEnglish(base) ?? findByEnglish(word) : findByDutch(base) ?? findByDutch(word);
+  // The word is only plural if its SINGULAR is what the lexicon matched.
+  // "toren" ends in -en, but stripping that gives "tor", which is not a word —
+  // the entry matched the full form, so the noun is singular. Without this the
+  // translator silently pluralises any noun that happens to end in -en or -s.
+  const baseEntry = base === word ? null : lang === "en" ? findByEnglish(base) : findByDutch(base);
+  const entry = baseEntry ?? (lang === "en" ? findByEnglish(word) : findByDutch(word));
   if (!entry) return { ok: false, reason: "unknown-word", word };
-  return { kind: "noun", root: entry.root ?? entry.gkh, entry, plural: plural || undefined };
+  return { kind: "noun", root: entry.root ?? entry.gkh, entry, plural: baseEntry && plural ? true : undefined };
 }
 
 /** Consumes a noun phrase (with optional possessive / adjective) from the front of `tokens`. Returns the NP and the remaining tokens. */
@@ -149,6 +375,40 @@ export function consumeNaturalNP(tokens: string[], lang: Lang): { np: NP; rest: 
   let np = headResult;
   let rest = t.slice(1);
 
+  // Subject-gap relative clause: "[head] who [verb] [object]".
+  // English "that" is handled as a relativiser only here, after a head noun —
+  // as a clause-level subordinator it is the complementiser, and index.ts tells
+  // the two apart by what precedes the word.
+  const relativisers = lang === "en" ? ["who", "which", "that"] : ["die"];
+  if (rest.length >= 2 && relativisers.includes(rest[0])) {
+    // Dutch relative clauses are verb-final ("die kracht heeft"), English ones
+    // verb-first ("who has strength"), so look in the right place for the verb.
+    const relVerbSurface = lang === "nl" ? rest[rest.length - 1] : rest[1];
+    const relVerbEntry = resolveContentWord(relVerbSurface, lang);
+    if (relVerbEntry && (relVerbEntry.pos === "verb" || relVerbEntry.pos === "particle/verb")) {
+      const afterVerb = lang === "nl" ? rest.slice(1, -1) : rest.slice(2);
+      let relObject: NP | undefined;
+      let remaining = afterVerb;
+      if (afterVerb.length > 0) {
+        const objResult = consumeNaturalNP(afterVerb, lang);
+        if ("reason" in objResult) return objResult;
+        relObject = objResult.np;
+        remaining = lang === "nl" ? [] : objResult.rest;
+        if (lang === "nl" && objResult.rest.length > 0) return { ok: false, reason: "unsupported-pattern" };
+      } else if (lang === "nl") {
+        remaining = [];
+      }
+      np = {
+        ...np,
+        relative: {
+          verb: { root: relVerbEntry.root ?? relVerbEntry.gkh, tense: "present", entry: relVerbEntry },
+          object: relObject,
+        },
+      };
+      rest = remaining;
+    }
+  }
+
   // Attributive adjective following the noun is not natural EN/NL order (adjectives precede the
   // noun there), so we do not attempt to parse one here; GKH-side NPs with attributive adjectives
   // are only produced by translateToGkh for GKH output, not required as EN/NL input in this subset.
@@ -193,6 +453,44 @@ export function parseNaturalClause(tokens: string[], lang: Lang, isQuestionMark:
   let questionRole: Clause["questionRole"];
   let subject: NP | undefined;
 
+  // An imperative has no subject at all and opens with a bare verb ("Go!",
+  // "Break the shield!"). Checked before the subject is consumed, and only
+  // when nothing marks the sentence as a question — "Do you see the land?"
+  // also starts with a verb once do-support is stripped.
+  const imperativeCandidate =
+    !questionWord && !questionYesNo && !isQuestionMark && t.length > 0 && !(lang === "en" ? EN_PRONOUNS : NL_PRONOUNS)[t[0]];
+  if (imperativeCandidate) {
+    const asVerb = resolveContentWord(t[0], lang);
+    if (asVerb && (asVerb.pos === "verb" || asVerb.pos === "particle/verb")) {
+      const verbRootImp = asVerb.root ?? asVerb.gkh;
+      let rest = t.slice(1);
+      let objectImp: NP | undefined;
+      let ppImp: Clause["postpositional"];
+      const prepAt = rest.findIndex((w) => ADPOSITION_BY_SURFACE[lang][w] !== undefined);
+      if (prepAt !== -1) {
+        const ppNp = consumeNaturalNP(rest.slice(prepAt + 1), lang);
+        if (!("reason" in ppNp) && ppNp.rest.length === 0) {
+          ppImp = { np: ppNp.np, postposition: ADPOSITION_BY_SURFACE[lang][rest[prepAt]] };
+          rest = rest.slice(0, prepAt);
+        }
+      }
+      if (rest.length > 0) {
+        const objResultImp = consumeNaturalNP(rest, lang);
+        if ("reason" in objResultImp) return objResultImp;
+        if (objResultImp.rest.length > 0) return { ok: false, reason: "unsupported-pattern" };
+        objectImp = objResultImp.np;
+      }
+      return {
+        negate,
+        questionYesNo: false,
+        imperative: true,
+        verb: { root: verbRootImp, tense: "present", entry: asVerb },
+        object: objectImp,
+        postpositional: ppImp,
+      };
+    }
+  }
+
   if (questionWord) {
     // Subject-question: no subject token present before the verb (verb comes first).
     const asVerb = lang === "en" ? resolveEnglishVerbEntry(t[0]) : findByDutch(t[0]);
@@ -221,6 +519,15 @@ export function parseNaturalClause(tokens: string[], lang: Lang, isQuestionMark:
     t = t.slice(1);
   }
 
+  // A modal takes the tense and hands the main verb through as a bare root.
+  let modal: Clause["modal"];
+  if (t.length >= 2 && MODAL_BY_SURFACE[lang][t[0]]) {
+    const modalGkh = MODAL_BY_SURFACE[lang][t[0]];
+    const modalEntry = findByGkh(modalGkh) ?? undefined;
+    modal = { root: modalEntry?.root ?? modalGkh, entry: modalEntry };
+    t = t.slice(1);
+  }
+
   const verbWord = t[0];
   t = t.slice(1);
   const copulaWords = lang === "en" ? ["is", "are", "am", "was", "were", "be"] : ["is", "ben", "bent", "zijn", "was", "waren"];
@@ -239,15 +546,12 @@ export function parseNaturalClause(tokens: string[], lang: Lang, isQuestionMark:
       infinitiveSurface = pastHit[0];
     }
     verbEntry = lang === "en" ? findByEnglish(infinitiveSurface) : findByDutch(infinitiveSurface);
-    // English present tense 3sg adds -s/-es (go -> goes); Dutch present tense inflects away
-    // from the infinitive for 2nd/3rd person singular (ik zie / jij ziet, from "zien"). Both
-    // are regular-pattern fallbacks only — documented simplifications (DESIGN_DECISIONS.md),
-    // not a claim of full EN/NL conjugation coverage.
-    if (!verbEntry && lang === "en" && !pastHit) {
-      verbEntry = resolveEnglishVerbEntry(infinitiveSurface);
-    }
-    if (!verbEntry && lang === "nl" && !pastHit) {
-      verbEntry = findByDutch(infinitiveSurface + "en") ?? findByDutch(infinitiveSurface.slice(0, -1) + "en");
+    // Fall through to the one shared resolver rather than a second copy of the
+    // inflection rules: English 3sg -s/-es, Dutch 2nd/3rd singular, open/closed
+    // syllable spelling and the irregular stems all live in resolveContentWord.
+    if (!verbEntry && !pastHit) {
+      const resolved = resolveContentWord(infinitiveSurface, lang);
+      if (resolved && (resolved.pos === "verb" || resolved.pos === "particle/verb")) verbEntry = resolved;
     }
     if (!verbEntry) return { ok: false, reason: "unknown-word", word: verbWord };
     if (verbEntry.pos !== "verb" && verbEntry.pos !== "particle/verb") return { ok: false, reason: "unsupported-pattern" };
@@ -255,6 +559,22 @@ export function parseNaturalClause(tokens: string[], lang: Lang, isQuestionMark:
   }
 
   const verb: Clause["verb"] = { root: verbRoot, tense, isCopula, entry: verbEntry ?? undefined };
+
+  // A trailing prepositional phrase becomes a postpositional one. Split it off
+  // before the object is consumed, so "I go to the tower" has no object at all
+  // and "I carry the sword to the tower" keeps "the sword" as its object.
+  let postpositional: Clause["postpositional"];
+  const prepIdx = t.findIndex((w) => ADPOSITION_BY_SURFACE[lang][w] !== undefined);
+  if (prepIdx !== -1) {
+    const ppTokens = t.slice(prepIdx + 1);
+    if (ppTokens.length === 0) return { ok: false, reason: "unsupported-pattern" };
+    const ppNp = consumeNaturalNP(ppTokens, lang);
+    if ("reason" in ppNp) return ppNp;
+    if (ppNp.rest.length > 0) return { ok: false, reason: "unsupported-pattern" };
+    postpositional = { np: ppNp.np, postposition: ADPOSITION_BY_SURFACE[lang][t[prepIdx]] };
+    t = t.slice(0, prepIdx);
+  }
+
 
   if (isCopula && t.length > 0) {
     const adj = lookupAdjective(t.join(" "), lang) ?? lookupAdjective(t[0], lang);
@@ -266,22 +586,28 @@ export function parseNaturalClause(tokens: string[], lang: Lang, isQuestionMark:
         questionRole,
         subject,
         verb,
+        modal,
+        postpositional,
         predicateAdjective: { root: adj.entry.root ?? adj.entry.gkh, entry: adj.entry, degree: adj.degree },
       };
     }
   }
 
   if (t.length === 0) {
-    const clause: Clause = { negate, questionYesNo, questionWord, questionRole, subject, verb };
+    const clause: Clause = { modal, negate, questionYesNo, questionWord, questionRole, subject, verb, postpositional };
     if (questionWord && questionRole === undefined) clause.questionRole = "adjunct";
     return clause;
+  }
+
+  if (t.length === 0) {
+    return { modal, negate, questionYesNo, questionWord, questionRole, subject, verb, postpositional };
   }
 
   const objResult = consumeNaturalNP(t, lang);
   if ("reason" in objResult) return objResult;
   if (objResult.rest.length > 0) return { ok: false, reason: "unsupported-pattern" };
 
-  return { negate, questionYesNo, questionWord, questionRole, subject, verb, object: objResult.np };
+  return { modal, negate, questionYesNo, questionWord, questionRole, subject, verb, object: objResult.np, postpositional };
 }
 
 // ---- Clause -> EN/NL rendering --------------------------------------------
@@ -319,6 +645,21 @@ export function renderNPNatural(np: NP, lang: Lang, withArticle = true): string 
           : `meer ${adjGloss}`
         : adjGloss;
     phrase = `${phrase} (${degreed})`;
+  }
+
+  if (np.relative) {
+    const relVerb = (lang === "en" ? np.relative.verb.entry?.en : np.relative.verb.entry?.nl)?.split("/")[0].trim().replace(/^to\s+/, "") ?? np.relative.verb.root;
+    const conjugated =
+      lang === "en"
+        ? EN_PRESENT_3SG_IRREGULAR[relVerb] ?? `${relVerb}s`
+        : NL_PRESENT_3SG_IRREGULAR[relVerb] ??
+          (relVerb.endsWith("en") ? `${NL_IRREGULAR_STEM[relVerb] ?? relVerb.slice(0, -2)}t` : relVerb);
+    const relObject = np.relative.object ? renderNPNatural(np.relative.object, lang, np.relative.object.kind === "noun") : "";
+    // English relative clauses are verb-first, Dutch ones verb-final.
+    phrase =
+      lang === "en"
+        ? `${phrase} who ${conjugated}${relObject ? ` ${relObject}` : ""}`
+        : `${phrase} die${relObject ? ` ${relObject}` : ""} ${conjugated}`;
   }
 
   if (np.possessive?.type === "suffix") {
@@ -367,19 +708,46 @@ export function renderVerbNatural(clause: Clause, lang: Lang): string {
     else if (verb.tense === "past") form = NL_PAST_FORMS[infinitive] ?? `${infinitive}de`;
     else {
       const stem = NL_IRREGULAR_STEM[infinitive] ?? (infinitive.endsWith("en") ? infinitive.slice(0, -2) : infinitive);
-      form = person === "1sg" ? stem : person === "1pl" || person === "2pl" || person === "3pl" ? infinitive : `${stem}t`;
+      // Adding -t to a stem that ends in a single vowel reopens the syllable, so
+      // the vowel is written double: ga -> gaat, sta -> staat (never "gat").
+      const stemT = /[aeou]$/.test(stem) ? `${stem}${stem.at(-1)}t` : `${stem}t`;
+      form = person === "1sg" ? stem : person === "1pl" || person === "2pl" || person === "3pl" ? infinitive : stemT;
     }
     return negate ? `${form} niet` : form;
   }
 }
 
-export function renderClauseNatural(clause: Clause, lang: Lang): string {
+/**
+ * `verbFinal` renders a Dutch subordinate clause the way Dutch actually writes
+ * one — "omdat de koning sterk is", not "omdat de koning is sterk". It is the
+ * mirror image of unwindDutchVerbFinal() on the parsing side; without it the
+ * translator understands idiomatic Dutch but cannot produce it.
+ */
+export function renderClauseNatural(clause: Clause, lang: Lang, options: { verbFinal?: boolean } = {}): string {
   const words: string[] = [];
+  const verbFinal = options.verbFinal === true && lang === "nl";
   if (clause.questionWord) words.push(questionWordNatural(clause.questionWord, lang));
-  if (clause.questionRole !== "subject" && clause.subject) {
+  if (clause.questionRole !== "subject" && clause.subject && !clause.imperative) {
     words.push(renderNPNatural(clause.subject, lang, clause.subject.kind === "noun"));
   }
-  words.push(renderVerbNatural(clause, lang));
+  let verbSurface = renderVerbNatural(clause, lang);
+  if (clause.imperative) {
+    // English commands use the bare infinitive; Dutch uses the verb STEM, so
+    // "gaan" has to come back out as "ga", not "gaan".
+    const infinitive =
+      (lang === "en" ? clause.verb.entry?.en : clause.verb.entry?.nl)?.split("/")[0].trim().replace(/^to\s+/, "") ?? clause.verb.root;
+    verbSurface =
+      lang === "en"
+        ? infinitive
+        : NL_IRREGULAR_STEM[infinitive] ?? (infinitive.endsWith("en") ? infinitive.slice(0, -2) : infinitive);
+  }
+  if (clause.modal) {
+    // The modal carries the tense in Gurzûl Khar too, so the main verb comes
+    // back out as a plain infinitive after it.
+    const infinitive = (lang === "en" ? clause.verb.entry?.en : clause.verb.entry?.nl)?.split("/")[0].trim().replace(/^to\s+/, "") ?? clause.verb.root;
+    verbSurface = `${modalSurface(clause.modal.root, lang) ?? clause.modal.root} ${infinitive}`;
+  }
+  if (!verbFinal) words.push(verbSurface);
   if (clause.predicateAdjective) {
     const gloss = (lang === "en" ? clause.predicateAdjective.entry?.en : clause.predicateAdjective.entry?.nl)?.split("/")[0].trim() ?? clause.predicateAdjective.root;
     const degreed =
@@ -396,10 +764,15 @@ export function renderClauseNatural(clause: Clause, lang: Lang): string {
   } else if (clause.questionRole !== "object" && clause.object) {
     words.push(renderNPNatural(clause.object, lang, clause.object.kind === "noun"));
   }
+  if (clause.postpositional) {
+    const preposition = adpositionSurface(clause.postpositional.postposition, lang);
+    if (preposition) words.push(preposition, renderNPNatural(clause.postpositional.np, lang, clause.postpositional.np.kind === "noun"));
+  }
+  if (verbFinal) words.push(verbSurface);
   let sentence = words.join(" ");
   const isQuestion = clause.questionYesNo || !!clause.questionWord;
   sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
-  sentence += isQuestion ? "?" : ".";
+  sentence += isQuestion ? "?" : clause.imperative ? "!" : ".";
   return sentence;
 }
 

@@ -1,6 +1,6 @@
 {
   "language": "Gurzûl Khar",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "typology": {
     "wordOrder": "SVO",
     "morphologicalType": "mildly agglutinative / analytic",
@@ -8,15 +8,35 @@
   },
   "pronouns": {
     "subjectForms": {
-      "1sg": "ük", "2sg": "tû", "3sg": "zhâ",
-      "1pl": "ükûn", "2pl": "tûkûn", "3pl": "zhâkûn"
+      "1sg": "ük",
+      "2sg": "tû",
+      "3sg": "zhâ",
+      "1pl": "ükûn",
+      "2pl": "tûkûn",
+      "3pl": "zhâkûn"
     },
     "possessiveSuffixes": {
-      "1sg": "-um", "2sg": "-ush", "3sg": "-az",
-      "1pl": "-nâk", "2pl": "-shûk", "3pl": "-zûk"
+      "1sg": "-um",
+      "2sg": "-ush",
+      "3sg": "-az",
+      "1pl": "-nâk",
+      "2pl": "-shûk",
+      "3pl": "-zûk"
     },
-    "demonstratives": { "this": "tar", "that": "dûr", "these": "tarûk", "those": "dûrûk" },
-    "interrogatives": { "who": "manu", "what": "kâsh", "where": "dorash", "when": "zûrash", "why": "ghâsh", "how": "pâlash" },
+    "demonstratives": {
+      "this": "tar",
+      "that": "dûr",
+      "these": "tarûk",
+      "those": "dûrûk"
+    },
+    "interrogatives": {
+      "who": "manu",
+      "what": "kâsh",
+      "where": "dorash",
+      "when": "zûrash",
+      "why": "ghâsh",
+      "how": "pâlash"
+    },
     "reflexive": "suffix -ûm attached to the pronoun, e.g. 'zhâûm' = himself/herself/itself"
   },
   "nouns": {
@@ -34,9 +54,16 @@
   },
   "verbs": {
     "citationForm": "bare root (= infinitive)",
-    "tenseSuffixes": { "present": "-u", "past": "-ak", "future": "-âth" },
+    "tenseSuffixes": {
+      "present": "-u",
+      "past": "-ak",
+      "future": "-âth"
+    },
     "imperative": "bare root, sentence-initial, no subject pronoun required",
-    "negation": { "particle": "na", "position": "immediately before the finite verb" },
+    "negation": {
+      "particle": "na",
+      "position": "immediately before the finite verb"
+    },
     "aspect": {
       "habitual": "reduplicate the first consonant+vowel of the root before the tense suffix, e.g. 'khaur' (burn) -> 'khakhaurak' (used to burn / burned repeatedly)",
       "progressive": "auxiliary 'ash' + root + '-u', e.g. 'ash khaur-u' = \"is burning\""
@@ -46,18 +73,37 @@
       "imperative": "bare root",
       "conditional": "particle 'ith' introduces the conditional clause; the result clause is unmarked, e.g. 'ith tû pâku, ük magâth' = \"if you go, I will follow\""
     },
-    "auxiliaries": { "be": "ash", "have": "dûn", "can/be-able": "mâg" },
+    "auxiliaries": {
+      "be": "ash",
+      "have": "dûn",
+      "can/be-able": "mâg"
+    },
     "personNumberMarking": "Verbs do not agree with person or number; the subject pronoun or noun phrase carries that information. This is a deliberate analytic design choice to keep the morphology regular and the translation engine fully deterministic.",
     "irregulars": [
-      { "root": "ash", "gloss": "to be", "note": "present tense is 'ash' itself (zero further suffix); past 'ashak'; future 'ashâth'." }
+      {
+        "root": "ash",
+        "gloss": "to be",
+        "note": "present tense is 'ash' itself (zero further suffix); past 'ashak'; future 'ashâth'."
+      }
     ]
   },
   "adjectives": {
     "position": "after the noun they modify",
     "agreement": "none — adjectives are invariable",
-    "comparative": { "marker": "zan", "position": "before the adjective", "example": "zan khar = \"stronger\"" },
-    "superlative": { "marker": "suffix -gûl added to the adjective in addition to 'zan'", "example": "zan khargûl = \"strongest\"" },
-    "intensification": { "marker": "ghâr", "position": "before the adjective", "example": "ghâr khar = \"very strong\"" }
+    "comparative": {
+      "marker": "zan",
+      "position": "before the adjective",
+      "example": "zan khar = \"stronger\""
+    },
+    "superlative": {
+      "marker": "suffix -gûl added to the adjective in addition to 'zan'",
+      "example": "zan khargûl = \"strongest\""
+    },
+    "intensification": {
+      "marker": "ghâr",
+      "position": "before the adjective",
+      "example": "ghâr khar = \"very strong\""
+    }
   },
   "adverbs": {
     "formation": "derived from adjectives with the suffix -ith, e.g. 'khar' (strong) -> 'kharith' (strongly)",
@@ -65,8 +111,16 @@
   },
   "numerals": {
     "cardinal": {
-      "1": "dush", "2": "tok", "3": "rem", "4": "quz", "5": "pâl",
-      "6": "sharn", "7": "vish", "8": "drol", "9": "nathu", "10": "ghazak"
+      "1": "dush",
+      "2": "tok",
+      "3": "rem",
+      "4": "quz",
+      "5": "pâl",
+      "6": "sharn",
+      "7": "vish",
+      "8": "drol",
+      "9": "nathu",
+      "10": "ghazak"
     },
     "ordinalSuffix": "-ith (same surface form as the adverbial suffix, disambiguated by syntactic position directly before a noun)",
     "position": "cardinal numerals precede the noun they quantify; ordinals also precede the noun"
@@ -79,9 +133,21 @@
     "imperative": "Verb(bare root) - Object  (no subject pronoun)",
     "conditional": "'ith' + protasis clause + comma-equivalent pause + apodosis clause",
     "relativeClause": "Formed with the relativiser 'kha' placed after the head noun: '[head noun] kha [clause]', e.g. 'shak kha khar dûnu' = \"the king who has strength\"",
-    "coordination": { "and": "ag", "or": "vo", "but": "nâth" },
-    "subordination": { "because": "ghâsha", "that (complementiser)": "sû", "if": "ith" },
+    "coordination": {
+      "and": "ag",
+      "or": "vo",
+      "but": "nâth"
+    },
+    "subordination": {
+      "because": "ghâsha",
+      "that (complementiser)": "sû",
+      "if": "ith",
+      "when": "râth"
+    },
     "compoundSentenceExample": "ük pâku ag tû magu = \"I go and you follow\"",
-    "complexSentenceExample": "ük zûrak sû tû pâkâth = \"I know that you will go\""
+    "complexSentenceExample": "ük zûrak sû tû pâkâth = \"I know that you will go\"",
+    "postpositionalPhrase": "Adpositions FOLLOW their noun phrase: '[NP] [postposition]', and the phrase sits at the end of the clause, after the object. 'durang dûl' = 'to the tower'; 'ük gareshu sarn durang dûl' = 'I carry the sword to the tower'. Postpositions: dûl (to/toward), mâsh (with), thûl (in), lan (from), et (at/by), zâm (on), nûd (under). 'ta' is not one of these: it marks possession inside a noun phrase.",
+    "modal": "Analytic, not affixal: the modal verb carries the tense and the main verb follows it as a BARE root. 'tû dâku pâk' = 'you must go'; 'ük mâgu sel dor' = 'I can see the land'. Modals: dâk (must), mâg (can/may). Chosen to match the language's mildly-agglutinative/analytic type rather than introducing a modal suffix.",
+    "relativeClauseNote": "Only SUBJECT-gap relatives are supported by the engine ('the king who has strength'). An object gap ('the sword that he carries') has no documented pattern yet and is refused rather than guessed. Note the documented example puts the relative clause's object BEFORE its verb: 'shak kha khar dûnu'."
   }
 }

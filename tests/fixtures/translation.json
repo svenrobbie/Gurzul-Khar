@@ -1,0 +1,415 @@
+{
+  "note": "Language-neutral translation fixtures. Read by both the TypeScript suite (tests/regression.test.ts) and, from phase 2 onward, the Rust tests. Never import engine code here: input and expected output only. See ROADMAP.md.",
+  "expectKinds": {
+    "output": "translation must succeed and equal `output`",
+    "partial": "translation must succeed, be marked partial, report `unknownWord`, and — when `output`/`coined` are present — match them exactly",
+    "fail": "translation must not succeed"
+  },
+  "cases": [
+    {
+      "name": "EN->GKH simple declarative",
+      "direction": "en-gkh",
+      "input": "I see the land",
+      "expect": "output",
+      "output": "ük selu dor"
+    },
+    {
+      "name": "NL->GKH simple declarative",
+      "direction": "nl-gkh",
+      "input": "Ik zie het land",
+      "expect": "output",
+      "output": "ük selu dor"
+    },
+    {
+      "name": "GKH->EN simple declarative",
+      "direction": "gkh-en",
+      "input": "ük selu dor",
+      "expect": "output",
+      "output": "I see the land."
+    },
+    {
+      "name": "GKH->NL simple declarative",
+      "direction": "gkh-nl",
+      "input": "ük selu dor",
+      "expect": "output",
+      "output": "Ik zie de land."
+    },
+    {
+      "name": "EN->GKH negative",
+      "direction": "en-gkh",
+      "input": "I do not see the land",
+      "expect": "output",
+      "output": "ük na selu dor"
+    },
+    {
+      "name": "NL->GKH negative",
+      "direction": "nl-gkh",
+      "input": "Ik zie het land niet",
+      "expect": "output",
+      "output": "ük na selu dor"
+    },
+    {
+      "name": "GKH->EN negative",
+      "direction": "gkh-en",
+      "input": "ük na selu dor",
+      "expect": "output",
+      "output": "I do not see the land."
+    },
+    {
+      "name": "EN->GKH yes/no question",
+      "direction": "en-gkh",
+      "input": "Do you see the land?",
+      "expect": "output",
+      "output": "tû selu dor ma"
+    },
+    {
+      "name": "GKH->EN yes/no question",
+      "direction": "gkh-en",
+      "input": "tû selu dor ma",
+      "expect": "output",
+      "output": "You see the land?"
+    },
+    {
+      "name": "EN->GKH content question (what)",
+      "direction": "en-gkh",
+      "input": "What do you see?",
+      "expect": "output",
+      "output": "kâsh tû selu"
+    },
+    {
+      "name": "GKH->EN content question (what)",
+      "direction": "gkh-en",
+      "input": "kâsh tû selu",
+      "expect": "output",
+      "output": "What you see?"
+    },
+    {
+      "name": "EN->GKH content question (who)",
+      "direction": "en-gkh",
+      "input": "Who sees the land?",
+      "expect": "output",
+      "output": "manu selu dor"
+    },
+    {
+      "name": "EN->GKH possession (postposition)",
+      "direction": "en-gkh",
+      "input": "the king's strength",
+      "expect": "output",
+      "output": "khar ta shak"
+    },
+    {
+      "name": "GKH->EN possession (postposition)",
+      "direction": "gkh-en",
+      "input": "khar ta shak",
+      "expect": "output",
+      "output": "the king's strength"
+    },
+    {
+      "name": "EN->GKH possession (suffix)",
+      "direction": "en-gkh",
+      "input": "my strength",
+      "expect": "output",
+      "output": "kharum"
+    },
+    {
+      "name": "GKH->EN possession (suffix)",
+      "direction": "gkh-en",
+      "input": "kharum",
+      "expect": "output",
+      "output": "my strength"
+    },
+    {
+      "name": "EN->GKH plural, regular",
+      "direction": "en-gkh",
+      "input": "the lands",
+      "expect": "output",
+      "output": "dorûk"
+    },
+    {
+      "name": "GKH->EN plural, epenthetic",
+      "direction": "gkh-en",
+      "input": "rûkakûk",
+      "expect": "output",
+      "output": "the armies"
+    },
+    {
+      "name": "GKH->EN comparative",
+      "direction": "gkh-en",
+      "input": "shak ash zan khar",
+      "expect": "output",
+      "output": "The king is more strong."
+    },
+    {
+      "name": "GKH->EN superlative",
+      "direction": "gkh-en",
+      "input": "shak ash zan khargûl",
+      "expect": "output",
+      "output": "The king is the most strong."
+    },
+    {
+      "name": "GKH->EN coordination",
+      "direction": "gkh-en",
+      "input": "ük pâku ag tû magu",
+      "expect": "output",
+      "output": "I go and you follow."
+    },
+    {
+      "name": "GKH->NL coordination",
+      "direction": "gkh-nl",
+      "input": "ük pâku ag tû magu",
+      "expect": "output",
+      "output": "Ik ga en jij volgt."
+    },
+    {
+      "name": "GKH->EN complex sentence",
+      "direction": "gkh-en",
+      "input": "ük zûrak sû tû pâkâth",
+      "expect": "output",
+      "output": "I knew that you will go.",
+      "comment": "grammar.json's free gloss says 'I know', but zûrak carries the past suffix -ak, so past tense is the only reading consistent with the suffix table. See DESIGN_DECISIONS.md."
+    },
+    {
+      "name": "unknown word -> partial, not silently dropped",
+      "direction": "en-gkh",
+      "input": "I see the spaceship",
+      "expect": "partial",
+      "unknownWord": "spaceship",
+      "neverUnknown": [
+        "the"
+      ],
+      "output": "ük sel gidu",
+      "coined": [
+        {
+          "source": "spaceship",
+          "gkh": "gidu"
+        }
+      ]
+    },
+    {
+      "name": "NL unknown word -> partial",
+      "direction": "nl-gkh",
+      "input": "Ik zie het ruimteschip",
+      "expect": "partial",
+      "unknownWord": "ruimteschip",
+      "neverUnknown": [
+        "het"
+      ],
+      "output": "ük sel nul",
+      "coined": [
+        {
+          "source": "ruimteschip",
+          "gkh": "nul"
+        }
+      ],
+      "comment": "'zie' must NOT appear in `coined`: it is an inflected form of 'zien', which the lexicon has. Coining a form for a word the lexicon already knows would invent a synonym for existing vocabulary."
+    },
+    {
+      "name": "GKH unknown word -> partial to EN",
+      "direction": "gkh-en",
+      "input": "ük selu blorzak",
+      "expect": "partial",
+      "unknownWord": "blorzak",
+      "neverUnknown": [],
+      "coined": [],
+      "comment": "Reverse direction: a coined form cannot be produced here, because the hash is not invertible. Unknown Gurzûl Khar words stay bracketed."
+    },
+    {
+      "name": "completely empty input fails honestly",
+      "direction": "en-gkh",
+      "input": "",
+      "expect": "fail"
+    },
+    {
+      "name": "NL inflected verb resolves, only the real gap is coined",
+      "direction": "nl-gkh",
+      "input": "Jij ziet de draak",
+      "expect": "partial",
+      "unknownWord": "draak",
+      "neverUnknown": [
+        "ziet",
+        "de"
+      ],
+      "output": "tû sel han",
+      "coined": [
+        {
+          "source": "draak",
+          "gkh": "han"
+        }
+      ],
+      "comment": "'ziet' resolves to 'zien' -> sel through the shared inflection heuristics; only 'draak' is genuinely missing."
+    },
+    {
+      "name": "EN->GKH postpositional phrase",
+      "direction": "en-gkh",
+      "input": "I go to the tower",
+      "expect": "output",
+      "output": "ük pâku durang dûl"
+    },
+    {
+      "name": "NL->GKH postpositional phrase",
+      "direction": "nl-gkh",
+      "input": "Ik ga naar de toren",
+      "expect": "output",
+      "output": "ük pâku durang dûl",
+      "comment": "'toren' must stay singular: stripping -en gives 'tor', which is not a word."
+    },
+    {
+      "name": "GKH->EN postpositional phrase",
+      "direction": "gkh-en",
+      "input": "ük pâku durang dûl",
+      "expect": "output",
+      "output": "I go to the tower."
+    },
+    {
+      "name": "EN->GKH object plus postpositional phrase",
+      "direction": "en-gkh",
+      "input": "I carry the sword to the tower",
+      "expect": "output",
+      "output": "ük gareshu sarn durang dûl"
+    },
+    {
+      "name": "EN->GKH copula plus postpositional phrase",
+      "direction": "en-gkh",
+      "input": "The king is strong in the land",
+      "expect": "output",
+      "output": "shak ash khar dor thûl"
+    },
+    {
+      "name": "EN->GKH modal (must)",
+      "direction": "en-gkh",
+      "input": "You must go",
+      "expect": "output",
+      "output": "tû dâku pâk",
+      "comment": "The modal carries the tense; the main verb stays a bare root."
+    },
+    {
+      "name": "EN->GKH modal (can) with object",
+      "direction": "en-gkh",
+      "input": "I can see the land",
+      "expect": "output",
+      "output": "ük mâgu sel dor"
+    },
+    {
+      "name": "NL->GKH modal (moet)",
+      "direction": "nl-gkh",
+      "input": "Jij moet gaan",
+      "expect": "output",
+      "output": "tû dâku pâk"
+    },
+    {
+      "name": "GKH->EN modal",
+      "direction": "gkh-en",
+      "input": "tû dâku pâk",
+      "expect": "output",
+      "output": "You must go."
+    },
+    {
+      "name": "GKH->NL modal",
+      "direction": "gkh-nl",
+      "input": "tû dâku pâk",
+      "expect": "output",
+      "output": "Jij moet gaan."
+    },
+    {
+      "name": "EN->GKH imperative with postpositional phrase",
+      "direction": "en-gkh",
+      "input": "Go to the tower",
+      "expect": "output",
+      "output": "pâk durang dûl",
+      "comment": "Bare root, no subject (grammar.json syntax.imperative)."
+    },
+    {
+      "name": "GKH->EN imperative",
+      "direction": "gkh-en",
+      "input": "pâk durang dûl",
+      "expect": "output",
+      "output": "Go to the tower!"
+    },
+    {
+      "name": "GKH->NL imperative uses the stem, not the infinitive",
+      "direction": "gkh-nl",
+      "input": "pâk durang dûl",
+      "expect": "output",
+      "output": "Ga naar de toren!"
+    },
+    {
+      "name": "EN->GKH relative clause",
+      "direction": "en-gkh",
+      "input": "the king who has strength",
+      "expect": "output",
+      "output": "shak kha khar dûnu",
+      "comment": "grammar.json syntax.relativeClause's own documented example."
+    },
+    {
+      "name": "EN->GKH relative clause with 'that'",
+      "direction": "en-gkh",
+      "input": "the king that has strength",
+      "expect": "output",
+      "output": "shak kha khar dûnu",
+      "comment": "'that' after a noun is the relativiser; after a verb it is the complementiser."
+    },
+    {
+      "name": "EN->GKH relative clause inside a sentence",
+      "direction": "en-gkh",
+      "input": "I see the king who has strength",
+      "expect": "output",
+      "output": "ük selu shak kha khar dûnu"
+    },
+    {
+      "name": "NL->GKH relative clause is verb-final",
+      "direction": "nl-gkh",
+      "input": "de koning die kracht heeft",
+      "expect": "output",
+      "output": "shak kha khar dûnu"
+    },
+    {
+      "name": "GKH->NL relative clause comes back verb-final",
+      "direction": "gkh-nl",
+      "input": "ük selu shak kha khar dûnu",
+      "expect": "output",
+      "output": "Ik zie de koning die de kracht heeft."
+    },
+    {
+      "name": "EN->GKH subordinate cause",
+      "direction": "en-gkh",
+      "input": "I go because you follow",
+      "expect": "output",
+      "output": "ük pâku ghâsha tû magu"
+    },
+    {
+      "name": "EN->GKH subordinate time",
+      "direction": "en-gkh",
+      "input": "I go when you follow",
+      "expect": "output",
+      "output": "ük pâku râth tû magu"
+    },
+    {
+      "name": "NL->GKH subordinate clause is verb-final",
+      "direction": "nl-gkh",
+      "input": "Ik ga omdat de koning sterk is",
+      "expect": "output",
+      "output": "ük pâku ghâsha shak ash khar"
+    },
+    {
+      "name": "GKH->NL subordinate clause comes back verb-final",
+      "direction": "gkh-nl",
+      "input": "ük pâku ghâsha shak ash khar",
+      "expect": "output",
+      "output": "Ik ga omdat de koning sterk is."
+    },
+    {
+      "name": "GKH->EN subordinate time",
+      "direction": "gkh-en",
+      "input": "ük pâku râth tû magu",
+      "expect": "output",
+      "output": "I go when you follow."
+    },
+    {
+      "name": "object-gap relative clause still fails honestly",
+      "direction": "en-gkh",
+      "input": "the sword that he carries",
+      "expect": "fail",
+      "comment": "Only SUBJECT-gap relatives are supported; an object gap has no documented pattern yet."
+    }
+  ]
+}

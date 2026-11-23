@@ -29,6 +29,17 @@ export interface TranslationSuccess {
   partial?: boolean;
   /** Surface forms the translator could not resolve against the lexicon, in the language of `input`. Always non-empty when `partial` is true. */
   unknownWords?: string[];
+  /**
+   * Words that are NOT in the hand-authored lexicon and were given a form by
+   * coiner_v1 instead. Deterministic: the same source word always yields the
+   * same `gkh`. These are real, usable Gurzûl Khar words, but they were
+   * generated rather than chosen, so a caller that shows them to a learner
+   * should mark them as such (a dotted underline, a "coined" badge) and never
+   * present them as established vocabulary. Only populated when the target
+   * language is Gurzûl Khar — a coined form cannot be translated back, because
+   * the hash is not invertible.
+   */
+  coinedWords?: { source: string; gkh: string; version: string }[];
 }
 
 export interface TranslationFailure {

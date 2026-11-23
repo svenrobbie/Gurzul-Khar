@@ -13,20 +13,66 @@ import {
   renderNPNatural,
   consumeNaturalNP,
   decapitalizeClause,
+  resolveContentWord,
   type Lang,
   type ParseFailure,
 } from "./naturalLanguage.js";
 import { parseGkhClause, renderClauseGkh, renderNP, consumeNP, type Clause, type GkhParseFailure } from "./clause.js";
 import { latinToNative } from "../generator/transliteration.js";
 import { ipaOfSentence } from "./ipa.js";
+import { coin, COINER_VERSION } from "../lexicon/coiner.js";
+import { lemmatize, guessLemma } from "../morphology/lemmatizer.js";
+import { glossCoinage, recordCoinage } from "../lexicon/coinageIndex.js";
 
 const EN_COORD: Record<string, "ag" | "vo" | "nâth"> = { and: "ag", or: "vo", but: "nâth" };
 const NL_COORD: Record<string, "ag" | "vo" | "nâth"> = { en: "ag", of: "vo", maar: "nâth" };
 const GKH_COORD_TO_EN: Record<string, string> = { ag: "and", vo: "or", nâth: "but" };
 const GKH_COORD_TO_NL: Record<string, string> = { ag: "en", vo: "of", nâth: "maar" };
-const EN_COMPLEMENTISER = "that";
-const NL_COMPLEMENTISER = "dat";
-const GKH_COMPLEMENTISER = "sû";
+/**
+ * Subordinators, from grammar.json syntax.subordination plus the time
+ * subordinator "râth". A complex sentence is [main] [subordinator] [subordinate],
+ * in every one of these cases, so they share one code path rather than the
+ * single hardcoded "that" the translator started with.
+ */
+interface Subordinator {
+  gkh: string;
+  en: string;
+  nl: string[];
+  label: string;
+}
+
+const SUBORDINATORS: Subordinator[] = [
+  { gkh: "sû", en: "that", nl: ["dat"], label: "complementiser" },
+  { gkh: "ghâsha", en: "because", nl: ["omdat", "want"], label: "cause" },
+  { gkh: "ith", en: "if", nl: ["als", "indien"], label: "condition" },
+  { gkh: "râth", en: "when", nl: ["wanneer", "toen"], label: "time" },
+];
+
+/**
+ * Dutch puts the verb at the END of a subordinate clause ("omdat hij sterk
+ * is"), where the clause parser expects SVO. Rather than teach the parser a
+ * second word order, the clause is normalised back to SVO before parsing:
+ * a clause-final verb moves to second position. Deliberately narrow — it fires
+ * only when the last token really is a verb the lexicon knows, and only after
+ * the straightforward parse has already been tried.
+ */
+function unwindDutchVerbFinal(words: string[]): string[] | null {
+  if (words.length < 3) return null;
+  const last = words[words.length - 1];
+  const entry = resolveContentWord(last, "nl");
+  const isVerb = entry && (entry.pos === "verb" || entry.pos === "particle/verb");
+  const isCopula = ["is", "zijn", "was", "waren", "ben", "bent"].includes(last);
+  if (!isVerb && !isCopula) return null;
+
+  // The verb belongs after the SUBJECT, not after the first token — "de koning
+  // sterk is" has to become "de koning is sterk", never "de is koning sterk".
+  const rest = words.slice(0, -1);
+  const np = consumeNaturalNP(rest, "nl");
+  if ("reason" in np) return null;
+  const subjectLength = rest.length - np.rest.length;
+  if (subjectLength === 0) return null;
+  return [...rest.slice(0, subjectLength), last, ...rest.slice(subjectLength)];
+}
 
 function isFailure(x: unknown): x is ParseFailure | GkhParseFailure {
   return typeof x === "object" && x !== null && "ok" in x && (x as any).ok === false;
@@ -87,29 +133,77 @@ function explainGkh(words: string[]): WordAnalysis[] {
  */
 const ARTICLES: Record<Lang, string[]> = { en: ["the", "a", "an"], nl: ["de", "het", "een"] };
 
-function partialEnNlToGkh(words: string[], lang: Lang): { outputWords: string[]; unknown: string[] } {
+function partialEnNlToGkh(
+  words: string[],
+  lang: Lang
+): {
+  outputWords: string[];
+  unknown: string[];
+  coined: { source: string; gkh: string; version: string }[];
+  compounds: { source: string; gkh: string; parts: string[] }[];
+} {
   const unknown: string[] = [];
+  const coined: { source: string; gkh: string; version: string }[] = [];
+  const compounds: { source: string; gkh: string; parts: string[] }[] = [];
+  // Reserve forms across the sentence so two unknown words in one sentence can
+  // never be handed the same spelling.
+  const taken = new Set<string>();
   const outputWords = words
     .filter((w) => !ARTICLES[lang].includes(w.toLowerCase())) // GKH has no articles (no change to definiteness marking); dropping them here matches real translation rather than falsely flagging them as unknown vocabulary.
     .map((w) => {
-      const entry = lang === "en" ? findByEnglish(w) : findByDutch(w);
-      if (entry) return entry.gkh;
+      // Every lexicon route first: a direct hit, an inflected form ("zie" for
+      // "zien"), or a compound built from parts the lexicon already has
+      // ("nachtwacht" = nacht + wacht). Coining is tier 4, and tier 4 only.
+      const lemma = lemmatize(w, lang);
+      if (lemma) {
+        if (lemma.kind === "compound" && lemma.parts) {
+          compounds.push({ source: w, gkh: lemma.gkh, parts: lemma.parts.map((p) => p.entry.gkh) });
+        }
+        return lemma.gkh;
+      }
       unknown.push(w);
-      return `⟦${w}⟧`;
+      // No lexicon entry means no part of speech is known either. "unknown" is
+      // used deliberately and consistently: it is part of the seed, so the same
+      // word always coins the same form, and a later lemmatiser that CAN supply
+      // a real part of speech will coin a different (better) one — which is a
+      // version boundary, not a silent change. See ROADMAP.md tier 4.
+      // Seed on the guessed dictionary form, never the surface form, so "huis"
+      // and "huizen" are given the same word rather than two unrelated ones.
+      const lemmaGuess = guessLemma(w, lang);
+      const result = coin({ lemma: lemmaGuess, pos: "unknown", lang }, { taken });
+      taken.add(result.gkh);
+      // Remember it, so the same word read back the other way is no longer a
+      // mystery spelling for the rest of this session.
+      recordCoinage({ gkh: result.gkh, lemma: lemmaGuess, lang });
+      coined.push({ source: w, gkh: result.gkh, version: result.version });
+      return result.gkh;
     });
-  return { outputWords, unknown };
+  return { outputWords, unknown, coined, compounds };
 }
 
-function partialGkhToNatural(words: string[], lang: Lang): { outputWords: string[]; unknown: string[] } {
+function partialGkhToNatural(
+  words: string[],
+  lang: Lang
+): { outputWords: string[]; unknown: string[]; reversed: { gkh: string; gloss: string }[] } {
   const unknown: string[] = [];
+  const reversed: { gkh: string; gloss: string }[] = [];
   const outputWords = words.map((w) => {
     const a = analyzeWord(w);
     const entry = a.entry ?? findByGkh(w);
-    if (entry) return lang === "en" ? entry.en : entry.nl;
+    // Lexicon glosses carry alternatives ("wanneer / toen"); a translation
+    // should pick one, not print the dictionary entry at the reader.
+    if (entry) return (lang === "en" ? entry.en : entry.nl).split("/")[0].trim();
+    // Not in the lexicon — but it may be a word the coiner issued, in which
+    // case the index knows what it was coined for.
+    const coined = glossCoinage(w, lang);
+    if (coined) {
+      reversed.push({ gkh: w, gloss: coined });
+      return coined;
+    }
     unknown.push(w);
     return `⟦${w}⟧`;
   });
-  return { outputWords, unknown };
+  return { outputWords, unknown, reversed };
 }
 
 function splitOnTopLevelWord(words: string[], markers: Record<string, string>): { left: string[]; marker: string; right: string[] } | null {
@@ -128,24 +222,49 @@ function respondToEnNlFailure(
   lang: Lang
 ): TranslationResult {
   if (f.reason === "unknown-word") {
-    const { outputWords, unknown } = partialEnNlToGkh(words, lang);
+    const { outputWords, unknown, coined, compounds } = partialEnNlToGkh(words, lang);
     explanation.transformations.push(
       `Grammatical parsing failed because of unrecognized word(s): ${unknown.map((u) => `"${u}"`).join(", ")}. ` +
         `Falling back to a word-for-word gloss for the words that ARE known; tense, plural and word order are not reliably applied in this fallback (see DESIGN_DECISIONS.md D14).`
     );
+    if (compounds.length) {
+      explanation.transformations.push(
+        `Built as compounds from roots the lexicon already has (grammar.json nouns.compounding, modifier + head): ` +
+          `${compounds.map((c) => `${c.source} -> ${c.parts.join(" + ")} = ${c.gkh}`).join(", ")}.`
+      );
+    }
+    if (coined.length) {
+      explanation.transformations.push(
+        `No lexicon entry exists for ${coined.map((c) => `"${c.source}"`).join(", ")}, so coiner_${COINER_VERSION} supplied a form: ` +
+          `${coined.map((c) => `${c.source} -> ${c.gkh}`).join(", ")}. These are generated, not hand-authored, and are marked as such.`
+      );
+    }
     const outputText = outputWords.join(" ");
-    const knownOnly = outputWords.filter((w) => !w.startsWith("⟦")).join(" ");
+    // Every word now has a Gurzûl Khar form, coined or curated, so the native
+    // script and the pronunciation can be produced for the whole sentence
+    // rather than only for the part the lexicon happened to cover.
     let nativeScript: string | undefined;
     let pronunciation: string | undefined;
     try {
-      if (knownOnly.trim()) {
-        nativeScript = latinToNative(knownOnly).nativeSvg;
-        pronunciation = ipaOfSentence(knownOnly);
+      if (outputText.trim()) {
+        nativeScript = latinToNative(outputText).nativeSvg;
+        pronunciation = ipaOfSentence(outputText);
       }
     } catch {
       /* best effort only */
     }
-    return { ok: true, input, direction, output: outputText, nativeScript, pronunciation, explanation, partial: true, unknownWords: unknown };
+    return {
+      ok: true,
+      input,
+      direction,
+      output: outputText,
+      nativeScript,
+      pronunciation,
+      explanation,
+      partial: true,
+      unknownWords: unknown,
+      coinedWords: coined.length ? coined : undefined,
+    };
   }
   return { ok: false, input, direction, ...describeFailure(f), explanation };
 }
@@ -159,20 +278,57 @@ function toGkh(input: string, lang: Lang): TranslationResult {
   const explanation = emptyExplanation();
   explanation.words = explainEnNl(words, lang);
 
-  const complementiser = lang === "en" ? EN_COMPLEMENTISER : NL_COMPLEMENTISER;
-  const complementiserIdx = words.indexOf(complementiser);
   const coordMap = lang === "en" ? EN_COORD : NL_COORD;
 
+  // First subordinator that actually splits the sentence in two.
+  let subordinator: Subordinator | undefined;
+  let subordinatorIdx = -1;
+  for (const candidate of SUBORDINATORS) {
+    const surfaces = lang === "en" ? [candidate.en] : candidate.nl;
+    for (const surface of surfaces) {
+      const idx = words.indexOf(surface);
+      if (idx <= 0 || idx >= words.length - 1) continue;
+      // "that" / "dat" is both a complementiser and a relativiser. After a NOUN
+      // it introduces a relative clause ("the king that has strength") and the
+      // noun phrase parser handles it; after a verb it is the complementiser
+      // ("I know that you will go"). What precedes it decides.
+      if (surface === "that" || surface === "dat") {
+        const preceding = resolveContentWord(words[idx - 1], lang);
+        if (preceding && preceding.pos === "noun") continue;
+      }
+      if (subordinatorIdx === -1 || idx < subordinatorIdx) {
+        subordinatorIdx = idx;
+        subordinator = candidate;
+      }
+    }
+  }
+
   let gkhTokens: string[];
-  if (complementiserIdx > 0 && complementiserIdx < words.length - 1) {
-    const mainWords = words.slice(0, complementiserIdx);
-    const subWords = words.slice(complementiserIdx + 1);
+  if (subordinator && subordinatorIdx > 0) {
+    const mainWords = words.slice(0, subordinatorIdx);
+    const subWords = words.slice(subordinatorIdx + 1);
     const main = parseNaturalClause(mainWords, lang, false);
-    const sub = parseNaturalClause(subWords, lang, isQuestion);
     if (isFailure(main)) return respondToEnNlFailure(main, input, direction, explanation, words, lang);
+
+    let sub = parseNaturalClause(subWords, lang, isQuestion);
+    if (isFailure(sub) && lang === "nl") {
+      const svo = unwindDutchVerbFinal(subWords);
+      if (svo) {
+        const retry = parseNaturalClause(svo, lang, isQuestion);
+        if (!isFailure(retry)) {
+          explanation.transformations.push(
+            `Dutch subordinate clauses are verb-final ("${subWords.join(" ")}"); normalised to SVO before parsing.`
+          );
+          sub = retry;
+        }
+      }
+    }
     if (isFailure(sub)) return respondToEnNlFailure(sub, input, direction, explanation, words, lang);
-    explanation.transformations.push("Parsed as a complex sentence: main clause + complementiser + subordinate clause.");
-    gkhTokens = [...renderClauseGkh(main), GKH_COMPLEMENTISER, ...renderClauseGkh(sub)];
+
+    explanation.transformations.push(
+      `Parsed as a complex sentence: main clause + ${subordinator.label} subordinator "${subordinator.gkh}" + subordinate clause.`
+    );
+    gkhTokens = [...renderClauseGkh(main), subordinator.gkh, ...renderClauseGkh(sub)];
   } else {
     const split = splitOnTopLevelWord(words, coordMap);
     if (split) {
@@ -235,11 +391,17 @@ function respondToGkhFailure(
   lang: Lang
 ): TranslationResult {
   if (f.reason === "unknown-word") {
-    const { outputWords, unknown } = partialGkhToNatural(words, lang);
+    const { outputWords, unknown, reversed } = partialGkhToNatural(words, lang);
     explanation.transformations.push(
       `Grammatical parsing failed because of unrecognized Gurzûl Khar word(s): ${unknown.map((u) => `"${u}"`).join(", ")}. ` +
         `Falling back to a word-for-word gloss for the words that ARE known; natural EN/NL grammar (word order, conjugation) is not reliably applied in this fallback (see DESIGN_DECISIONS.md D14).`
     );
+    if (reversed.length) {
+      explanation.transformations.push(
+        `Recognised as previously coined rather than hand-authored: ${reversed.map((r) => `${r.gkh} = "${r.gloss}"`).join(", ")}. ` +
+          `The coiner's hash cannot be inverted, so these were read out of the coinage index (data/lexicon/coinages.json).`
+      );
+    }
     const outputText = outputWords.join(" ");
     return {
       ok: true,
@@ -250,6 +412,7 @@ function respondToGkhFailure(
       explanation,
       partial: true,
       unknownWords: unknown,
+      coinedWords: reversed.length ? reversed.map((r) => ({ source: r.gloss, gkh: r.gkh, version: COINER_VERSION })) : undefined,
     };
   }
   return { ok: false, input, direction, ...describeFailure(f), explanation };
@@ -265,7 +428,8 @@ function fromGkh(input: string, lang: Lang): TranslationResult {
   explanation.words = explainGkh(words);
 
   const coordToNatural = lang === "en" ? GKH_COORD_TO_EN : GKH_COORD_TO_NL;
-  const sûIdx = words.indexOf(GKH_COMPLEMENTISER);
+  const subordinatorHit = SUBORDINATORS.map((c) => ({ c, idx: words.indexOf(c.gkh) })).filter((h) => h.idx > 0).sort((a, b) => a.idx - b.idx)[0];
+  const sûIdx = subordinatorHit ? subordinatorHit.idx : -1;
 
   let sentence: string;
   if (sûIdx > 0 && sûIdx < words.length - 1) {
@@ -274,9 +438,10 @@ function fromGkh(input: string, lang: Lang): TranslationResult {
     if (isFailure(main)) return respondToGkhFailure(main, input, direction, explanation, words, lang);
     if (isFailure(sub)) return respondToGkhFailure(sub, input, direction, explanation, words, lang);
     explanation.transformations.push("Parsed as a complex sentence: main clause + complementiser + subordinate clause.");
-    const complementiser = lang === "en" ? EN_COMPLEMENTISER : NL_COMPLEMENTISER;
+    const complementiser = lang === "en" ? subordinatorHit!.c.en : subordinatorHit!.c.nl[0];
     const mainText = decapitalizeClause(renderClauseNatural(main as Clause, lang));
-    const subText = decapitalizeClause(renderClauseNatural(sub as Clause, lang));
+    // Dutch subordinate clauses are verb-final; English ones are not.
+    const subText = decapitalizeClause(renderClauseNatural(sub as Clause, lang, { verbFinal: true }));
     sentence = `${mainText} ${complementiser} ${subText}.`;
     sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
   } else {
