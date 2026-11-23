@@ -6,6 +6,72 @@ This mirrors the "Definition of a completed initial release" checklist in the Ma
 
 > **Note on history:** an earlier version of this file claimed the engine, tests, and website were complete when no code for any of them existed in the repository yet — only the `/data` JSON files and this documentation. That was inaccurate. This revision reflects what has actually been implemented and verified (typechecked, tested, built, and manually exercised in a browser) as of this pass.
 
+## Phase 2 of the roadmap — finish the language (in progress)
+
+Reordered on Sven's call: the Rust port now waits until the language is finished, so it is a mechanical translation rather than a rewrite that has to keep absorbing new grammar.
+
+Done:
+
+- **Lemmatiser** (`engine/morphology/lemmatizer.ts`). Tier 2 (inflection) and tier 3 (compounding) of the coverage plan. `nachtwacht` is built from `nacht` + `wacht` using the language's own head-final compounding rule, not coined whole. Dutch morphology now covers open/closed syllable spelling (`draagt` → `dragen`, `loopt` → `lopen`), final devoicing (`huizen` → `huis`, `wolven` → `wolf`), consonant doubling (`mannen` → `man`), the irregular stems (`ga` → `gaan`) and irregular 3sg present (`heeft` → `hebben`). `guessLemma()` makes `huis` and `huizen` coin the SAME word when neither is in the lexicon.
+- **Grammar coverage**, all four gaps, in all four directions:
+  - Postpositional phrases. `ük pâku durang dûl` = "I go to the tower". Seven new postpositions.
+  - Modals. Analytic: the modal takes the tense, the main verb stays a bare root — `tû dâku pâk` = "you must go".
+  - Imperatives. Bare root, no subject, and Dutch comes back as the stem (`Ga!`) not the infinitive.
+  - Relative clauses. `shak kha khar dûnu` — exactly grammar.json's own documented example, reproduced by the engine. English "that" is read as a relativiser after a noun and a complementiser after a verb.
+  - Subordinate clauses generalised from one hardcoded complementiser to a table (`sû`, `ghâsha`, `ith`, `râth`), with Dutch verb-final order handled in both directions.
+- **Reverse coining** (`engine/lexicon/coinageIndex.ts`). A pre-computed index of 175 common coinages plus runtime recording, so `han` reads back as `draak`. The hash is not invertible, so this is a record, not an inversion — a word nobody has ever coined still comes back bracketed, which is stated rather than hidden.
+- **9 new closed-class words**, hand-picked rather than coined: the coiner produced `thûmlaresh` for "from", which is fine for a noun and absurd for a postposition. Short forms in the style of `ta`/`na`/`ag`/`vo`/`ith`/`sû`. Every one is marked `provenance: hand-picked-2026-11-23` and can be renamed freely.
+- **A hole in the freeze, closed.** Coined words were being checked against the LIVE lexicon, so adding those 9 words silently rewrote coinages and broke the golden file. The coiner now reads a frozen snapshot (`data/lexicon/coinerReserved_v1.json`), so the dictionary can grow without moving a single coined word; `tests/coinerReserved.test.ts` enforces the other half, stopping a new hand-authored word from taking a spelling the coiner already issued. It caught 7 collisions in the 9 words above immediately.
+
+Bugs found and fixed along the way:
+
+- Any Dutch noun ending in `-en` or `-s` was silently pluralised: `toren` was read as the plural of `tor`. A word is only plural if its singular is what the lexicon matched.
+- The word-for-word fallback coined new words for inflected forms of words the lexicon already had, inventing synonyms for existing vocabulary.
+- `is` was being coined rather than resolved to the copula `ash`.
+- Lexicon glosses with alternatives were printed whole ("wanneer / toen") instead of one being chosen.
+
+Known and deliberate limits:
+
+- Object-gap relatives ("the sword that he carries") are refused, not guessed. Only the documented subject-gap pattern exists.
+- Compounds resolve in the word-for-word fallback, not in the full clause parser, so a sentence containing one is translated word-for-word rather than with full grammar. Fixing that means breaking a module cycle between the lemmatiser and the clause parser.
+- Dutch `van` is deliberately NOT treated as a postposition: in Dutch it is overwhelmingly the possessive, and that reading has to win.
+- The runtime half of the coinage index lives in memory and dies with the process. Making it permanent is a job for the proposal flow, not for a translator that must stay pure to compile to WASM.
+- 6 spellings in the lexicon are homographs. Three are legitimate zero-derivation (`khar` noun/verb/adjective); three are accidental and genuinely ambiguous: `morith` (grave / morning), `sharak` (book / to love), `shelath` (bright / shield), `haskith` (to hate / afraid). Reported, not auto-fixed — they are Sven's to resolve.
+
+## Phase 1 of the Rust roadmap — complete
+
+Plan: `ROADMAP.md` (living version linked at its top). Phase 1 locks the language's behaviour behind shared fixtures so the Rust port in phase 2 is verifiable rather than a leap of faith.
+
+Done:
+
+- `tests/fixtures/translation.json` — the regression cases now live as language-neutral data. `tests/regression.test.ts` reads them instead of hardcoding them, so the Rust port can assert the same 28 cases.
+- `tests/fixtures/phonotactics.json` + `tests/phonotacticFixture.test.ts` — 35 pinned words, valid and invalid. The validator now emits a stable `code` per violation (`PhonotacticCode`) alongside the human-readable `rule`; codes are the contract, wording is not.
+- `engine/lexicon/coiner.ts` — `coiner_v1`, the deterministic fallback that gives every input word a form. Integer-only (u64 via BigInt, mirroring Rust's wrapping u64), byte-level FNV-1a over UTF-8, one independent sub-seed per decision so tuning one table cannot reshuffle the others, normalised seed (`lemma|pos|lang`), deterministic collision resolution via an attempt counter.
+- `data/phonology/coinerWeights_v1.json` — onset/nucleus/coda frequencies **measured from the 292 hand-authored entries** by `scripts/buildCoinerWeights.ts`, rather than drawn uniformly from the declared inventory. This was the fix that made coined words sound like the language: `phonology.json` declares ê/î/ô, which the lexicon never uses once, and uniform draws produced things like `thaadûl` and `lubaghzhîl`.
+- Two euphony rules the lexicon obeys without ever stating them, now enforced on coinages: no doubled letter (0 of 292 entries have one) and no run of three consonant phonemes (also 0 of 292).
+- `tests/fixtures/coiner_v1.golden.json` — 10,549 pinned coinages, asserted on every run. Regenerating it twice produces a byte-identical file.
+- `scripts/` + npm scripts: `fixtures:phonotactics`, `coiner:weights`, `coiner:golden`, `coiner:sample`.
+
+Measured, worth knowing:
+
+- Coining 150,000 words produces 150,000 distinct forms with no exhaustion (worst case 32 of 64 attempts). The 1–2-syllable space alone saturates around 50,000, so the syllable floor rises with the attempt counter — common words stay short, the long tail gets longer, which is how natural languages behave anyway.
+- 13% of first candidates are rejected by the rules; the rest of the retries are collision avoidance.
+- The coiner is *stricter* than the hand-authored lexicon: it will never produce `gurz`, `zhâ` or `shelgh`, all of which exist as real entries and violate the documented rules.
+
+Gate passed, 2026-11-23: the `COINER_SAMPLE.md` ear test was reviewed and accepted.
+
+- **`coiner_v1` is FROZEN.** `tests/coinerFrozen.test.ts` pins the SHA-256 of `coinerWeights_v1.json`; the golden file pins the algorithm. A change to either now means `coiner_v2` — a new file, a new version tag, a new golden fixture — never an edit to v1. Do not update the digest to make a test pass.
+- The coiner is wired into the translator. A sentence containing a word the lexicon does not have now comes back fully in Gurzûl Khar, with native script and IPA for the whole sentence rather than only the part the lexicon covered. `TranslationSuccess.coinedWords` reports exactly which words were generated rather than looked up, so the UI can mark them and never present them as established vocabulary.
+- Coining is strictly last resort. `resolveContentWord()` in `naturalLanguage.ts` applies the clause parser's own inflection heuristics (plural, EN/NL verb forms, comparative/superlative) before anything reaches the coiner, so an inflected form of a known word is never given an invented synonym — "Ik zie het ruimteschip" coins for `ruimteschip` only, and "Jij ziet de draak" for `draak` only. It also adds Dutch 2nd/3rd-person `-t` stripping, which the clause parser itself does not do.
+- The new behaviour is pinned in `tests/fixtures/translation.json` (29 cases), so the Rust port must reproduce the exact coined output, not merely "something".
+
+Still not done:
+
+- The reverse direction cannot be coined: the hash is not invertible, so an unrecognised Gurzûl Khar word stays bracketed when translating to EN/NL. Resolving that needs a persisted coinage index, which is one of ROADMAP.md's open questions.
+- No lemmatiser. Tiers 2 and 3 of the plan (derivation from known roots, Dutch compound splitting) do not exist, so `huis` and `huizen` resolve through the inflection heuristics above but a genuinely unknown compound like `nachtwacht` is coined whole rather than built from `nacht` + `wacht`.
+- Coined words are not surfaced in the website UI yet — the engine reports them, no page renders the distinction.
+- Nothing Rust exists yet. That is phase 2, and it can now start against a fully pinned specification.
+
 ## Phase 2 — audit-and-improve pass (status by brief section)
 `Phase2.md` itself was not present in the repository when this pass began (confirmed by a recursive search); this pass worked from the detailed task description supplied directly for it, which was presented as a faithful translation of that brief — see DESIGN_DECISIONS.md D17.
 
