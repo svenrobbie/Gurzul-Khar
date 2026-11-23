@@ -1,0 +1,353 @@
+{
+  "version": "v1",
+  "note": "FROZEN with coiner_v1. Measured from the hand-authored lexicon by scripts/buildCoinerWeights.ts so that coined words match the observed sound of the language rather than the full declared inventory. Weights are raw observed counts; selection is cumulative-integer, never floating point. Unit order is alphabetical and is part of the contract — do not re-sort. Regenerating this file changes every coined word, so it belongs to a new coiner version, not to an edit of v1.",
+  "measuredFrom": {
+    "entries": 292,
+    "lexiconVersion": "0.2.0"
+  },
+  "syllableCount": {
+    "onePercent": 28,
+    "twoPercent": 98
+  },
+  "presence": {
+    "onsetFirstPercent": 97,
+    "onsetMedialPercent": 89,
+    "codaFinalPercent": 80,
+    "codaMedialPercent": 30,
+    "longVowelPercent": 11
+  },
+  "onsetInitial": [
+    {
+      "unit": "b",
+      "weight": 11
+    },
+    {
+      "unit": "d",
+      "weight": 12
+    },
+    {
+      "unit": "dr",
+      "weight": 12
+    },
+    {
+      "unit": "g",
+      "weight": 27
+    },
+    {
+      "unit": "gh",
+      "weight": 11
+    },
+    {
+      "unit": "h",
+      "weight": 4
+    },
+    {
+      "unit": "k",
+      "weight": 4
+    },
+    {
+      "unit": "kh",
+      "weight": 27
+    },
+    {
+      "unit": "kr",
+      "weight": 1
+    },
+    {
+      "unit": "l",
+      "weight": 1
+    },
+    {
+      "unit": "m",
+      "weight": 18
+    },
+    {
+      "unit": "n",
+      "weight": 26
+    },
+    {
+      "unit": "p",
+      "weight": 9
+    },
+    {
+      "unit": "q",
+      "weight": 3
+    },
+    {
+      "unit": "r",
+      "weight": 4
+    },
+    {
+      "unit": "s",
+      "weight": 6
+    },
+    {
+      "unit": "sh",
+      "weight": 24
+    },
+    {
+      "unit": "t",
+      "weight": 18
+    },
+    {
+      "unit": "th",
+      "weight": 10
+    },
+    {
+      "unit": "v",
+      "weight": 28
+    },
+    {
+      "unit": "w",
+      "weight": 1
+    },
+    {
+      "unit": "y",
+      "weight": 1
+    },
+    {
+      "unit": "z",
+      "weight": 21
+    }
+  ],
+  "onsetMedial": [
+    {
+      "unit": "b",
+      "weight": 1
+    },
+    {
+      "unit": "d",
+      "weight": 15
+    },
+    {
+      "unit": "g",
+      "weight": 6
+    },
+    {
+      "unit": "gr",
+      "weight": 3
+    },
+    {
+      "unit": "k",
+      "weight": 10
+    },
+    {
+      "unit": "kh",
+      "weight": 1
+    },
+    {
+      "unit": "kr",
+      "weight": 1
+    },
+    {
+      "unit": "l",
+      "weight": 42
+    },
+    {
+      "unit": "m",
+      "weight": 3
+    },
+    {
+      "unit": "n",
+      "weight": 29
+    },
+    {
+      "unit": "r",
+      "weight": 47
+    },
+    {
+      "unit": "s",
+      "weight": 2
+    },
+    {
+      "unit": "sh",
+      "weight": 9
+    },
+    {
+      "unit": "th",
+      "weight": 5
+    },
+    {
+      "unit": "v",
+      "weight": 13
+    },
+    {
+      "unit": "z",
+      "weight": 5
+    }
+  ],
+  "nuclei": [
+    {
+      "unit": "a",
+      "weight": 170
+    },
+    {
+      "unit": "ai",
+      "weight": 1
+    },
+    {
+      "unit": "au",
+      "weight": 3
+    },
+    {
+      "unit": "e",
+      "weight": 84
+    },
+    {
+      "unit": "i",
+      "weight": 44
+    },
+    {
+      "unit": "o",
+      "weight": 69
+    },
+    {
+      "unit": "oi",
+      "weight": 2
+    },
+    {
+      "unit": "u",
+      "weight": 75
+    },
+    {
+      "unit": "â",
+      "weight": 21
+    },
+    {
+      "unit": "û",
+      "weight": 37
+    },
+    {
+      "unit": "ü",
+      "weight": 2
+    }
+  ],
+  "codaFinal": [
+    {
+      "unit": "b",
+      "weight": 1
+    },
+    {
+      "unit": "g",
+      "weight": 4
+    },
+    {
+      "unit": "k",
+      "weight": 17
+    },
+    {
+      "unit": "kh",
+      "weight": 1
+    },
+    {
+      "unit": "l",
+      "weight": 35
+    },
+    {
+      "unit": "lk",
+      "weight": 2
+    },
+    {
+      "unit": "m",
+      "weight": 14
+    },
+    {
+      "unit": "n",
+      "weight": 21
+    },
+    {
+      "unit": "ng",
+      "weight": 1
+    },
+    {
+      "unit": "r",
+      "weight": 26
+    },
+    {
+      "unit": "rk",
+      "weight": 1
+    },
+    {
+      "unit": "rn",
+      "weight": 6
+    },
+    {
+      "unit": "rth",
+      "weight": 1
+    },
+    {
+      "unit": "sh",
+      "weight": 24
+    },
+    {
+      "unit": "th",
+      "weight": 67
+    },
+    {
+      "unit": "v",
+      "weight": 1
+    },
+    {
+      "unit": "z",
+      "weight": 3
+    }
+  ],
+  "codaMedial": [
+    {
+      "unit": "g",
+      "weight": 1
+    },
+    {
+      "unit": "k",
+      "weight": 3
+    },
+    {
+      "unit": "l",
+      "weight": 15
+    },
+    {
+      "unit": "lk",
+      "weight": 2
+    },
+    {
+      "unit": "m",
+      "weight": 1
+    },
+    {
+      "unit": "n",
+      "weight": 3
+    },
+    {
+      "unit": "r",
+      "weight": 12
+    },
+    {
+      "unit": "rk",
+      "weight": 1
+    },
+    {
+      "unit": "rn",
+      "weight": 19
+    },
+    {
+      "unit": "rth",
+      "weight": 1
+    },
+    {
+      "unit": "s",
+      "weight": 3
+    },
+    {
+      "unit": "sh",
+      "weight": 1
+    },
+    {
+      "unit": "th",
+      "weight": 1
+    },
+    {
+      "unit": "zg",
+      "weight": 1
+    }
+  ]
+}

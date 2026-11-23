@@ -6,6 +6,8 @@ import alphabetData from "../data/orthography/alphabet.json";
 import grammarData from "../data/morphology/grammar.json";
 import lexiconData from "../data/lexicon/lexicon.json";
 import proposalsData from "../data/lexicon/proposals.json";
+import coinerWeightsV1Data from "../data/phonology/coinerWeights_v1.json";
+import coinerReservedV1Data from "../data/lexicon/coinerReserved_v1.json";
 
 export interface ConsonantDef {
   id: string;
@@ -102,3 +104,41 @@ export const alphabet = alphabetData as any;
 export const grammar = grammarData as any;
 export const lexicon = lexiconData as LexiconData;
 export const proposals = proposalsData as ProposalsData;
+
+/** Frequency tables measured from the hand-authored lexicon, frozen with coiner_v1. See scripts/buildCoinerWeights.ts. */
+export interface WeightedUnit {
+  unit: string;
+  weight: number;
+}
+
+export interface CoinerWeights {
+  version: string;
+  note: string;
+  measuredFrom: { entries: number; lexiconVersion: string };
+  syllableCount: { onePercent: number; twoPercent: number };
+  presence: {
+    onsetFirstPercent: number;
+    onsetMedialPercent: number;
+    codaFinalPercent: number;
+    codaMedialPercent: number;
+    longVowelPercent: number;
+  };
+  onsetInitial: WeightedUnit[];
+  onsetMedial: WeightedUnit[];
+  nuclei: WeightedUnit[];
+  codaFinal: WeightedUnit[];
+  codaMedial: WeightedUnit[];
+}
+
+export const coinerWeightsV1 = coinerWeightsV1Data as CoinerWeights;
+
+/** Hand-authored spellings as they stood when coiner_v1 was frozen. See the file's own note for why the coiner reads this instead of the live lexicon. */
+export interface CoinerReserved {
+  version: string;
+  note: string;
+  frozenAt: string;
+  entryCount: number;
+  forms: string[];
+}
+
+export const coinerReservedV1 = coinerReservedV1Data as CoinerReserved;
