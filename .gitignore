@@ -7,3 +7,4 @@ website/node_modules/
 .vite/
 coverage/
 .claude/worktrees/
+vitest.config.ts.timestamp-*.mjs
