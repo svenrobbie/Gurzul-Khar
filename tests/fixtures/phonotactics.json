@@ -1,0 +1,219 @@
+{
+  "note": "Language-neutral phonotactic fixtures. Each word is checked against the documented rules in data/phonology/phonology.json; `codes` are the stable PhonotacticCode identifiers, in the order the validator emits them. The Rust port must reproduce this file exactly. Regenerate with `npm run fixtures:phonotactics` and review the diff.",
+  "cases": [
+    {
+      "word": "khar",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "shak",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "dor",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "ük",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "tû",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "pâk",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "pâkûl",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "khardûm",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "kharith",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "ghûldor",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "nâzgam",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "rûkakûk",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "magu",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "selu",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "zan",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "dorûk",
+      "valid": true,
+      "codes": []
+    },
+    {
+      "word": "zhâ",
+      "valid": false,
+      "codes": [
+        "initial-ng-zh"
+      ]
+    },
+    {
+      "word": "zhâkûn",
+      "valid": false,
+      "codes": [
+        "initial-ng-zh"
+      ]
+    },
+    {
+      "word": "izh",
+      "valid": false,
+      "codes": [
+        "final-voiced-fricative"
+      ]
+    },
+    {
+      "word": "dorizh",
+      "valid": false,
+      "codes": [
+        "final-voiced-fricative"
+      ]
+    },
+    {
+      "word": "hask",
+      "valid": false,
+      "codes": [
+        "coda-not-allowed"
+      ]
+    },
+    {
+      "word": "shelgh",
+      "valid": false,
+      "codes": [
+        "final-voiced-fricative",
+        "coda-not-allowed"
+      ]
+    },
+    {
+      "word": "zherk",
+      "valid": false,
+      "codes": [
+        "initial-ng-zh"
+      ]
+    },
+    {
+      "word": "plâsh",
+      "valid": false,
+      "codes": [
+        "onset-not-allowed"
+      ]
+    },
+    {
+      "word": "golm",
+      "valid": false,
+      "codes": [
+        "coda-not-allowed"
+      ]
+    },
+    {
+      "word": "zherkith",
+      "valid": false,
+      "codes": [
+        "initial-ng-zh"
+      ]
+    },
+    {
+      "word": "nairgh",
+      "valid": false,
+      "codes": [
+        "final-voiced-fricative",
+        "coda-not-allowed"
+      ]
+    },
+    {
+      "word": "shelm",
+      "valid": false,
+      "codes": [
+        "coda-not-allowed"
+      ]
+    },
+    {
+      "word": "gurz",
+      "valid": false,
+      "codes": [
+        "coda-not-allowed"
+      ]
+    },
+    {
+      "word": "xyzzyq",
+      "valid": false,
+      "codes": [
+        "tokenization-failed"
+      ]
+    },
+    {
+      "word": "",
+      "valid": false,
+      "codes": [
+        "empty-word"
+      ]
+    },
+    {
+      "word": "ngor",
+      "valid": false,
+      "codes": [
+        "initial-ng-zh"
+      ]
+    },
+    {
+      "word": "katq",
+      "valid": false,
+      "codes": [
+        "final-q-w-y",
+        "coda-not-allowed"
+      ]
+    },
+    {
+      "word": "shugh",
+      "valid": false,
+      "codes": [
+        "final-voiced-fricative"
+      ]
+    },
+    {
+      "word": "shûgh",
+      "valid": true,
+      "codes": []
+    }
+  ]
+}
