@@ -1,0 +1,883 @@
+{
+  "version": "v1",
+  "note": "Reverse index for coined words: the coiner's hash cannot be inverted, so a coined form is only translatable back if it was written down here. Pre-seeded with the common vocabulary; the translator adds anything else it coins at runtime, for that session only. A coined word nobody has ever coined before still cannot be read back — that is a real limit, not a bug. Rebuild with `npm run coiner:index`.",
+  "generatedBy": "scripts/buildCoinageIndex.ts",
+  "entryCount": 175,
+  "entries": [
+    {
+      "gkh": "alu",
+      "lemma": "priester",
+      "lang": "nl"
+    },
+    {
+      "gkh": "anashon",
+      "lemma": "elektriciteit",
+      "lang": "nl"
+    },
+    {
+      "gkh": "bael",
+      "lemma": "ijs",
+      "lang": "nl"
+    },
+    {
+      "gkh": "banam",
+      "lemma": "oost",
+      "lang": "nl"
+    },
+    {
+      "gkh": "bashan",
+      "lemma": "waanzin",
+      "lang": "nl"
+    },
+    {
+      "gkh": "birnuth",
+      "lemma": "hagedi",
+      "lang": "nl"
+    },
+    {
+      "gkh": "bâlo",
+      "lemma": "zij (mv.)",
+      "lang": "nl"
+    },
+    {
+      "gkh": "bûlak",
+      "lemma": "moera",
+      "lang": "nl"
+    },
+    {
+      "gkh": "dalel",
+      "lemma": "zaad",
+      "lang": "nl"
+    },
+    {
+      "gkh": "dem",
+      "lemma": "storm",
+      "lang": "nl"
+    },
+    {
+      "gkh": "dikrosh",
+      "lemma": "carried)",
+      "lang": "en"
+    },
+    {
+      "gkh": "direl",
+      "lemma": "belegering",
+      "lang": "nl"
+    },
+    {
+      "gkh": "dragesh",
+      "lemma": "vlucht",
+      "lang": "nl"
+    },
+    {
+      "gkh": "dramuth",
+      "lemma": "maag",
+      "lang": "nl"
+    },
+    {
+      "gkh": "drar",
+      "lemma": "rivier",
+      "lang": "nl"
+    },
+    {
+      "gkh": "drashe",
+      "lemma": "verraad",
+      "lang": "nl"
+    },
+    {
+      "gkh": "drathe",
+      "lemma": "hinderlaag",
+      "lang": "nl"
+    },
+    {
+      "gkh": "drenan",
+      "lemma": "you (sg.)",
+      "lang": "en"
+    },
+    {
+      "gkh": "drethda",
+      "lemma": "dag",
+      "lang": "nl"
+    },
+    {
+      "gkh": "drokukh",
+      "lemma": "hart",
+      "lang": "nl"
+    },
+    {
+      "gkh": "drolal",
+      "lemma": "doorn",
+      "lang": "nl"
+    },
+    {
+      "gkh": "drûdush",
+      "lemma": "jong",
+      "lang": "nl"
+    },
+    {
+      "gkh": "dunâk",
+      "lemma": "mond",
+      "lang": "nl"
+    },
+    {
+      "gkh": "gakan",
+      "lemma": "werp",
+      "lang": "nl"
+    },
+    {
+      "gkh": "gal",
+      "lemma": "kraai",
+      "lang": "nl"
+    },
+    {
+      "gkh": "gath",
+      "lemma": "geduld",
+      "lang": "nl"
+    },
+    {
+      "gkh": "gaulash",
+      "lemma": "trouw",
+      "lang": "nl"
+    },
+    {
+      "gkh": "gha",
+      "lemma": "knie",
+      "lang": "nl"
+    },
+    {
+      "gkh": "ghalub",
+      "lemma": "iron ore",
+      "lang": "en"
+    },
+    {
+      "gkh": "ghath",
+      "lemma": "bind",
+      "lang": "nl"
+    },
+    {
+      "gkh": "gilketh",
+      "lemma": "honger",
+      "lang": "nl"
+    },
+    {
+      "gkh": "gim",
+      "lemma": "craft",
+      "lang": "en"
+    },
+    {
+      "gkh": "golrush",
+      "lemma": "vol",
+      "lang": "nl"
+    },
+    {
+      "gkh": "gorlur",
+      "lemma": "sterk (bijw.)",
+      "lang": "nl"
+    },
+    {
+      "gkh": "gour",
+      "lemma": "beul",
+      "lang": "nl"
+    },
+    {
+      "gkh": "govul",
+      "lemma": "schoon",
+      "lang": "nl"
+    },
+    {
+      "gkh": "guath",
+      "lemma": "hoog",
+      "lang": "nl"
+    },
+    {
+      "gkh": "gul",
+      "lemma": "huid",
+      "lang": "nl"
+    },
+    {
+      "gkh": "gûgeth",
+      "lemma": "telefoon",
+      "lang": "nl"
+    },
+    {
+      "gkh": "gûlnun",
+      "lemma": "nee-vraagpartikel)",
+      "lang": "nl"
+    },
+    {
+      "gkh": "gûrveg",
+      "lemma": "boven",
+      "lang": "nl"
+    },
+    {
+      "gkh": "hanal",
+      "lemma": "hond",
+      "lang": "nl"
+    },
+    {
+      "gkh": "kath",
+      "lemma": "ladder",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khagla",
+      "lemma": "vuil",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khalel",
+      "lemma": "smelt",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khaluk",
+      "lemma": "zwerver",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khanal",
+      "lemma": "schouder",
+      "lang": "nl"
+    },
+    {
+      "gkh": "kharnuk",
+      "lemma": "fluister",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khash",
+      "lemma": "geweer",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khashgath",
+      "lemma": "west",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khath",
+      "lemma": "bron",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khaû",
+      "lemma": "slag",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khe",
+      "lemma": "hoofd",
+      "lang": "nl"
+    },
+    {
+      "gkh": "kheo",
+      "lemma": "brek",
+      "lang": "nl"
+    },
+    {
+      "gkh": "kher",
+      "lemma": "koper",
+      "lang": "nl"
+    },
+    {
+      "gkh": "kherath",
+      "lemma": "modder",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khethdan",
+      "lemma": "ondiep",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khioth",
+      "lemma": "vind",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khir",
+      "lemma": "leeg",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khishoir",
+      "lemma": "the knowing one",
+      "lang": "en"
+    },
+    {
+      "gkh": "khoruth",
+      "lemma": "sleutel",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khoshruth",
+      "lemma": "worm",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khuath",
+      "lemma": "noord",
+      "lang": "nl"
+    },
+    {
+      "gkh": "khug",
+      "lemma": "light (source)",
+      "lang": "en"
+    },
+    {
+      "gkh": "kun",
+      "lemma": "raaf",
+      "lang": "nl"
+    },
+    {
+      "gkh": "kûath",
+      "lemma": "broer of zu",
+      "lang": "nl"
+    },
+    {
+      "gkh": "kûgran",
+      "lemma": "kaart",
+      "lang": "nl"
+    },
+    {
+      "gkh": "lûsh",
+      "lemma": "bier",
+      "lang": "nl"
+    },
+    {
+      "gkh": "mana",
+      "lemma": "live (dwell)",
+      "lang": "en"
+    },
+    {
+      "gkh": "marûl",
+      "lemma": "fabriek",
+      "lang": "nl"
+    },
+    {
+      "gkh": "mash",
+      "lemma": "mier",
+      "lang": "nl"
+    },
+    {
+      "gkh": "maulath",
+      "lemma": "traag",
+      "lang": "nl"
+    },
+    {
+      "gkh": "mazal",
+      "lemma": "raad",
+      "lang": "nl"
+    },
+    {
+      "gkh": "melam",
+      "lemma": "rat",
+      "lang": "nl"
+    },
+    {
+      "gkh": "mer",
+      "lemma": "de wetende",
+      "lang": "nl"
+    },
+    {
+      "gkh": "merash",
+      "lemma": "sluit",
+      "lang": "nl"
+    },
+    {
+      "gkh": "merathash",
+      "lemma": "cry out",
+      "lang": "en"
+    },
+    {
+      "gkh": "mulbath",
+      "lemma": "long",
+      "lang": "nl"
+    },
+    {
+      "gkh": "munosh",
+      "lemma": "bos",
+      "lang": "nl"
+    },
+    {
+      "gkh": "muth",
+      "lemma": "rug",
+      "lang": "nl"
+    },
+    {
+      "gkh": "mâga",
+      "lemma": "which (relative)",
+      "lang": "en"
+    },
+    {
+      "gkh": "nale",
+      "lemma": "laag",
+      "lang": "nl"
+    },
+    {
+      "gkh": "narak",
+      "lemma": "vleermui",
+      "lang": "nl"
+    },
+    {
+      "gkh": "nathath",
+      "lemma": "zwer",
+      "lang": "nl"
+    },
+    {
+      "gkh": "nel",
+      "lemma": "spion",
+      "lang": "nl"
+    },
+    {
+      "gkh": "nilsâth",
+      "lemma": "vals",
+      "lang": "nl"
+    },
+    {
+      "gkh": "nodû",
+      "lemma": "wiel",
+      "lang": "nl"
+    },
+    {
+      "gkh": "nolbush",
+      "lemma": "dief",
+      "lang": "nl"
+    },
+    {
+      "gkh": "nul",
+      "lemma": "ruimteschip",
+      "lang": "nl"
+    },
+    {
+      "gkh": "nulzûth",
+      "lemma": "winter",
+      "lang": "nl"
+    },
+    {
+      "gkh": "nuoshik",
+      "lemma": "you (pl.)",
+      "lang": "en"
+    },
+    {
+      "gkh": "nurnag",
+      "lemma": "kroon",
+      "lang": "nl"
+    },
+    {
+      "gkh": "nuthath",
+      "lemma": "losgeld",
+      "lang": "nl"
+    },
+    {
+      "gkh": "padal",
+      "lemma": "snijd",
+      "lang": "nl"
+    },
+    {
+      "gkh": "parash",
+      "lemma": "kever",
+      "lang": "nl"
+    },
+    {
+      "gkh": "pethi",
+      "lemma": "trein",
+      "lang": "nl"
+    },
+    {
+      "gkh": "pig",
+      "lemma": "klok",
+      "lang": "nl"
+    },
+    {
+      "gkh": "pornuth",
+      "lemma": "horde",
+      "lang": "nl"
+    },
+    {
+      "gkh": "pâth",
+      "lemma": "schreeuw",
+      "lang": "nl"
+    },
+    {
+      "gkh": "pâvesh",
+      "lemma": "muur",
+      "lang": "nl"
+    },
+    {
+      "gkh": "qagath",
+      "lemma": "jager",
+      "lang": "nl"
+    },
+    {
+      "gkh": "qie",
+      "lemma": "voet",
+      "lang": "nl"
+    },
+    {
+      "gkh": "ram",
+      "lemma": "buit",
+      "lang": "nl"
+    },
+    {
+      "gkh": "reth",
+      "lemma": "serve",
+      "lang": "en"
+    },
+    {
+      "gkh": "riroth",
+      "lemma": "oor",
+      "lang": "nl"
+    },
+    {
+      "gkh": "sar",
+      "lemma": "aarde",
+      "lang": "nl"
+    },
+    {
+      "gkh": "sha",
+      "lemma": "light (weight)",
+      "lang": "en"
+    },
+    {
+      "gkh": "shalark",
+      "lemma": "tand",
+      "lang": "nl"
+    },
+    {
+      "gkh": "shalga",
+      "lemma": "jagen",
+      "lang": "nl"
+    },
+    {
+      "gkh": "shanluth",
+      "lemma": "out of",
+      "lang": "en"
+    },
+    {
+      "gkh": "shara",
+      "lemma": "be strong",
+      "lang": "en"
+    },
+    {
+      "gkh": "shath",
+      "lemma": "hert",
+      "lang": "nl"
+    },
+    {
+      "gkh": "shaâm",
+      "lemma": "vis",
+      "lang": "nl"
+    },
+    {
+      "gkh": "shedârk",
+      "lemma": "ash (cinder)",
+      "lang": "en"
+    },
+    {
+      "gkh": "shek",
+      "lemma": "wapenstilstand",
+      "lang": "nl"
+    },
+    {
+      "gkh": "shiroth",
+      "lemma": "zwak",
+      "lang": "nl"
+    },
+    {
+      "gkh": "shom",
+      "lemma": "that (complementiser)",
+      "lang": "en"
+    },
+    {
+      "gkh": "shoruth",
+      "lemma": "the mighty one",
+      "lang": "en"
+    },
+    {
+      "gkh": "shu",
+      "lemma": "wreed",
+      "lang": "nl"
+    },
+    {
+      "gkh": "shul",
+      "lemma": "lafheid",
+      "lang": "nl"
+    },
+    {
+      "gkh": "shâth",
+      "lemma": "zoek",
+      "lang": "nl"
+    },
+    {
+      "gkh": "shû",
+      "lemma": "leid",
+      "lang": "nl"
+    },
+    {
+      "gkh": "takre",
+      "lemma": "ketting",
+      "lang": "nl"
+    },
+    {
+      "gkh": "talath",
+      "lemma": "vinger",
+      "lang": "nl"
+    },
+    {
+      "gkh": "talush",
+      "lemma": "dat (betr.)",
+      "lang": "nl"
+    },
+    {
+      "gkh": "tanath",
+      "lemma": "drinking water (stored",
+      "lang": "en"
+    },
+    {
+      "gkh": "tashug",
+      "lemma": "call",
+      "lang": "en"
+    },
+    {
+      "gkh": "tel",
+      "lemma": "zout",
+      "lang": "nl"
+    },
+    {
+      "gkh": "telom",
+      "lemma": "diep",
+      "lang": "nl"
+    },
+    {
+      "gkh": "tenath",
+      "lemma": "zee",
+      "lang": "nl"
+    },
+    {
+      "gkh": "thagath",
+      "lemma": "de machtige",
+      "lang": "nl"
+    },
+    {
+      "gkh": "thanath",
+      "lemma": "haar",
+      "lang": "nl"
+    },
+    {
+      "gkh": "thar",
+      "lemma": "zwijn",
+      "lang": "nl"
+    },
+    {
+      "gkh": "thauz",
+      "lemma": "dat (voegwoord)",
+      "lang": "nl"
+    },
+    {
+      "gkh": "thelâl",
+      "lemma": "spin",
+      "lang": "nl"
+    },
+    {
+      "gkh": "thera",
+      "lemma": "smid",
+      "lang": "nl"
+    },
+    {
+      "gkh": "theth",
+      "lemma": "vlakte",
+      "lang": "nl"
+    },
+    {
+      "gkh": "thith",
+      "lemma": "bow (weapon)",
+      "lang": "en"
+    },
+    {
+      "gkh": "ti",
+      "lemma": "boot",
+      "lang": "nl"
+    },
+    {
+      "gkh": "til",
+      "lemma": "kerker",
+      "lang": "nl"
+    },
+    {
+      "gkh": "to",
+      "lemma": "pot",
+      "lang": "nl"
+    },
+    {
+      "gkh": "toth",
+      "lemma": "heks",
+      "lang": "nl"
+    },
+    {
+      "gkh": "tûsu",
+      "lemma": "keel",
+      "lang": "nl"
+    },
+    {
+      "gkh": "va",
+      "lemma": "dal",
+      "lang": "nl"
+    },
+    {
+      "gkh": "vae",
+      "lemma": "licht (gewicht)",
+      "lang": "nl"
+    },
+    {
+      "gkh": "vagak",
+      "lemma": "levend",
+      "lang": "nl"
+    },
+    {
+      "gkh": "vaurâsh",
+      "lemma": "droom",
+      "lang": "nl"
+    },
+    {
+      "gkh": "vekh",
+      "lemma": "blad",
+      "lang": "nl"
+    },
+    {
+      "gkh": "verash",
+      "lemma": "volk",
+      "lang": "nl"
+    },
+    {
+      "gkh": "verlor",
+      "lemma": "order (stability)",
+      "lang": "en"
+    },
+    {
+      "gkh": "veroth",
+      "lemma": "koningin",
+      "lang": "nl"
+    },
+    {
+      "gkh": "veshor",
+      "lemma": "brandmerk",
+      "lang": "nl"
+    },
+    {
+      "gkh": "vikel",
+      "lemma": "overgave",
+      "lang": "nl"
+    },
+    {
+      "gkh": "vilneg",
+      "lemma": "dwaasheid",
+      "lang": "nl"
+    },
+    {
+      "gkh": "vin",
+      "lemma": "zomer",
+      "lang": "nl"
+    },
+    {
+      "gkh": "vinel",
+      "lemma": "wood (material)",
+      "lang": "en"
+    },
+    {
+      "gkh": "voith",
+      "lemma": "zuid",
+      "lang": "nl"
+    },
+    {
+      "gkh": "volur",
+      "lemma": "open",
+      "lang": "nl"
+    },
+    {
+      "gkh": "vu",
+      "lemma": "be able to",
+      "lang": "en"
+    },
+    {
+      "gkh": "vula",
+      "lemma": "zuster",
+      "lang": "nl"
+    },
+    {
+      "gkh": "vular",
+      "lemma": "zing",
+      "lang": "nl"
+    },
+    {
+      "gkh": "vûlrum",
+      "lemma": "be (aux.)",
+      "lang": "en"
+    },
+    {
+      "gkh": "vûth",
+      "lemma": "verberg",
+      "lang": "nl"
+    },
+    {
+      "gkh": "wuth",
+      "lemma": "twijfel",
+      "lang": "nl"
+    },
+    {
+      "gkh": "yeg",
+      "lemma": "rook",
+      "lang": "nl"
+    },
+    {
+      "gkh": "zalrû",
+      "lemma": "root (of a plant)",
+      "lang": "en"
+    },
+    {
+      "gkh": "zath",
+      "lemma": "einde",
+      "lang": "nl"
+    },
+    {
+      "gkh": "zeth",
+      "lemma": "have to",
+      "lang": "en"
+    },
+    {
+      "gkh": "zithoish",
+      "lemma": "banier",
+      "lang": "nl"
+    },
+    {
+      "gkh": "zoruth",
+      "lemma": "dwaa",
+      "lang": "nl"
+    },
+    {
+      "gkh": "zoth",
+      "lemma": "nagel",
+      "lang": "nl"
+    },
+    {
+      "gkh": "zunaz",
+      "lemma": "computer",
+      "lang": "nl"
+    },
+    {
+      "gkh": "zâmal",
+      "lemma": "schor",
+      "lang": "nl"
+    },
+    {
+      "gkh": "zûrath",
+      "lemma": "buit",
+      "lang": "nl"
+    },
+    {
+      "gkh": "ügno",
+      "lemma": "no question marker)",
+      "lang": "en"
+    }
+  ]
+}
