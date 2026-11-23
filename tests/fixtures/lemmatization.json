@@ -1,0 +1,28 @@
+{
+  "note": "Language-neutral lemmatiser fixtures, shared with the Rust port. `kind` is direct (the surface form IS the dictionary form), inflected (resolved through Dutch/English inflection rules) or compound (built from lexicon roots, modifier + head). `null` means no lexicon route exists and the word is coined instead — which is a legitimate, pinned outcome, not a failure.",
+  "cases": [
+    { "word": "zien", "lang": "nl", "kind": "direct", "gkh": "sel" },
+    { "word": "zie", "lang": "nl", "kind": "inflected", "gkh": "sel" },
+    { "word": "ziet", "lang": "nl", "kind": "inflected", "gkh": "sel" },
+    { "word": "loopt", "lang": "nl", "kind": "inflected", "gkh": "pâkith", "comment": "open/closed syllable: loop -> lopen" },
+    { "word": "draagt", "lang": "nl", "kind": "inflected", "gkh": "garesh", "comment": "draag -> dragen" },
+    { "word": "huis", "lang": "nl", "kind": "direct", "gkh": "khelath" },
+    { "word": "huizen", "lang": "nl", "kind": "inflected", "gkh": "khelath", "comment": "final devoicing: huizen -> huis. Both MUST resolve to one word." },
+    { "word": "wolven", "lang": "nl", "kind": "inflected", "gkh": "nagûl", "comment": "wolven -> wolf" },
+    { "word": "sterker", "lang": "nl", "kind": "inflected", "gkh": "khar" },
+
+    { "word": "nachtwacht", "lang": "nl", "kind": "compound", "gkh": "narothnelash", "parts": ["naroth", "nelash"] },
+    { "word": "koningszoon", "lang": "nl", "kind": "compound", "gkh": "shakzurna", "parts": ["shak", "zurna"], "comment": "linking -s-" },
+    { "word": "vuurberg", "lang": "nl", "kind": "compound", "gkh": "qâthgarn", "parts": ["qâth", "garn"] },
+    { "word": "bloedzwaard", "lang": "nl", "kind": "compound", "gkh": "zûnsarn", "parts": ["zûn", "sarn"] },
+
+    { "word": "lands", "lang": "en", "kind": "inflected", "gkh": "dor" },
+    { "word": "shadowland", "lang": "en", "kind": "direct", "gkh": "ghûldor" },
+    { "word": "warhammer", "lang": "en", "kind": "compound", "gkh": "zagrathgharnu", "parts": ["zagrath", "gharnu"] },
+    { "word": "bloodfire", "lang": "en", "kind": "compound", "gkh": "zûnqâth", "parts": ["zûn", "qâth"] },
+
+    { "word": "ruimteschip", "lang": "nl", "kind": null, "comment": "neither part is in the lexicon; coined whole" },
+    { "word": "spaceship", "lang": "en", "kind": null },
+    { "word": "dragon", "lang": "en", "kind": null }
+  ]
+}
