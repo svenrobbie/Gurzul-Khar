@@ -1,0 +1,593 @@
+{
+  "version": "1.0.0",
+  "note": "Authored lesson path. Every `gkh` spelling must exist in data/lexicon/lexicon.json and every example must actually translate through the engine to the stated output — tests/learningContent.test.ts enforces both, so a lesson can never teach a word or a sentence the language does not have.",
+  "method": {
+    "summary": "The course is built on four findings that hold across decades of learning research, not on how language apps usually look.",
+    "principles": [
+      {
+        "name": "Recall before you check",
+        "what": "Every drill asks you to produce the answer from memory first, then shows it. Never a multiple choice, never a word list to re-read.",
+        "why": "Retrieving an answer from memory strengthens it far more than seeing it again does. Re-reading feels productive and mostly is not."
+      },
+      {
+        "name": "Spread sessions out",
+        "what": "Ten minutes a day across six days beats an hour on Sunday. Each lesson is sized for one short sitting.",
+        "why": "The same total study time produces markedly better long-term retention when it is distributed rather than massed."
+      },
+      {
+        "name": "Relearn, repeatedly",
+        "what": "Words you have met come back in later lessons at widening intervals until you get them right without hesitating.",
+        "why": "Spacing and retrieval combined — recalling correctly across several separated sessions — is what moves vocabulary into memory that lasts years rather than days."
+      },
+      {
+        "name": "Mix things up",
+        "what": "Review mixes vocabulary from several earlier lessons rather than drilling one set at a time.",
+        "why": "Practice that interleaves topics feels harder and performs worse on the day, then retains better. Difficulty during practice is not a sign it is going badly."
+      }
+    ],
+    "howToUse": "Do one lesson per sitting. Read the grammar point, say every example out loud, then do the drills without looking. Finish with the review queue, which pulls from everything you have met. If a drill is easy, it is doing nothing for you — the ones you have to dig for are the ones that are working."
+  },
+  "lessons": [
+    {
+      "id": "l01",
+      "title": "The sounds",
+      "goal": "Say every Gurzûl Khar letter out loud without hesitating.",
+      "grammar": "Gurzûl Khar is written in the Latin alphabet, left to right, and spelled as it sounds — one letter, one sound, with the digraphs kh, gh, sh, zh, th and ng each counting as a single sound. A circumflex marks a LONG vowel, and length changes the word: khar and khâr would be two different words.",
+      "focus": "pronunciation",
+      "vocabulary": [],
+      "examples": [],
+      "drills": [
+        {
+          "prompt": "Say the difference out loud: k / kh / gh",
+          "answer": "k as in skin, kh as in Scottish loch, gh as the Dutch g in goed",
+          "kind": "say"
+        },
+        {
+          "prompt": "Where does the stress fall in durang?",
+          "answer": "DU-rang. Stress is penultimate, and durang has two syllables, so it lands on the first.",
+          "kind": "recall"
+        },
+        {
+          "prompt": "Say the long/short pair: dor / dôr",
+          "answer": "dor has a short o as in pot; dôr holds the vowel, as in boot",
+          "kind": "say"
+        }
+      ]
+    },
+    {
+      "id": "l02",
+      "title": "I, you, and one verb",
+      "goal": "Build your first sentence.",
+      "grammar": "Word order is Subject - Verb - Object, like English. Present tense adds -u to the verb root: sel (to see) becomes selu. There are no articles at all — no the, no a. dor means both land and the land.",
+      "focus": "syntax",
+      "vocabulary": [
+        {
+          "gkh": "ük",
+          "en": "I",
+          "nl": "ik"
+        },
+        {
+          "gkh": "tû",
+          "en": "you",
+          "nl": "jij"
+        },
+        {
+          "gkh": "sel",
+          "en": "to see",
+          "nl": "zien"
+        },
+        {
+          "gkh": "dor",
+          "en": "land",
+          "nl": "land"
+        }
+      ],
+      "examples": [
+        {
+          "gkh": "ük selu dor",
+          "en": "I see the land",
+          "direction": "en-gkh",
+          "source": "I see the land"
+        }
+      ],
+      "drills": [
+        {
+          "prompt": "you see the land",
+          "answer": "tû selu dor",
+          "kind": "produce"
+        },
+        {
+          "prompt": "ük selu dor",
+          "answer": "I see the land",
+          "kind": "translate"
+        }
+      ]
+    },
+    {
+      "id": "l03",
+      "title": "Things worth naming",
+      "goal": "Twelve core nouns, and plurals.",
+      "grammar": "Plural adds -ûk to the noun: dor becomes dorûk. If the root already ends in -k, an -a- is inserted first so two k sounds never collide: rûk becomes rûkakûk, not rûkkûk.",
+      "focus": "nouns",
+      "vocabulary": [
+        {
+          "gkh": "shak",
+          "en": "king",
+          "nl": "koning"
+        },
+        {
+          "gkh": "sarn",
+          "en": "sword",
+          "nl": "zwaard"
+        },
+        {
+          "gkh": "durang",
+          "en": "tower",
+          "nl": "toren"
+        },
+        {
+          "gkh": "qâth",
+          "en": "fire",
+          "nl": "vuur"
+        },
+        {
+          "gkh": "waz",
+          "en": "water",
+          "nl": "water"
+        },
+        {
+          "gkh": "zûn",
+          "en": "blood",
+          "nl": "bloed"
+        },
+        {
+          "gkh": "garn",
+          "en": "mountain",
+          "nl": "berg"
+        },
+        {
+          "gkh": "rûk",
+          "en": "army",
+          "nl": "leger"
+        }
+      ],
+      "examples": [
+        {
+          "gkh": "dorûk",
+          "en": "the lands",
+          "direction": "en-gkh",
+          "source": "the lands"
+        }
+      ],
+      "drills": [
+        {
+          "prompt": "the lands",
+          "answer": "dorûk",
+          "kind": "produce"
+        },
+        {
+          "prompt": "rûkakûk",
+          "answer": "the armies",
+          "kind": "translate"
+        },
+        {
+          "prompt": "Why is it rûkakûk and not rûkûk?",
+          "answer": "The root ends in -k, so -a- is inserted to avoid a doubled k",
+          "kind": "recall"
+        }
+      ]
+    },
+    {
+      "id": "l04",
+      "title": "When it happened",
+      "goal": "Past, present and future.",
+      "grammar": "Tense is a suffix on the verb root and nothing else changes: -u present, -ak past, -âth future. pâk (to go) gives pâku, pâkak, pâkâth. The verb does not agree with its subject, so there is no conjugation table to memorise.",
+      "focus": "verbs",
+      "vocabulary": [
+        {
+          "gkh": "pâk",
+          "en": "to go",
+          "nl": "gaan"
+        },
+        {
+          "gkh": "mag",
+          "en": "to follow",
+          "nl": "volgen"
+        },
+        {
+          "gkh": "zûr",
+          "en": "to know",
+          "nl": "weten"
+        },
+        {
+          "gkh": "varn",
+          "en": "to speak",
+          "nl": "spreken"
+        },
+        {
+          "gkh": "drash",
+          "en": "to fight",
+          "nl": "vechten"
+        }
+      ],
+      "examples": [
+        {
+          "gkh": "ük pâku ag tû magu",
+          "en": "I go and you follow.",
+          "direction": "gkh-en",
+          "source": "ük pâku ag tû magu"
+        }
+      ],
+      "drills": [
+        {
+          "prompt": "Make pâk past tense",
+          "answer": "pâkak",
+          "kind": "produce"
+        },
+        {
+          "prompt": "Make pâk future tense",
+          "answer": "pâkâth",
+          "kind": "produce"
+        },
+        {
+          "prompt": "ük pâku ag tû magu",
+          "answer": "I go and you follow",
+          "kind": "translate"
+        }
+      ]
+    },
+    {
+      "id": "l05",
+      "title": "Saying no, and asking",
+      "goal": "Negatives and both kinds of question.",
+      "grammar": "Negation puts the particle na directly before the verb. A yes/no question is a normal sentence with ma on the end. A content question fronts the question word and drops ma: kâsh tû selu, what do you see.",
+      "focus": "syntax",
+      "vocabulary": [
+        {
+          "gkh": "na",
+          "en": "not",
+          "nl": "niet"
+        },
+        {
+          "gkh": "ma",
+          "en": "(question marker)",
+          "nl": "(vraagpartikel)"
+        },
+        {
+          "gkh": "kâsh",
+          "en": "what",
+          "nl": "wat"
+        },
+        {
+          "gkh": "manu",
+          "en": "who",
+          "nl": "wie"
+        }
+      ],
+      "examples": [
+        {
+          "gkh": "ük na selu dor",
+          "en": "I do not see the land",
+          "direction": "en-gkh",
+          "source": "I do not see the land"
+        },
+        {
+          "gkh": "tû selu dor ma",
+          "en": "Do you see the land?",
+          "direction": "en-gkh",
+          "source": "Do you see the land?"
+        },
+        {
+          "gkh": "kâsh tû selu",
+          "en": "What do you see?",
+          "direction": "en-gkh",
+          "source": "What do you see?"
+        }
+      ],
+      "drills": [
+        {
+          "prompt": "I do not see the land",
+          "answer": "ük na selu dor",
+          "kind": "produce"
+        },
+        {
+          "prompt": "Do you see the land?",
+          "answer": "tû selu dor ma",
+          "kind": "produce"
+        }
+      ]
+    },
+    {
+      "id": "l06",
+      "title": "Describing and comparing",
+      "goal": "Adjectives, and the two degrees.",
+      "grammar": "An adjective follows its noun and never changes form. Comparative puts zan before it; superlative adds -gûl to it. The copula is ash: shak ash khar, the king is strong.",
+      "focus": "adjectives",
+      "vocabulary": [
+        {
+          "gkh": "khar",
+          "en": "strong",
+          "nl": "sterk"
+        },
+        {
+          "gkh": "gurz",
+          "en": "dark",
+          "nl": "donker"
+        },
+        {
+          "gkh": "gan",
+          "en": "big",
+          "nl": "groot"
+        },
+        {
+          "gkh": "pish",
+          "en": "small",
+          "nl": "klein"
+        },
+        {
+          "gkh": "ushen",
+          "en": "good",
+          "nl": "goed"
+        },
+        {
+          "gkh": "ash",
+          "en": "to be",
+          "nl": "zijn"
+        }
+      ],
+      "examples": [
+        {
+          "gkh": "shak ash zan khar",
+          "en": "The king is more strong.",
+          "direction": "gkh-en",
+          "source": "shak ash zan khar"
+        },
+        {
+          "gkh": "shak ash zan khargûl",
+          "en": "The king is the most strong.",
+          "direction": "gkh-en",
+          "source": "shak ash zan khargûl"
+        }
+      ],
+      "drills": [
+        {
+          "prompt": "shak ash zan khar",
+          "answer": "The king is stronger",
+          "kind": "translate"
+        },
+        {
+          "prompt": "How do you form the superlative?",
+          "answer": "zan before the adjective and -gûl on the end of it",
+          "kind": "recall"
+        }
+      ]
+    },
+    {
+      "id": "l07",
+      "title": "Whose, and where",
+      "goal": "Possession, and phrases that sit after their noun.",
+      "grammar": "Possession is built with ta AFTER the thing possessed: khar ta shak, the king's strength, literally strength of king. Place and direction work the same way round — the marker FOLLOWS the noun: durang dûl, to the tower. That is the habit to build: English puts these words in front, Gurzûl Khar puts them behind.",
+      "focus": "syntax",
+      "vocabulary": [
+        {
+          "gkh": "ta",
+          "en": "of",
+          "nl": "van"
+        },
+        {
+          "gkh": "dûl",
+          "en": "to, toward",
+          "nl": "naar"
+        },
+        {
+          "gkh": "mâsh",
+          "en": "with",
+          "nl": "met"
+        },
+        {
+          "gkh": "thûl",
+          "en": "in",
+          "nl": "in"
+        },
+        {
+          "gkh": "lan",
+          "en": "from",
+          "nl": "vanaf"
+        }
+      ],
+      "examples": [
+        {
+          "gkh": "khar ta shak",
+          "en": "the king's strength",
+          "direction": "en-gkh",
+          "source": "the king's strength"
+        },
+        {
+          "gkh": "ük pâku durang dûl",
+          "en": "I go to the tower",
+          "direction": "en-gkh",
+          "source": "I go to the tower"
+        },
+        {
+          "gkh": "ük drashu sarn mâsh",
+          "en": "I fight with the sword",
+          "direction": "en-gkh",
+          "source": "I fight with the sword"
+        }
+      ],
+      "drills": [
+        {
+          "prompt": "I go to the tower",
+          "answer": "ük pâku durang dûl",
+          "kind": "produce"
+        },
+        {
+          "prompt": "the king's strength",
+          "answer": "khar ta shak",
+          "kind": "produce"
+        },
+        {
+          "prompt": "Which comes first in Gurzûl Khar, the tower or the word for to?",
+          "answer": "The tower. The postposition follows its noun.",
+          "kind": "recall"
+        }
+      ]
+    },
+    {
+      "id": "l08",
+      "title": "Orders and obligation",
+      "goal": "Commands, and must and can.",
+      "grammar": "A command is the bare verb root with no subject and no tense: pâk, go. A modal takes the tense and the main verb stays bare: tû dâku pâk, you must go — dâk carries the -u, pâk does not.",
+      "focus": "verbs",
+      "vocabulary": [
+        {
+          "gkh": "dâk",
+          "en": "must",
+          "nl": "moeten"
+        },
+        {
+          "gkh": "mâg",
+          "en": "can",
+          "nl": "kunnen"
+        }
+      ],
+      "examples": [
+        {
+          "gkh": "pâk durang dûl",
+          "en": "Go to the tower!",
+          "direction": "gkh-en",
+          "source": "pâk durang dûl"
+        },
+        {
+          "gkh": "tû dâku pâk",
+          "en": "You must go.",
+          "direction": "gkh-en",
+          "source": "tû dâku pâk"
+        },
+        {
+          "gkh": "ük mâgu sel dor",
+          "en": "I can see the land.",
+          "direction": "gkh-en",
+          "source": "ük mâgu sel dor"
+        }
+      ],
+      "drills": [
+        {
+          "prompt": "You must go",
+          "answer": "tû dâku pâk",
+          "kind": "produce"
+        },
+        {
+          "prompt": "Which word carries the tense in tû dâku pâk?",
+          "answer": "dâk, the modal. The main verb pâk stays a bare root.",
+          "kind": "recall"
+        }
+      ]
+    },
+    {
+      "id": "l09",
+      "title": "Joining thoughts",
+      "goal": "Two clauses in one sentence.",
+      "grammar": "Linking words sit between the two clauses and each clause keeps normal word order: ag and, vo or, nâth but, ghâsha because, râth when, sû that, ith if.",
+      "focus": "syntax",
+      "vocabulary": [
+        {
+          "gkh": "ag",
+          "en": "and",
+          "nl": "en"
+        },
+        {
+          "gkh": "nâth",
+          "en": "but",
+          "nl": "maar"
+        },
+        {
+          "gkh": "ghâsha",
+          "en": "because",
+          "nl": "omdat"
+        },
+        {
+          "gkh": "râth",
+          "en": "when",
+          "nl": "wanneer"
+        },
+        {
+          "gkh": "sû",
+          "en": "that",
+          "nl": "dat"
+        }
+      ],
+      "examples": [
+        {
+          "gkh": "ük pâku ghâsha tû magu",
+          "en": "I go because you follow",
+          "direction": "en-gkh",
+          "source": "I go because you follow"
+        },
+        {
+          "gkh": "ük pâku râth tû magu",
+          "en": "I go when you follow",
+          "direction": "en-gkh",
+          "source": "I go when you follow"
+        }
+      ],
+      "drills": [
+        {
+          "prompt": "I go because you follow",
+          "answer": "ük pâku ghâsha tû magu",
+          "kind": "produce"
+        },
+        {
+          "prompt": "ük pâku râth tû magu",
+          "answer": "I go when you follow",
+          "kind": "translate"
+        }
+      ]
+    },
+    {
+      "id": "l10",
+      "title": "The king who has strength",
+      "goal": "Relative clauses — the last structure in the supported grammar.",
+      "grammar": "kha attaches a clause to the noun in front of it, and inside that clause the object comes BEFORE the verb: shak kha khar dûnu, the king who has strength, literally king who strength has. Only clauses where the head noun is the subject work this way.",
+      "focus": "syntax",
+      "vocabulary": [
+        {
+          "gkh": "kha",
+          "en": "who, which",
+          "nl": "die"
+        },
+        {
+          "gkh": "dûn",
+          "en": "to have",
+          "nl": "hebben"
+        }
+      ],
+      "examples": [
+        {
+          "gkh": "shak kha khar dûnu",
+          "en": "the king who has strength",
+          "direction": "en-gkh",
+          "source": "the king who has strength"
+        },
+        {
+          "gkh": "ük selu shak kha khar dûnu",
+          "en": "I see the king who has strength",
+          "direction": "en-gkh",
+          "source": "I see the king who has strength"
+        }
+      ],
+      "drills": [
+        {
+          "prompt": "the king who has strength",
+          "answer": "shak kha khar dûnu",
+          "kind": "produce"
+        },
+        {
+          "prompt": "Inside a kha clause, does the object come before or after the verb?",
+          "answer": "Before. khar dûnu, not dûnu khar.",
+          "kind": "recall"
+        }
+      ]
+    }
+  ]
+}

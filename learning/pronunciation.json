@@ -1,0 +1,43 @@
+{
+  "note": "Authored pronunciation help, one entry per phoneme declared in data/phonology/phonology.json. Keys are phoneme ids; tests/learningContent.test.ts fails if a declared phoneme has no entry or an entry names a phoneme that does not exist, so this file cannot drift from the inventory. `en` and `nl` are anchor words a learner already knows how to say; `how` is the instruction for a sound neither language has.",
+  "consonants": {
+    "p": { "en": "p in spin", "nl": "p in pen", "how": "Unaspirated: no puff of air after it, closer to the Dutch p than the English one." },
+    "b": { "en": "b in bed", "nl": "b in bed" },
+    "t": { "en": "t in stop", "nl": "t in tak", "how": "Unaspirated, tongue against the ridge behind the teeth." },
+    "d": { "en": "d in dog", "nl": "d in dak" },
+    "k": { "en": "k in skin", "nl": "k in kat", "how": "Unaspirated. Note that k and kh are different sounds, not a spelling variation." },
+    "g": { "en": "g in go", "nl": "g in goal (the loanword g, not the Dutch native g)", "how": "A hard g. Dutch speakers: this is NOT the Dutch g in 'goed' — that sound is gh." },
+    "q": { "en": "no English equivalent", "nl": "geen Nederlands equivalent", "how": "A k made much further back, with the very back of the tongue against the soft palate — a deep, swallowed k. Say 'kar', then make the same sound as far back in the throat as you can." },
+    "gh": { "en": "no English equivalent", "nl": "g in goed", "how": "A voiced scrape at the back of the mouth. Dutch and Flemish speakers already have this; English speakers can start from a gargle and soften it." },
+    "kh": { "en": "ch in Scottish loch", "nl": "ch in acht", "how": "The voiceless partner of gh: same place, no voice." },
+    "z": { "en": "z in zoo", "nl": "z in zee" },
+    "s": { "en": "s in sun", "nl": "s in soep" },
+    "sh": { "en": "sh in ship", "nl": "sj in sjaal" },
+    "zh": { "en": "s in measure", "nl": "j in journaal", "how": "The voiced partner of sh. Never starts a word." },
+    "h": { "en": "h in hat", "nl": "h in huis" },
+    "m": { "en": "m in man", "nl": "m in man" },
+    "n": { "en": "n in no", "nl": "n in nee" },
+    "ng": { "en": "ng in sing", "nl": "ng in ding", "how": "One sound, not n followed by g. Never starts a word." },
+    "r": { "en": "no English equivalent", "nl": "r in rood (Gooise or throat r)", "how": "Trilled at the back of the throat, like French or standard German r. This is the sound that gives the language its growl — do not substitute an English r." },
+    "l": { "en": "l in look", "nl": "l in land", "how": "Always a clear l, never the dark l English uses at the end of 'full'." },
+    "w": { "en": "w in water", "nl": "w in wauw (not the Dutch w in 'water')", "how": "Dutch speakers: lips rounded, no teeth — the English w." },
+    "y": { "en": "y in yes", "nl": "j in ja" },
+    "v": { "en": "v in van", "nl": "v in vier" },
+    "th": { "en": "th in thin", "nl": "geen Nederlands equivalent", "how": "Tongue tip between the teeth, no voice. Dutch speakers: this is not s and not t — let the air hiss over the tongue tip." }
+  },
+  "vowels": {
+    "a": { "en": "a in father, cut short", "nl": "a in dat" },
+    "e": { "en": "e in bed", "nl": "e in bed" },
+    "i": { "en": "i in sit", "nl": "i in dit" },
+    "o": { "en": "o in hot", "nl": "o in pot" },
+    "u": { "en": "u in put", "nl": "oe in boek, cut short" },
+    "â": { "en": "a in father", "nl": "aa in kaas", "how": "The long partner of a. Length is meaningful: hold it." },
+    "ê": { "en": "e in they, without the glide", "nl": "ee in zee", "how": "The long partner of e." },
+    "î": { "en": "ee in see", "nl": "ie in niet", "how": "The long partner of i." },
+    "ô": { "en": "o in more, without the r", "nl": "oo in boot", "how": "The long partner of o." },
+    "û": { "en": "oo in food", "nl": "oe in boer", "how": "The long partner of u." },
+    "ai": { "en": "i in like", "nl": "ij in mijn" },
+    "au": { "en": "ow in how", "nl": "ou in koud" },
+    "oi": { "en": "oy in boy", "nl": "oi in hoi" }
+  }
+}
