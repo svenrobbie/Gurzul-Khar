@@ -12,31 +12,22 @@ Current status / what is and isn't done: [BACKLOG.md](BACKLOG.md)
 | Path | Contents |
 |---|---|
 | `data/` | Single source of truth for all linguistic data (phonology, orthography, morphology/grammar, lexicon) — JSON, validated by schema + tests |
-| `engine/` | Deterministic translation engine in TypeScript (tokeniser, morphological analyser, lemmatiser, coiner, EN/NL ⇄ Gurzûl Khar translator, native-script generator) |
-| `crates/` | The same engine in Rust. `gkh-core` is the portable, dependency-free core; `gkh-wasm` wraps it for the browser |
+| `crates/` | The language engine. `gkh-core` is the portable, dependency-free core — phonology, morphology, lexicon, coiner, translator; `gkh-wasm` wraps it for the browser |
+| `fixtures/` | Language-neutral test data: translations, phonotactics, lemmatisation, and the 10,549-case coiner golden file |
+| `scripts/` | Build and maintenance tools, all running against the same WebAssembly engine the site uses |
 | `website/` | The public site (Home, Translator, Dictionary, Grammar, Alphabet, Pronunciation, Learn, Lore, Engine docs, About) |
 | `learning/` | Course structure, lesson content and exercise data |
 | `alphabet/` | Khargûl script documentation and the procedural glyph generator |
 | `lore/` | Fictional in-world history and culture of Gurzûl Khar |
-| `tests/` | Automated tests across data validation, engine determinism and translation regression |
 | `docs/` | Project-level documentation |
 | `.github/workflows/` | CI: test, validate, build, deploy to GitHub Pages |
 
 ## Getting started
 
 ```powershell
-npm install
-npm install --prefix website
+npm run install:all
+npm run build:wasm   # the site cannot run without this
 npm run dev          # starts the website's Vite dev server
-```
-
-```powershell
-npm test             # engine + data tests (Vitest)
-npm run validate     # linguistic data validation report
-```
-
-```powershell
-npm run build        # typechecks the engine, then builds the website
 ```
 
 The website uses React Router's `HashRouter` (URLs like `/#/translator`), a deliberate choice so the site works
@@ -46,36 +37,37 @@ SPA-redirect trick or a base-path-aware browser router. See `website/vite.config
 Deployment to GitHub Pages runs automatically on push to `main` via `.github/workflows/deploy.yml`. The repository
 lives at [github.com/svenrobbie/Gurzul-Khar](https://github.com/svenrobbie/Gurzul-Khar) and the site is live.
 
-## Two engines
+## The engine
 
-The engine exists twice on purpose. `engine/` (TypeScript) is the original and is still what the site ships with;
-`crates/gkh-core` (Rust) is the port that will replace it and that the Android app will use. They are kept honest by
-shared, language-neutral fixtures in `tests/fixtures/*.json` — the same inputs and expected outputs are asserted by
-Vitest and by `cargo test`, so a divergence fails a build rather than surfacing months later on a phone.
+Everything about the language lives in `crates/gkh-core`: phonology, morphology, the lexicon, the coiner and the
+translator. It compiles to WebAssembly for this site, and the same crate will back the Android app and the
+command-line tooling, so a bug fixed in the translator is fixed everywhere at once.
 
-The Rust crate reads no files at runtime. `scripts/buildRustData.mjs` turns `data/*.json` into Rust constants at build
-time, which is why `gkh-core` has zero dependencies and compiles unchanged to WebAssembly. CI regenerates that data and
-fails if the checked-in copy is stale, so `data/` stays the single source of truth.
+The crate has no dependencies and reads no files at runtime. `scripts/buildRustData.mjs` turns `data/*.json` into
+Rust constants at build time, which is what keeps `data/` the single source of truth while making the engine
+impossible to start with the wrong data. CI regenerates that data and fails if the checked-in copy is stale.
+
+There was a TypeScript engine first. The port was held to shared fixtures in `fixtures/*.json` — the same inputs
+and expected outputs asserted by both suites while both existed — and the TypeScript engine was deleted once the
+Rust one reproduced every case. The fixtures stayed, and are now what pins the language against future changes.
 
 ```powershell
-npm run rust:data    # regenerate the Rust data + fixtures from data/
-npm run rust:test    # cargo test --workspace
+npm run rust:data    # regenerate the compiled-in language data from data/
+npm test             # cargo test --workspace
+npm run validate     # lexicon + learning content, checked against the engine
 ```
 
-### Building the site on the Rust engine
+### Building
 
-The website picks its engine at build time. Without the WebAssembly artifact it builds and runs on TypeScript as
-before; with it, `vite.config.ts` aliases the engine adapter to the compiled crate.
+The site has one engine, so the WebAssembly artifact is not optional: without it the build fails and says so.
 
 ```powershell
 rustup target add wasm32-unknown-unknown
 cargo install wasm-pack
-npm run build:wasm        # wasm-pack build crates/gkh-wasm
-npm run build:rust-site   # GKH_ENGINE=rust vite build
+npm run build        # builds the crate to wasm, then builds the site against it
 ```
 
-If the WebAssembly module fails to load at runtime, `website/src/engine/index.ts` falls back to the TypeScript engine
-rather than leaving the Translator dead.
+`npm run dev` needs the artifact too — run `npm run build:wasm` once first.
 
 ## Contributing
 

@@ -105,6 +105,26 @@ Separately, the translator's unknown-word handling (`engine/translator/index.ts`
 ### D22. The coiner's hash contract survived the port intact, and two details in it are load-bearing
 **Finding (recorded because both are easy to "clean up" and silently catastrophic):** `coiner_v1` sub-seeds each decision with `hash(format!("{root:016x}:{label}"))`. The zero-padding to 16 hex digits is part of the hash input, so dropping it would reshuffle every coined word ever produced. Separately, the minimum-length check counts *characters*, not bytes — `gkh.chars().count() < 2` — because `û` and `â` are two bytes each in UTF-8 and a byte-length check would accept one-character words. Both are pinned by the golden file, but neither is obvious from reading the code, so they are written down here.
 
+## 2026-11-24 — The TypeScript engine is deleted
+
+### D23. One implementation, not two kept in step
+**Decision:** `engine/` and its Vitest suite are removed. `crates/gkh-core`, compiled to WebAssembly, is now the only implementation of Gurzûl Khar, and the website, the build tooling and the dev-server review tool all call it.
+**Rationale:** two engines agreeing is a property that has to be maintained, and the shared fixtures (D19) were the maintenance. They did their job — the port is verified — and keeping them as a cross-check would mean every future grammar rule gets written twice, in a language the project is moving away from. The fixtures themselves stay, now asserted by the Rust suite alone, where their job is pinning behaviour against change rather than comparing two implementations.
+**What this costs, honestly:** the site cannot be built or run without the WebAssembly artifact. That is a real new step for a contributor (`npm run build:wasm`, which needs the wasm32 target and wasm-pack). It is accepted rather than softened with a fallback, because a site that silently runs a second, different engine when the first fails to load is worse than one that says it is broken.
+
+### D24. Reverse coining was ported rather than lost
+**Finding and fix:** the coinage index was the one piece of engine behaviour the Rust port had deliberately skipped, on the grounds that it was a runtime record rather than language. Deleting the TypeScript engine would therefore have quietly removed a working feature — `han` reading back as `draak`. It is now in the core: `data/lexicon/coinages.json` is compiled in like every other data file, and the session half is a `thread_local` rather than a lock, which keeps the crate free of synchronisation and of I/O. Two tests pin both halves of what the index actually promises: a word the translator coined reads back, and a spelling nobody has ever coined still comes back bracketed.
+**Worth recording:** "not ported, by design" and "not ported, and nobody checked what that removed" look identical in a commit log. The deletion is what forced the question.
+
+### D25. Drawing stays in the website; the engine decides what to draw
+**Decision:** `glyphGenerator` moved to `website/src/script/` rather than into the crate. The engine returns syllable blocks (`transliterate`), and the website turns those into SVG.
+**Rationale:** the Khargûl glyphs are derived from phonological features (D3/D12), and *that* derivation is language — it stays in the crate, in the data the blocks carry. The 60×100 unit cell, the spine geometry and the thorn angles are rendering decisions for a browser, and an Android app will want different ones. Putting them in the core would mean the Rust crate emitted SVG, which is the wrong shape for a UniFFI binding and a strange thing for a language engine to do. The same reasoning moved `engine/data.ts` — typed JSON loading, no rules — to `website/src/data.ts`.
+
+### D26. The tooling asks the engine rather than keeping its own opinion
+**Decision:** every build and maintenance script (`npm run validate`, the fixture and golden generators, the ear-test sample, the coinage index, the IPA sync) and the dev-server review tool load the same WebAssembly build the site loads.
+**Rationale:** a validator with its own idea of what a legal word is would be exactly the duplication the port removed, only harder to notice because it only runs at build time. The one thing this needed from the crate was `coin_batch`: collision resolution depends on what has already been issued, so coining a list one call at a time — each with an empty reserved set — gives a different and wrong answer.
+**What was dropped on purpose:** `buildCoinerWeights`, because `coiner_v1`'s weights are frozen and a button that recomputes them from a lexicon that has since grown is a hazard rather than a tool; and `coinerFrozen`'s SHA-256 digest, because the golden file already fails if the weights move.
+
 ## Open questions for the project owner (non-blocking — current defaults stand until revisited)
 - Whether Gurzûl Khar should eventually gain a grammatical case system beyond the current postposition-based strategy.
 - Whether regional/historical dialect variants (spec §10.8) should diverge phonologically or only lexically.

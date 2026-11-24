@@ -21,19 +21,34 @@ Deliberately not ported:
 
 - The Khargûl glyph generator and the coinage index. The site renders glyphs client-side in TypeScript and will keep doing so; the coinage index is a runtime record, not engine behaviour.
 
-## Phase 4 of the roadmap — the website on WebAssembly — in progress
+## Phase 4 of the roadmap — the website on WebAssembly — complete
 
 Done:
 
-- `crates/gkh-wasm` — a `wasm-bindgen` wrapper exporting `translate`, `word_ipa`, `sentence_ipa`, `lemmatize`, `coin`, `lemma_guess`, `analyze_sentence` across a hand-rolled JSON boundary (no `serde`, so the core keeps its zero-dependency guarantee). 8 boundary tests covering diacritics, refusals, coined words and the word-by-word analysis table.
-- A workspace `Cargo.toml` over `gkh-core` and `gkh-wasm`.
-- `website/src/engine/` — one `Engine` interface, a TypeScript implementation and a Rust one. Vite picks between them at build time via `GKH_ENGINE`; without the wasm artifact a stub keeps the site building, and `initEngine()` falls back to TypeScript if the module fails to load. The Translator page now talks to the adapter rather than the engine directly. See DESIGN_DECISIONS.md D21.
-- Verified in a browser on the TypeScript path through the new adapter: `the king who has strength` → `shak kha khar dûnu`, `Ik zie de draak` → `ük sel han` with `han` marked as coined, the five-row analysis table intact, no console errors.
+- `crates/gkh-wasm` — a `wasm-bindgen` wrapper exporting `translate`, `word_ipa`, `sentence_ipa`, `lemmatize`, `coin`, `lemma_guess`, `analyze_sentence`, `check_word`, `tokenize`, `transliterate`, `normalise_seed_for` and `coin_batch` across a hand-rolled JSON boundary, so the core keeps its zero-dependency guarantee. 16 boundary tests.
+- `website/src/engine/` — the site talks to one `Engine` interface and parses the crate's JSON in exactly one place. There is no fallback and no stub: a missing artifact is a build failure that says how to fix it, and a load failure at runtime is a page that says so rather than a site quietly running something else.
+- CI builds the crate, tests it, compiles it to WebAssembly and builds the site against that artifact, failing if no `.wasm` reaches the bundle. The deploy workflow does the same before publishing.
+- `coin_batch`, because collision resolution depends on what has already been issued — coining a list one call at a time, each with an empty reserved set, would give a different and wrong answer. The golden file and the coinage index are both built through it.
 
-Still not done:
+## The TypeScript engine is deleted
 
-- **The wasm artifact has never been built or run.** `rustup target add wasm32-unknown-unknown` could not reach `static.rust-lang.org` from the environment this pass ran in, so `npm run build:wasm` has not executed anywhere. The gate for this phase is a browser running the compiled crate, and it has not been met.
-- **The TypeScript engine is therefore still in place.** Deleting it before its replacement is proven would leave the live site with no working engine and no fallback. It is also a wider job than swapping the translator: seven website pages import `@engine/data.js` for display data, and the Alphabet, Pronunciation and Dictionary pages use `glyphGenerator`, `transliteration`, `ipa`, `phonotacticValidator` and `phonemes` directly. Removing `engine/` means repointing those at `@data` JSON and at the wasm exports, not deleting a folder.
+`engine/` is gone, along with the Vitest suite and the TypeScript build scripts. There is now one implementation of the language.
+
+What moved, and why:
+
+- **Reverse coining was ported, not dropped.** It was the one piece of engine behaviour the port had left behind, so deleting TypeScript would have quietly removed a feature. `data/lexicon/coinages.json` is compiled into the crate and the session half is thread-local, which keeps the core free of locks and of file I/O. Two tests pin both halves of the promise: a coined word reads back, and a spelling nobody has coined still comes back bracketed.
+- **Rendering stayed in the website.** `glyphGenerator` draws syllable blocks as SVG; the engine decides what the blocks are. Geometry is drawing, not language. `engine/data.ts` was only typed JSON loading, so it is `website/src/data.ts` now.
+- **The tooling runs on the engine.** `npm run validate`, the fixture and golden generators, the ear-test sample, the coinage index, the IPA sync and the dev-server review tool all load the same WebAssembly build. No script keeps its own opinion about what a legal word is.
+- **Tests the Rust suite did not already cover were ported rather than dropped:** lexicon IPA against the engine, both halves of the frozen-snapshot bargain, the phoneme round trip over every entry, unique ids, determinism across repeated runs, and the learning-content checks (a node script, since the course is not compiled into the crate).
+- `fixtures/` is no longer under `tests/`, which no longer exists.
+
+Deliberately not ported:
+
+- `scripts/buildCoinerWeights.ts`. `coiner_v1`'s weights are frozen, so a button that recomputes them from a lexicon that has since grown is a hazard rather than a tool. A `coiner_v2` would need a fresh measurement anyway, and `data/phonology/coinerWeights_v1.json` records what the original was measured over.
+- `coinerFrozen.test.ts`'s SHA-256 digest of the weights file. The golden file already fails if the weights move, so the digest was a second alarm for the same event.
+- `mergedView.ts` and `wordGenerator.ts`. The first was only ever used by its own test; the second is replaced by the frozen coiner, so a suggested word is now the spelling the translator was already producing for that meaning rather than a third, unrelated invention.
+
+Known gap: `website/devConflicts.ts` (homograph and duplicate-gloss detection for the proposal flow) lost its automated test with the Vitest suite. It is dev-server-only bookkeeping over the lexicon files rather than language behaviour, but it is untested now and that is worth saying.
 
 ## Phase 2 of the roadmap — finish the language — complete
 
@@ -107,7 +122,7 @@ Still not done:
 1. **Audit, fix as you go** — done. Read every engine/website module; confirmed the translator genuinely tokenizes/parses/transforms grammar rather than swapping words; fixed what was found (unknown-word silent-failure, the v0.1 alphabet geometry, the inlined/forked phonotactic checker) rather than only reporting it.
 2. **Unknown-word & lexicon-management system** — done, with one explicit scope limit. Partial translation (never silently drops a word) is real and tested. The official/proposed/deprecated/unknown lifecycle is real: `data/lexicon/proposals.json` + `engine/lexicon/{conflicts,wordGenerator,mergedView}.ts` + `website/devApi.ts` (dev-server-only HTTP API) + `/propose` and `/admin` pages, verified end to end in a browser (propose → conflict shown → force-submit → appears on /admin → approve → really lands in `lexicon.json`). Scope limit: the "backend" only exists inside `npm run dev`; the static production build has no server, so Propose/Admin/the Dictionary's lifecycle toggle detect that and say so rather than pretending to work. See DESIGN_DECISIONS.md D13/D14.
 3. **Alphabet redesign (Thornscript)** — done. `glyphGenerator.ts` rewritten to the spine+thorn construction rules exactly as `alphabet.json` v0.2.0 documents them; full chart (consonants/vowels/diphthongs/numerals/punctuation) regenerated; a sample sentence from the regression suite renders live on the Alphabet page. No font file (OTF/TTF) — unchanged limitation from v0.1, still SVG-only.
-4. **Translation engine improvements** — partial. Confirmed (not assumed) the engine does real grammatical parsing. Added the unknown-word partial-translation fallback and tests for both well-formed and ill-formed/unsupported input (a relative-clause sentence fails honestly). Did NOT add new grammatical coverage (e.g. relative clauses, conditionals) this pass — that remains the same documented, deliberately-scoped subset as v0.1 (see `engine/translator/`); extending it further is a larger follow-up than this pass's budget covered.
+4. **Translation engine improvements** — partial. Confirmed (not assumed) the engine does real grammatical parsing. Added the unknown-word partial-translation fallback and tests for both well-formed and ill-formed/unsupported input (a relative-clause sentence fails honestly). Did NOT add new grammatical coverage (e.g. relative clauses, conditionals) this pass — that remains the same documented, deliberately-scoped subset as v0.1 (see `crates/gkh-core/src/translator/`); extending it further is a larger follow-up than this pass's budget covered.
 5. **Dictionary expansion** — done to 292 entries (up from 133), not yet 500-1000. See the Language section below for the breakdown by domain.
 6. **Pronunciation / offline TTS groundwork** — partial, honestly. IPA/stress documentation already existed in phonology.json (extended, not duplicated). A genuinely offline, non-neural, rule-based Web Audio prototype was built and verified working (`website/src/lib/audioSynth.ts`) as a second, clearly "experimental" option alongside the existing SpeechSynthesis aid — see D16. It does not model coarticulation or claim to be real speech.
 7. **Website/UX** — done. Translate/dictionary/propose-a-word/alphabet/grammar/pronunciation/examples/learning are all reachable from the top nav (or, for the single-owner admin tool, from the About page) and visually consistent with the existing dark theme. Checked (not assumed) mobile width (375px) on the Propose page in a browser: no horizontal scroll, nav wraps, two-column grids collapse to one column.
@@ -118,12 +133,12 @@ Still not done:
 - [x] Phonological inventory for v0.1 — `data/phonology/phonology.json`. Extended this pass with two phonemes (`v`, `th`) that the lexicon already used but the inventory never declared, and an orthographic variant note (`ü` = written variant of `û`) — see DESIGN_DECISIONS.md §D6/D7.
 - [x] Vowel/consonant system documented with IPA, place/manner/voicing, positional restrictions
 - [x] Pronunciation conventions (stress rules, intonation) documented
-- [x] Word stress rules documented, and now actually implemented (`engine/phonology/stress.ts`, tested)
+- [x] Word stress rules documented, and now actually implemented (`crates/gkh-core/src/phonology/stress.rs`, tested)
 - [x] Original writing system designed (Khargûl script, procedural abugida) — `data/orthography/alphabet.json`
 - [x] Alphabet chart — rendered live on the Alphabet page from the procedural glyph generator (every consonant/vowel/diphthong)
-- [x] Digitally renderable characters — inline SVG generator (`engine/phonology/glyphGenerator.ts`), implemented and tested
+- [x] Digitally renderable characters — inline SVG generator (`website/src/script/glyphGenerator.ts`, drawing the syllable blocks the engine returns), implemented and tested
 - [x] Latin transcription system (single source of truth in phonology data)
-- [x] Transliteration in both directions (Latin ↔ native-script block data) — `engine/generator/transliteration.ts`, round-trip tested against every lexicon entry
+- [x] Transliteration in both directions (Latin ↔ native-script block data) — `crates/gkh-core` (blocks) + `website/src/script/transliteration.ts` (SVG), round-trip tested against every lexicon entry
 - [~] Full grammatical specification — core noun/verb/adjective/pronoun/syntax system documented (`data/morphology/grammar.json`) and now actually implemented in the engine for a defined subset; does not cover every edge case (e.g. all irregular forms, dialectal variation, relative clauses, conditionals are documented but not yet implemented in the translator)
 - [~] Core vocabulary — 292 entries after the Phase 2 expansion (up from the 133-entry v0.1 seed); target is 500–1000 (see Design Decisions open questions)
 - [x] Word derivation rules (agent noun `-dûm`, adverb `-ith`, place noun `-ûl`) documented and now implemented in the morphological analyzer
@@ -132,11 +147,11 @@ Still not done:
 - [x] Fictional language history — `lore/history/history.md`, rendered on the Lore page
 
 ## Language engine
-- [x] English → Gurzûl Khar — implemented (`engine/translator/`), tested
+- [x] English → Gurzûl Khar — implemented (`crates/gkh-core/src/translator/`), tested
 - [x] Dutch → Gurzûl Khar — implemented, tested
 - [x] Gurzûl Khar → English — implemented, tested
 - [x] Gurzûl Khar → Dutch — implemented, tested
-- [x] Morphological analysis (tokenizer + affix stripping) — `engine/morphology/`, tested
+- [x] Morphological analysis (tokenizer + affix stripping) — `crates/gkh-core/src/morphology/`, tested
 - [x] Grammatical processing (tense, plural, negation, questions, possession, comparative/superlative, coordination, complementiser clauses)
 - [x] Deterministic word generation (same input + same data version ⇒ same output — covered by `tests/determinism.test.ts`)
 - [x] Unknown word handling (Phase 2) — never silently drops an unrecognized word. The real grammatical parser still flags and explains an unknown root; when that's the ONLY reason a sentence fails, the engine now falls back to a word-for-word gloss of the recognized words, brackets the unrecognized ones, and marks the result `partial: true` with `unknownWords: [...]` rather than failing the whole sentence. Does not synthesize novel derivations for genuinely new concepts on its own — that's what the Propose-a-word flow is for.
@@ -174,10 +189,10 @@ Still not done:
 - [x] GitHub Pages deployment workflow (`.github/workflows/deploy.yml`) and CI workflow (`.github/workflows/ci.yml`) — pushed and running; the site is live. `.github/workflows/rust.yml` added for the Rust workspace and the wasm build.
 
 ## Quality
-- [x] Automated tests — 51 Vitest tests (up from 38) across phonotactic validation, dictionary schema, determinism, Latin↔native round-trip, a 28-case translation regression suite covering all 4 directions (including unknown-word partial translation and an unsupported-pattern case), and Phase 2's new lexicon-lifecycle suite (conflict detection, word-generator validity/determinism, merged-view filtering). All passing.
+- [x] Automated tests — the Rust suite (`cargo test --workspace`): phonotactics, the 10,549-case coiner golden file, IPA, lemmatisation, a 52-case translation suite covering all four directions, lexicon integrity, and the WebAssembly boundary. Plus `npm run validate` for data schema and learning content. The former 51 Vitest tests (up from 38) across phonotactic validation, dictionary schema, determinism, Latin↔native round-trip, a 28-case translation regression suite covering all 4 directions (including unknown-word partial translation and an unsupported-pattern case), and Phase 2's new lexicon-lifecycle suite (conflict detection, word-generator validity/determinism, merged-view filtering). All passing. The Vitest suite itself is gone with the TypeScript engine; what it asserted is either covered by the Rust tests or ported to `npm run validate` — see "The TypeScript engine is deleted" above for the two things that were not.
 - [x] Linguistic data validation — `npm run validate` (`tests/validateData.ts`), wired into CI
 - [x] Consistent terminology (single JSON source of truth; engine and website both read `/data` directly, verified by code review — no duplicated grammar/lexicon copies)
-- [x] Documentation (this file, DESIGN_DECISIONS.md, README.md, docs/CONTRIBUTING.md, docs/LICENSE_NOTES.md)
+- [x] Documentation (this file, DESIGN_DECISIONS.md, ROADMAP.md, README.md, docs/CONTRIBUTING.md, docs/LICENSE_NOTES.md)
 - [x] Installation instructions (README.md)
 - [x] Contribution guidelines (docs/CONTRIBUTING.md)
 - [x] Versioned language data (`"version"` field in every `/data` JSON file)
@@ -185,11 +200,10 @@ Still not done:
 ## Explicitly NOT done yet (do not claim otherwise)
 - No OpenType/TrueType font file for the Khargûl script — native script is generated inline SVG only.
 - No recorded human pronunciation audio — SpeechSynthesis is used as a clearly labelled synthetic aid only.
-- The WebAssembly build has never been produced or run — see phase 4 above. The site still ships the TypeScript engine.
 - No Android app. That is phase 5 (UniFFI + Kotlin/Compose) and no code for it exists.
 - Lexicon is a 292-entry set after Phase 2 (up from the 133-word v0.1 seed), not the full 500–1000 target.
 - Learning course Levels 2–5 are documented in `/data`/the spec but not built into interactive lessons; shown as an honest roadmap.
-- The translator supports a deliberately scoped grammatical subset (see `engine/translator/`); it does not handle relative clauses, conditionals, or arbitrary free-form sentences — unsupported input fails with an explanation rather than guessing. Phase 2 added unknown-*vocabulary* partial translation (see above), which is a different thing from unsupported *grammar* — a relative clause with every word known still fails honestly, by test.
+- The translator supports a deliberately scoped grammatical subset (see `crates/gkh-core/src/translator/`); it does not handle relative clauses, conditionals, or arbitrary free-form sentences — unsupported input fails with an explanation rather than guessing. Phase 2 added unknown-*vocabulary* partial translation (see above), which is a different thing from unsupported *grammar* — a relative clause with every word known still fails honestly, by test.
 - English/Dutch surface generation (when translating out of Gurzûl Khar) uses a documented, non-exhaustive set of conjugation rules for the interface languages themselves (not the conlang) — see DESIGN_DECISIONS.md §D11.
 - A handful of pre-existing lexicon entries violate the documented phonotactic cluster/position rules (e.g. "zhâ" begins with zh, which the rules say never happens word-initially). These are detected and reported by `npm run validate` / `tests/phonotactics.test.ts` but intentionally not auto-corrected, since fixing them would mean inventing new spellings for existing, cross-referenced words. No *new* Phase 2 entry adds to this list (checked by re-running the tests during drafting, not just at the end).
 - The Phase 2 word-proposal/review "backend" (`website/devApi.ts`) only exists inside the Vite dev server (`npm run dev`). It is not deployed anywhere, has no authentication (by design — see DESIGN_DECISIONS.md D14), and does not run in the static production/GitHub Pages build at all. `/propose`, `/admin`, and the Dictionary's lifecycle toggle all detect this and say so explicitly rather than presenting a dead UI.
