@@ -8,6 +8,11 @@ mod generated;
 
 pub use generated::*;
 
+/// coiner_v1's frozen weight tables and reserved spellings.
+pub mod coiner {
+    include!("coiner_generated.rs");
+}
+
 /// Every vowel the language declares, in the order the tokenizer should prefer
 /// when two spellings are the same length: diphthongs, then long, then short.
 pub fn all_vowels() -> impl Iterator<Item = &'static Vowel> {

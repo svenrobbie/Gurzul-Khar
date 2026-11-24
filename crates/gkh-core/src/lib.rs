@@ -20,4 +20,5 @@
 #![warn(missing_docs)]
 
 pub mod data;
+pub mod lexicon;
 pub mod phonology;
