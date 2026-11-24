@@ -1,0 +1,20 @@
+[package]
+name = "gkh-core"
+version = "0.1.0"
+edition = "2021"
+description = "The Gurzûl Khar language engine: phonology, morphology, lexicon and translation. Deterministic, no I/O, no dependencies."
+license = "MIT"
+publish = false
+
+# No dependencies, deliberately.
+#
+# The language data is compiled in as Rust constants (src/data/generated.rs),
+# so there is no serde, no JSON parsing and no file access anywhere in the
+# crate. That makes it trivially portable to wasm32 and to Android, and it
+# removes a whole class of "it worked on my machine" failure: there is no file
+# to be missing, stale or malformed at runtime.
+[dependencies]
+
+[lib]
+name = "gkh_core"
+path = "src/lib.rs"

@@ -8,3 +8,6 @@ website/node_modules/
 coverage/
 .claude/worktrees/
 vitest.config.ts.timestamp-*.mjs
+
+# Rust build output
+crates/*/target/
