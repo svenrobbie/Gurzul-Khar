@@ -18,6 +18,21 @@ pub mod lexicon {
     include!("lexicon_generated.rs");
 }
 
+/// Grammar constants: affixes, particles and markers.
+pub mod grammar {
+    include!("grammar_generated.rs");
+}
+
+/// Looks up a value in a generated `&[(&str, &str)]` table.
+pub fn table_get(table: &'static [(&'static str, &'static str)], key: &str) -> Option<&'static str> {
+    table.iter().find(|(k, _)| *k == key).map(|(_, v)| *v)
+}
+
+/// Reverse lookup in a generated table: finds the key for a value.
+pub fn table_key_of(table: &'static [(&'static str, &'static str)], value: &str) -> Option<&'static str> {
+    table.iter().find(|(_, v)| *v == value).map(|(k, _)| *k)
+}
+
 /// Every vowel the language declares, in the order the tokenizer should prefer
 /// when two spellings are the same length: diphthongs, then long, then short.
 pub fn all_vowels() -> impl Iterator<Item = &'static Vowel> {
