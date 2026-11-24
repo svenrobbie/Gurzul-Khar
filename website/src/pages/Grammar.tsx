@@ -143,7 +143,10 @@ export default function Grammar() {
                 ["Imperative", grammar.syntax.imperative],
                 ["Conditional", grammar.syntax.conditional],
                 ["Relative clause", grammar.syntax.relativeClause],
-              ] as [string, string][]
+                ["Relative clause — scope", (grammar.syntax as Record<string, string>).relativeClauseNote],
+                ["Postpositional phrase", (grammar.syntax as Record<string, string>).postpositionalPhrase],
+                ["Modal", (grammar.syntax as Record<string, string>).modal],
+              ].filter(([, pattern]) => Boolean(pattern)) as [string, string][]
             ).map(([label, pattern]) => (
               <tr key={label}>
                 <th style={{ width: "30%" }}>{label}</th>
