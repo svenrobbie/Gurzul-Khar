@@ -1,0 +1,9 @@
+# Workspace for the Rust side of the project.
+#
+# gkh-core holds the language and takes no dependencies at all. gkh-wasm is a
+# thin binding layer over it, and any future Android bindings will sit beside
+# it the same way — so there is exactly one implementation of the language,
+# with adapters around it rather than copies of it.
+[workspace]
+resolver = "2"
+members = ["crates/gkh-core", "crates/gkh-wasm"]

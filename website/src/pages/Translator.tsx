@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
-import { translate, type Direction, type TranslationResult } from "@engine/translator/index.js";
-import { SHOW_NATIVE_SCRIPT } from "../features";
+import { engine, type Direction, type TranslationResult } from "../engine";
 
 const DIRECTIONS: { value: Direction; label: string }[] = [
   { value: "en-gkh", label: "English → Gurzûl Khar" },
@@ -54,7 +53,7 @@ export default function Translator() {
 
   const result: TranslationResult | null = useMemo(() => {
     if (!input.trim()) return null;
-    return translate(input, direction);
+    return engine().translate(input, direction);
   }, [input, direction]);
 
   function handleDirectionChange(next: Direction) {
@@ -185,9 +184,6 @@ export default function Translator() {
                   {result.pronunciation}
                 </p>
               )}
-              {SHOW_NATIVE_SCRIPT && result.nativeScript && (
-                <div className="glyph-row" dangerouslySetInnerHTML={{ __html: result.nativeScript }} aria-label="Khargûl native script rendering" />
-              )}
               <div style={{ marginTop: "0.5rem" }}>
                 <button className="secondary" onClick={copyOutput} type="button">
                   {copied ? "Copied!" : "Copy output"}
@@ -225,22 +221,24 @@ export default function Translator() {
                     </tr>
                   </thead>
                   <tbody>
-                    {result.explanation.words.map((w, i) => (
-                      <tr key={i}>
-                        <td>{w.surface}</td>
-                        <td>{w.root}</td>
-                        <td>{w.gloss}</td>
-                        <td>{w.pos ?? "—"}</td>
-                        <td>{w.affixes.length ? w.affixes.map((a) => `${a.suffix} (${a.gloss})`).join(", ") : "—"}</td>
-                      </tr>
-                    ))}
+                    {engine()
+                      .analyze(input, direction)
+                      .map((w, i) => (
+                        <tr key={i}>
+                          <td>{w.surface}</td>
+                          <td>{w.root}</td>
+                          <td>{w.gloss}</td>
+                          <td>{w.pos ?? "—"}</td>
+                          <td>{w.affixes.length ? w.affixes.join(", ") : "—"}</td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
-                {result.explanation.transformations.length > 0 && (
+                {result.ok && result.transformations.length > 0 && (
                   <>
                     <h3>Grammatical transformations applied</h3>
                     <ul>
-                      {result.explanation.transformations.map((t, i) => (
+                      {result.transformations.map((t: string, i: number) => (
                         <li key={i}>{t}</li>
                       ))}
                     </ul>

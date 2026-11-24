@@ -17,7 +17,10 @@
     "coiner:sample": "tsx scripts/sampleCoinages.ts > COINER_SAMPLE.md",
     "coiner:index": "tsx scripts/buildCoinageIndex.ts",
     "lexicon:ipa": "tsx scripts/syncLexiconIpa.ts",
-    "rust:data": "node scripts/buildRustData.mjs ."
+    "rust:data": "node scripts/buildRustData.mjs .",
+    "rust:test": "cargo test --manifest-path Cargo.toml",
+    "build:wasm": "wasm-pack build crates/gkh-wasm --target web --out-dir pkg",
+    "build:rust-site": "npm run build:wasm && cross-env GKH_ENGINE=rust npm run --prefix website build"
   },
   "devDependencies": {
     "typescript": "^5.6.3",

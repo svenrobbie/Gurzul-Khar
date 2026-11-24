@@ -20,10 +20,21 @@ export default defineConfig({
       allow: [path.resolve(__dirname, ".."), path.resolve(__dirname)],
     },
   },
+  // GKH_ENGINE=rust builds the site against the Rust core compiled to
+  // WebAssembly; anything else keeps the TypeScript engine and compiles the
+  // WebAssembly path out. The alias is what makes that a build-time choice, so
+  // the site still builds when crates/gkh-wasm/pkg does not exist yet.
+  define: {
+    "import.meta.env.VITE_GKH_ENGINE": JSON.stringify(process.env.GKH_ENGINE ?? "typescript"),
+  },
   resolve: {
     alias: {
       "@engine": path.resolve(__dirname, "../engine"),
       "@data": path.resolve(__dirname, "../data"),
+      "@wasm":
+        process.env.GKH_ENGINE === "rust"
+          ? path.resolve(__dirname, "../crates/gkh-wasm/pkg/gkh_wasm.js")
+          : path.resolve(__dirname, "src/engine/wasmStub.ts"),
     },
   },
   build: {
