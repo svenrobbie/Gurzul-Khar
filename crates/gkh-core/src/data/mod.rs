@@ -13,6 +13,11 @@ pub mod coiner {
     include!("coiner_generated.rs");
 }
 
+/// The hand-authored vocabulary.
+pub mod lexicon {
+    include!("lexicon_generated.rs");
+}
+
 /// Every vowel the language declares, in the order the tokenizer should prefer
 /// when two spellings are the same length: diphthongs, then long, then short.
 pub fn all_vowels() -> impl Iterator<Item = &'static Vowel> {
