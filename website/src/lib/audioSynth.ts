@@ -9,7 +9,8 @@
 // (vowel height/backness via id, consonant manner/voicing), one phoneme
 // after another. It is honestly labelled "experimental, not real speech" in
 // the UI — see BACKLOG.md §6 for exactly what this is and is not.
-import { tryTokenizeWord, type PhonemeToken } from "@engine/phonology/phonemes.js";
+import { engine } from "../engine";
+import type { PhonemeToken } from "../script/types";
 
 // Rough, deliberately simplified pitch per vowel quality (NOT real formant
 // values) — close front vowels get a higher tone, close back vowels a lower
@@ -102,7 +103,7 @@ export function playRuleBasedPronunciation(word: string): boolean {
   if (typeof window === "undefined") return false;
   const AudioCtor = window.AudioContext || (window as any).webkitAudioContext;
   if (!AudioCtor) return false;
-  const tokens = tryTokenizeWord(word);
+  const tokens = engine().tokenize(word);
   if (!tokens || tokens.length === 0) return false;
 
   if (!sharedCtx) sharedCtx = new AudioCtor();

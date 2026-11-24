@@ -3,32 +3,35 @@ export default function EngineDocs() {
     <div>
       <h1>How the translation engine works</h1>
       <p>
-        This page describes the <em>actual</em> pipeline implemented in <code>engine/</code> — not an idealised
-        version of it. The engine is deterministic: the same input, against the same version of the language data in
-        <code>/data</code>, always produces the same output.
+        This page describes the <em>actual</em> pipeline implemented in <code>crates/gkh-core</code> — not an
+        idealised version of it. The engine is deterministic: the same input, against the same version of the
+        language data in <code>/data</code>, always produces the same output.
       </p>
 
       <section className="card" style={{ marginTop: "1rem" }}>
-        <h2>0. Two implementations, one specification</h2>
+        <h2>0. One engine, three front ends</h2>
         <p>
-          The pipeline below exists twice: in TypeScript under <code>engine/</code>, and in Rust under{" "}
-          <code>crates/gkh-core</code>. The Rust crate is the one that will eventually run here (compiled to
-          WebAssembly) and in the Android app, so that a bug fixed in the translator is fixed on every platform at
-          once rather than drifting between two codebases.
+          Everything below runs in <code>crates/gkh-core</code>, a Rust crate compiled to WebAssembly and loaded by
+          this page. The same crate backs the command-line tools and will back the Android app, so a bug fixed in
+          the translator is fixed everywhere at once rather than being fixed twice and then drifting.
         </p>
         <p>
-          They are kept in agreement by data, not by review: the inputs and expected outputs live in
-          <code>tests/fixtures/*.json</code>, and both test suites assert the same files. A divergence fails a build.
-          The Rust crate has no dependencies and reads no files at runtime — the JSON in <code>/data</code> is
-          generated into Rust constants at build time, so <code>/data</code> stays the single source of truth for
-          both engines.
+          It was a TypeScript engine first. The port was checked against shared fixtures in <code>fixtures/*.json</code>{" "}
+          — the same inputs and expected outputs asserted by both suites while both existed — and the TypeScript
+          engine was deleted once the Rust one reproduced every case. The fixtures stayed: they are now what pins
+          the language's behaviour against future changes.
+        </p>
+        <p>
+          The crate has no dependencies and reads no files at runtime. The JSON in <code>/data</code> is generated
+          into Rust constants at build time, so the data cannot be loaded wrongly and <code>/data</code> is still
+          the single source of truth.
         </p>
       </section>
 
       <section className="card" style={{ marginTop: "1rem" }}>
         <h2>1. Tokenize</h2>
         <p>
-          The input sentence is split into words (<code>engine/morphology/tokenizer.ts</code>), punctuation is
+          The input sentence is split into words (<code>morphology/tokenizer</code>), punctuation is
           separated out, and a trailing "?" is noted as a yes/no-question marker.
         </p>
       </section>
@@ -36,7 +39,7 @@ export default function EngineDocs() {
       <section className="card" style={{ marginTop: "1rem" }}>
         <h2>2. Analyze</h2>
         <p>
-          <strong>Gurzûl Khar input</strong> is run through <code>engine/morphology/analyzer.ts</code>, which strips
+          <strong>Gurzûl Khar input</strong> is run through <code>translator/analyzer</code>, which strips
           known affixes — plural <code>-ûk</code>/<code>-akûk</code>, tense suffixes, possessive suffixes, the
           reflexive suffix, and the derivational suffixes <code>-dûm</code>/<code>-ith</code>/<code>-ûl</code> — in a
           fixed priority order, always checking the stripped root against the lexicon. Every suffix string it checks
@@ -75,9 +78,10 @@ export default function EngineDocs() {
         <h2>5. Native script &amp; pronunciation</h2>
         <p>
           When the target is Gurzûl Khar, the Latin output is tokenized into phonemes
-          (<code>engine/phonology/phonemes.ts</code>), grouped into syllables by the phonotactic rules in
-          <code>data/phonology/phonology.json</code> (<code>engine/phonology/syllabify.ts</code>), and rendered to
-          inline SVG glyphs (<code>engine/phonology/glyphGenerator.ts</code>) following the construction rules in
+          (<code>phonology/phonemes</code>), grouped into syllables by the phonotactic rules in
+          <code>data/phonology/phonology.json</code> (<code>phonology/syllabify</code>), and handed back to the site, which renders them as
+          inline SVG glyphs (<code>website/src/script/glyphGenerator.ts</code> — geometry is drawing, not language)
+          following the construction rules in
           <code>data/orthography/alphabet.json</code>. The same syllabification also drives stress placement for the
           IPA pronunciation string.
         </p>

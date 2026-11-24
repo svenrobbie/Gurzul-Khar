@@ -7,3 +7,13 @@
 [workspace]
 resolver = "2"
 members = ["crates/gkh-core", "crates/gkh-wasm"]
+
+# Smaller WebAssembly artifact: the site ships this to every visitor, so the
+# release profile trades compile time and a readable backtrace for bytes.
+# Cargo only honours a profile at the workspace root.
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

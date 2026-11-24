@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { phonology } from "@engine/data.js";
-import { ipaOfWord } from "@engine/translator/ipa.js";
+import { phonology } from "../data";
+import { engine } from "../engine";
 import { playRuleBasedPronunciation } from "../lib/audioSynth.js";
 
 function speak(text: string) {
@@ -121,7 +121,7 @@ export default function Pronunciation() {
         <input id="practice-word" value={practiceWord} onChange={(e) => setPracticeWord(e.target.value)} />
         <div style={{ marginTop: "0.5rem" }}>
           <p className="pill" style={{ fontFamily: "var(--font-mono)" }}>
-            /{ipaOfWord(practiceWord)}/
+            /{engine().ipaOfWord(practiceWord)}/
           </p>
           <button type="button" onClick={() => speak(practiceWord)} disabled={!supported}>
             ▶ Play (SpeechSynthesis approximation)

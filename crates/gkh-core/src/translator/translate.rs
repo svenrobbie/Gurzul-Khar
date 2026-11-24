@@ -1,6 +1,6 @@
 //! The top-level translator: English and Dutch ⇄ Gurzûl Khar.
 
-use crate::lexicon::{coin, CoinInput, COINER_VERSION};
+use crate::lexicon::{coin, gloss_coinage, record_coinage, CoinInput, COINER_VERSION};
 use crate::morphology::{guess_lemma, lemmatize, Lang, LemmaKind};
 use crate::phonology::ipa_of_sentence;
 use crate::translator::analyzer::analyze_word;
@@ -220,6 +220,9 @@ fn partial_to_gkh(words: &[String], lang: Lang) -> (Vec<String>, Vec<String>, Ve
             match coin(&input, &taken) {
                 Ok(result) => {
                     taken.push(result.gkh.clone());
+                    // Remember it, so the word just coined here reads back in
+                    // the other direction for the rest of this session.
+                    record_coinage(&result.gkh, &input.lemma, lang.code());
                     coined.push(CoinedEntry {
                         source: w.clone(),
                         gkh: result.gkh.clone(),
@@ -251,6 +254,13 @@ fn partial_to_natural(words: &[String], lang: Lang) -> (Vec<String>, Vec<String>
                 // Glosses carry alternatives; a translation picks one rather
                 // than printing the dictionary entry at the reader.
                 return gloss.split('/').next().unwrap_or(gloss).trim().to_string();
+            }
+            // Not in the lexicon — but it may be a word the coiner issued, in
+            // which case the index knows what it was coined for. The hash
+            // cannot be inverted, so this is a record, not a reversal: a word
+            // nobody has ever coined still comes back bracketed.
+            if let Some(gloss) = gloss_coinage(w, lang.code()) {
+                return gloss;
             }
             unknown.push(w.clone());
             format!("⟦{w}⟧")

@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { SHOW_NATIVE_SCRIPT } from "../features";
-import { lexicon, type LexiconEntry } from "@engine/data.js";
-import { latinToNative } from "@engine/generator/transliteration.js";
-import { ipaOfWord } from "@engine/translator/ipa.js";
+import { lexicon, type LexiconEntry } from "../data";
+import { latinToNative } from "../script/transliteration";
+import { engine } from "../engine";
 
 type StatusTag = "official" | "proposed" | "deprecated";
 type DisplayEntry = LexiconEntry & { status: StatusTag };
@@ -125,7 +125,7 @@ export default function Dictionary() {
               </h3>
               {SHOW_NATIVE_SCRIPT && svg && <div className="glyph-row" dangerouslySetInnerHTML={{ __html: svg }} />}
               <p className="pill">{entry.pos}</p> <p className="pill">{entry.domain}</p>
-              <p style={{ fontFamily: "var(--font-mono)" }}>/{ipaOfWord(entry.gkh.replace(/-/g, ""))}/</p>
+              <p style={{ fontFamily: "var(--font-mono)" }}>/{engine().ipaOfWord(entry.gkh.replace(/-/g, ""))}/</p>
               <p>
                 <strong>EN:</strong> {entry.en} &nbsp; <strong>NL:</strong> {entry.nl}
               </p>

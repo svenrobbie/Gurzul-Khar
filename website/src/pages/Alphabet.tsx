@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { alphabet, phonology } from "@engine/data.js";
-import { generateConsonantGlyph, generateVowelGlyph, generateNumeralGlyph, generatePunctuationGlyph } from "@engine/phonology/glyphGenerator.js";
-import { latinToNative, nativeToLatin } from "@engine/generator/transliteration.js";
-import { tryTokenizeWord } from "@engine/phonology/phonemes.js";
+import { alphabet, phonology } from "../data";
+import { generateConsonantGlyph, generateVowelGlyph, generateNumeralGlyph, generatePunctuationGlyph } from "../script/glyphGenerator";
+import { latinToNative, nativeToLatin } from "../script/transliteration";
+import { engine } from "../engine";
 
 // A real sentence from the regression test suite (tests/regression.test.ts,
 // "compound sentence"), rendered live in the new Thornscript, per the
@@ -19,7 +19,7 @@ export default function Alphabet() {
     try {
       const result = latinToNative(latinInput);
       setSvg(result.nativeSvg);
-      setNativeRoundTrip(nativeToLatin(result.words));
+      setNativeRoundTrip(nativeToLatin(result.parts));
       setToolError(null);
     } catch (e) {
       setToolError(e instanceof Error ? e.message : "Could not transliterate this input.");
@@ -143,5 +143,5 @@ export default function Alphabet() {
 }
 
 export function isValidLatinWord(word: string): boolean {
-  return tryTokenizeWord(word) !== null;
+  return engine().tokenize(word) !== null;
 }

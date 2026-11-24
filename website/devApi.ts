@@ -11,6 +11,8 @@ import type { Plugin, ViteDevServer } from "vite";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { devEngine, type DevEngine } from "./devEngine.js";
+import { findConflicts } from "./devConflicts.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const LEXICON_PATH = path.resolve(here, "../data/lexicon/lexicon.json");
@@ -21,6 +23,53 @@ async function readJson(p: string): Promise<any> {
 }
 async function writeJson(p: string, data: any): Promise<void> {
   await fs.writeFile(p, JSON.stringify(data, null, 2) + "\n", "utf-8");
+}
+
+
+/**
+ * Suggests a spelling for a new word.
+ *
+ * Two routes, both going through the engine rather than a second generator.
+ * With a root hint it builds the derived form the grammar documents — root
+ * plus a derivational affix — which stays transparent to a reader. Without
+ * one it asks the frozen coiner for the word that gloss would get anyway, so
+ * a suggestion accepted here is the spelling the translator was already
+ * producing for that meaning, rather than a third, unrelated invention.
+ */
+async function suggest(gkh: DevEngine, body: any) {
+  const violationsOf = (word: string) => JSON.parse(gkh.check_word(word)) as { rule: string }[];
+
+  if (body.rootHint?.rootGkh) {
+    const lex = await readJson(LEXICON_PATH);
+    const suffix = String(body.rootHint.suffix || "").replace(/^-/, "");
+    const rootEntry = lex.entries.find(
+      (e: any) => e.gkh.toLowerCase() === String(body.rootHint.rootGkh).toLowerCase(),
+    );
+    const affix = (lex.derivationalAffixes ?? []).find(
+      (a: any) => a.suffix.replace(/^-/, "") === suffix,
+    );
+    if (rootEntry && affix) {
+      const word = rootEntry.gkh + suffix;
+      return {
+        gkh: word,
+        ipa: gkh.word_ipa(word),
+        phonotacticallyValid: violationsOf(word).length === 0,
+        derivation: { suffix: affix.suffix, function: affix.function, rootEntry: rootEntry.gkh },
+      };
+    }
+  }
+
+  const lemma = String(body.en || body.nl || "").trim().toLowerCase();
+  const coined = JSON.parse(gkh.coin(lemma, String(body.pos || "noun"), body.en ? "en" : "nl"));
+  if (!coined) {
+    return { gkh: "", ipa: "", phonotacticallyValid: false };
+  }
+  return {
+    gkh: coined.gkh,
+    ipa: gkh.word_ipa(coined.gkh),
+    phonotacticallyValid: violationsOf(coined.gkh).length === 0,
+    coinedAs: coined.version,
+  };
 }
 
 function bumpPatch(version: string): string {
@@ -71,9 +120,11 @@ export function lexiconDevApiPlugin(): Plugin {
         res.setHeader("access-control-allow-origin", "*");
 
         try {
-          // Lazy import so this module tree-shakes cleanly out of any accidental client bundle.
-          const { checkWordPhonotactics } = await import("../engine/phonology/phonotacticValidator.js");
-          const { findConflicts } = await import("../engine/lexicon/conflicts.js");
+          // Loaded lazily: the engine is only needed once a request arrives,
+          // and the dev server must start even before the crate is built.
+          const gkh = await devEngine();
+          const checkWordPhonotactics = (word: string) =>
+            JSON.parse(gkh.check_word(word)) as { word: string; code: string; rule: string }[];
 
           if (req.method === "GET" && req.url === "/api/lexicon/vocabulary") {
             const [lex, prop] = await Promise.all([readJson(LEXICON_PATH), readJson(PROPOSALS_PATH)]);
@@ -82,8 +133,7 @@ export function lexiconDevApiPlugin(): Plugin {
 
           if (req.method === "POST" && req.url === "/api/lexicon/suggest") {
             const body = await readBody(req);
-            const { suggestWord } = await import("../engine/lexicon/wordGenerator.js");
-            const candidate = suggestWord({ en: body.en, nl: body.nl }, body.pos, body.rootHint);
+            const candidate = await suggest(gkh, body);
             return sendJson(res, 200, { candidate });
           }
 
@@ -102,7 +152,8 @@ export function lexiconDevApiPlugin(): Plugin {
             }
             const propData = await readJson(PROPOSALS_PATH);
             const activeProposals = propData.proposals.filter((p: any) => p.status === "proposed");
-            const conflicts = findConflicts({ gkh, en, nl, pos }, activeProposals);
+            const lexForConflicts = await readJson(LEXICON_PATH);
+            const conflicts = findConflicts({ gkh, en, nl, pos }, lexForConflicts.entries, activeProposals);
             if (conflicts.length > 0 && !body.force) {
               return sendJson(res, 200, { ok: false, violations: [], conflicts });
             }
@@ -155,7 +206,7 @@ export function lexiconDevApiPlugin(): Plugin {
             }
             const lex = await readJson(LEXICON_PATH);
             const otherActive = propData.proposals.filter((p: any) => p.status === "proposed" && p.id !== id);
-            const conflicts = findConflicts({ gkh: proposal.gkh, en: proposal.en, nl: proposal.nl, pos: proposal.pos }, otherActive);
+            const conflicts = findConflicts({ gkh: proposal.gkh, en: proposal.en, nl: proposal.nl, pos: proposal.pos }, lex.entries, otherActive);
             const homographConflicts = conflicts.filter((c: any) => c.kind !== "same-gloss-different-spelling");
             if (homographConflicts.length > 0 && !body.force) {
               return sendJson(res, 200, { ok: false, error: "Cannot approve: unresolved homograph conflict.", conflicts: homographConflicts });

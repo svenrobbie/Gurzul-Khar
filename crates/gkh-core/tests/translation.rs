@@ -137,3 +137,88 @@ fn reproduces_every_shared_translation() {
         failures.join("\n  ")
     );
 }
+
+#[test]
+fn a_coined_word_reads_back_through_the_index() {
+    use gkh_core::translator::{translate, Direction, Translation};
+
+    // "draak" is not in the lexicon, so the coiner supplies a form.
+    let out = match translate("Ik zie de draak", Direction::NlToGkh) {
+        Translation::Ok(ok) => ok,
+        Translation::Failed { reason } => panic!("expected a translation, got {reason:?}"),
+    };
+    let coined = out
+        .coined_words
+        .iter()
+        .find(|c| c.source == "draak")
+        .unwrap_or_else(|| panic!("expected \"draak\" to be coined, got {:?}", out.coined_words));
+
+    // The hash cannot be inverted, so the way back is the recorded pairing.
+    let back = match translate(&format!("ük sel {}", coined.gkh), Direction::GkhToNl) {
+        Translation::Ok(ok) => ok,
+        Translation::Failed { reason } => panic!("expected a translation back, got {reason:?}"),
+    };
+    assert!(
+        back.output.contains("draak"),
+        "a coined word must read back as what it was coined for, got {:?}",
+        back.output
+    );
+    assert!(
+        !back.output.contains('⟦'),
+        "nothing should be bracketed here, got {:?}",
+        back.output
+    );
+}
+
+#[test]
+fn a_word_nobody_has_coined_is_still_bracketed() {
+    use gkh_core::translator::{translate, Direction, Translation};
+
+    // The index is a record, not an inversion. A spelling that was never
+    // issued has no gloss, and saying so is the honest answer.
+    match translate("ük sel zorbuth", Direction::GkhToNl) {
+        Translation::Ok(ok) => assert!(
+            ok.output.contains('⟦'),
+            "an unrecorded spelling must not be given a meaning, got {:?}",
+            ok.output
+        ),
+        Translation::Failed { .. } => {}
+    }
+}
+
+#[test]
+fn the_same_input_always_gives_the_same_output() {
+    use gkh_core::translator::{translate, Direction, Translation};
+
+    // "Always the same word" is the promise the whole project is built on, so
+    // it is asserted rather than assumed — including for a sentence that
+    // coins, where a stray bit of state would show up first.
+    let cases = [
+        ("Ik zie de draak", Direction::NlToGkh),
+        ("the king who has strength", Direction::EnToGkh),
+        ("ük pâku", Direction::GkhToNl),
+        ("shak kha khar dûnu", Direction::GkhToEn),
+    ];
+
+    for (input, dir) in cases {
+        let first = translate(input, dir);
+        for _ in 0..3 {
+            let again = translate(input, dir);
+            match (&first, &again) {
+                (Translation::Ok(a), Translation::Ok(b)) => {
+                    assert_eq!(a.output, b.output, "{input:?} translated differently on a second run");
+                    assert_eq!(a.pronunciation, b.pronunciation, "{input:?} changed pronunciation");
+                    assert_eq!(
+                        a.coined_words.iter().map(|c| &c.gkh).collect::<Vec<_>>(),
+                        b.coined_words.iter().map(|c| &c.gkh).collect::<Vec<_>>(),
+                        "{input:?} coined differently on a second run"
+                    );
+                }
+                (Translation::Failed { reason: a }, Translation::Failed { reason: b }) => {
+                    assert_eq!(format!("{a:?}"), format!("{b:?}"), "{input:?} failed for a different reason");
+                }
+                _ => panic!("{input:?} succeeded on one run and failed on another"),
+            }
+        }
+    }
+}

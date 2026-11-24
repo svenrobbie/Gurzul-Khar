@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { checkWordPhonotactics } from "@engine/phonology/phonotacticValidator.js";
-import { lexicon } from "@engine/data.js";
+import { engine } from "../engine";
+import { lexicon } from "../data";
 
 const POS_OPTIONS = ["noun", "verb", "adjective", "adverb", "pronoun", "particle", "conjunction", "postposition", "numeral", "interjection"];
 const DOMAINS = Array.from(new Set(lexicon.entries.map((e) => e.domain))).sort();
@@ -45,7 +45,7 @@ export default function Propose() {
   const [status, setStatus] = useState<"idle" | "loading" | "submitted" | "offline">("idle");
   const [message, setMessage] = useState<string | null>(null);
 
-  const manualViolations = manualGkh ? checkWordPhonotactics(manualGkh.replace(/-/g, "")).map((v) => v.rule) : [];
+  const manualViolations = manualGkh ? engine().checkWord(manualGkh.replace(/-/g, "")).map((v) => v.rule) : [];
 
   async function requestSuggestion() {
     setStatus("loading");

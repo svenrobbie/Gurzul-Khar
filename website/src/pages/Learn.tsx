@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { phonology } from "@engine/data.js";
+import { phonology } from "../data";
 import course from "../../../learning/course.json";
 import pronunciationGuide from "../../../learning/pronunciation.json";
 import {

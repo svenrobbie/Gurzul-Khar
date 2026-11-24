@@ -1,5 +1,10 @@
 name: CI
 
+# One engine, so one test suite. The crate is built, tested and compiled to
+# WebAssembly, and the site is built against that artifact — the same sequence
+# the deploy workflow runs, so a problem shows up on a branch rather than at
+# deploy time.
+
 on:
   push:
     branches: ["**"]
@@ -7,7 +12,58 @@ on:
     branches: ["**"]
 
 jobs:
-  test-and-validate:
+  engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Regenerate the compiled-in language data
+        run: npm run rust:data
+
+      - name: Fail if the generated data is stale
+        # The crate compiles data/*.json in as constants. If someone edits the
+        # JSON without regenerating, the engine and the data describe different
+        # languages — so the generated files must already be current.
+        run: |
+          if ! git diff --quiet -- crates/; then
+            echo "::error::Generated Rust data is out of date. Run 'npm run rust:data' and commit the result."
+            git diff --stat -- crates/
+            exit 1
+          fi
+
+      - name: Test the engine and its bindings
+        run: cargo test --workspace
+
+      - name: Warnings are errors
+        run: cargo build --workspace
+        env:
+          RUSTFLAGS: "-D warnings"
+
+      - name: Install wasm-pack
+        uses: jetli/wasm-pack-action@v0.4.0
+        with:
+          version: latest
+
+      - name: Build the WebAssembly package
+        run: npm run build:wasm
+
+      - name: Report the artifact size
+        # This ships to every visitor, so a jump is worth noticing.
+        run: ls -la crates/gkh-wasm/pkg/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gkh-wasm-pkg
+          path: crates/gkh-wasm/pkg/
+
+  site:
+    needs: engine
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,22 +73,28 @@ jobs:
           node-version: "20"
           cache: "npm"
 
-      - name: Install root dependencies
-        run: npm install
+      - uses: actions/download-artifact@v4
+        with:
+          name: gkh-wasm-pkg
+          path: crates/gkh-wasm/pkg
 
-      - name: Install website dependencies
-        run: npm install
+      - run: npm install
+      - run: npm install
         working-directory: website
 
-      - name: Validate linguistic data
+      # The data validators and the course checks run against the same
+      # WebAssembly build the site uses, rather than a second opinion about
+      # what a legal word is.
+      - name: Validate linguistic data and learning content
         run: npm run validate
 
-      - name: Run engine test suite
-        run: npm test
-
-      - name: Typecheck engine
-        run: npx tsc -p tsconfig.json
-
-      - name: Typecheck + build website
+      - name: Typecheck and build the site
         run: npm run build
         working-directory: website
+
+      - name: Fail if the WebAssembly module did not make it into the bundle
+        run: |
+          if ! ls website/dist/assets/*.wasm >/dev/null 2>&1; then
+            echo "::error::No .wasm in the built site — the engine was not bundled."
+            exit 1
+          fi

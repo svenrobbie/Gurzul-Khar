@@ -6,26 +6,16 @@
   "type": "module",
   "scripts": {
     "dev": "npm run --prefix website dev",
-    "build": "npm run build:engine && npm run --prefix website build",
-    "build:engine": "tsc -p tsconfig.json --noEmit false --outDir dist/engine",
-    "test": "vitest run",
-    "validate": "tsx tests/validateData.ts",
-    "install:all": "npm install && npm install --prefix website",
-    "fixtures:phonotactics": "tsx scripts/buildPhonotacticFixture.ts",
-    "coiner:weights": "tsx scripts/buildCoinerWeights.ts",
-    "coiner:golden": "tsx scripts/buildCoinerGolden.ts",
-    "coiner:sample": "tsx scripts/sampleCoinages.ts > COINER_SAMPLE.md",
-    "coiner:index": "tsx scripts/buildCoinageIndex.ts",
-    "lexicon:ipa": "tsx scripts/syncLexiconIpa.ts",
-    "rust:data": "node scripts/buildRustData.mjs .",
-    "rust:test": "cargo test --manifest-path Cargo.toml",
+    "build": "npm run build:wasm && npm run --prefix website build",
     "build:wasm": "wasm-pack build crates/gkh-wasm --target web --out-dir pkg",
-    "build:rust-site": "npm run build:wasm && node scripts/buildSite.mjs rust"
-  },
-  "devDependencies": {
-    "typescript": "^5.6.3",
-    "vitest": "^2.1.4",
-    "tsx": "^4.19.1",
-    "@types/node": "^22.9.0"
+    "test": "cargo test --workspace",
+    "validate": "node scripts/validate.mjs && node scripts/validateLearning.mjs",
+    "install:all": "npm install && npm install --prefix website",
+    "rust:data": "node scripts/buildRustData.mjs .",
+    "fixtures:phonotactics": "node scripts/buildPhonotacticFixture.mjs",
+    "coiner:golden": "node scripts/buildCoinerGolden.mjs",
+    "coiner:sample": "node scripts/sampleCoinages.mjs > COINER_SAMPLE.md",
+    "coiner:index": "node scripts/buildCoinageIndex.mjs",
+    "lexicon:ipa": "node scripts/syncLexiconIpa.mjs"
   }
 }

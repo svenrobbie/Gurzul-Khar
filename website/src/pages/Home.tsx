@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { lexicon } from "@engine/data.js";
+import { lexicon } from "../data";
 
 export default function Home() {
   return (

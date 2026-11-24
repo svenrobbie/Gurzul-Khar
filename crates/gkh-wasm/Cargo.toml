@@ -12,11 +12,3 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 gkh-core = { path = "../gkh-core" }
 wasm-bindgen = "0.2"
-
-# Smaller artifact: the site ships this to every visitor.
-[profile.release]
-opt-level = "s"
-lto = true
-codegen-units = 1
-panic = "abort"
-strip = true

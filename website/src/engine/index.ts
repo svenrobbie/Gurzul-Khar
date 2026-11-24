@@ -1,49 +1,54 @@
 /**
- * Which engine the site runs.
+ * The engine the site runs.
  *
- * Chosen at BUILD time, not at runtime: `GKH_ENGINE=rust npm run build` points
- * the `@wasm` alias at the compiled WebAssembly and selects the Rust core;
- * anything else keeps the TypeScript engine and compiles the WebAssembly path
- * out entirely. That means the site always builds, whether or not the Rust
- * artifact has been produced.
+ * One implementation: `crates/gkh-core`, compiled to WebAssembly. The same
+ * crate backs the Android app and the command-line tools, so a change to the
+ * language lands everywhere at once instead of having to be made twice and
+ * then kept in step.
  *
- * The two implementations are held to the same behaviour by the shared
- * fixtures in `tests/fixtures/` — the same words, the same expected results,
- * asserted by both test suites. Swapping between them should change nothing a
- * user can see except the name on the Engine page.
+ * `initEngine()` must be awaited before anything renders, because WebAssembly
+ * instantiation is asynchronous while every call site is not. There is
+ * deliberately no fallback: a site that silently runs a second, different
+ * engine when the first fails to load is worse than one that says so.
  */
 import type { Engine } from "./types";
-import { typescriptEngine } from "./typescript";
+import { initRustEngine, rustEngine } from "./rust";
 
 export * from "./types";
 
-/** True when this build was compiled against the Rust core. */
-export const USING_RUST_ENGINE = import.meta.env.VITE_GKH_ENGINE === "rust";
+let active: Engine | null = null;
+let failure: Error | null = null;
 
-let active: Engine = typescriptEngine;
-
-/**
- * Loads the engine. Awaited once at startup, before the app renders, because
- * WebAssembly instantiation is asynchronous while every call site is not.
- *
- * If the Rust engine was selected but fails to load, this falls back to the
- * TypeScript engine and says so in the console rather than leaving the site
- * blank — a translator that works is better than a correct one that never
- * appears.
- */
+/** Loads the engine. Awaited once at startup, before the app renders. */
 export async function initEngine(): Promise<void> {
-  if (!USING_RUST_ENGINE) return;
   try {
-    const { initRustEngine, rustEngine } = await import("./rust");
     await initRustEngine();
     active = rustEngine;
   } catch (error) {
+    failure = error instanceof Error ? error : new Error(String(error));
     // eslint-disable-next-line no-console
-    console.error("The Rust engine failed to load; falling back to TypeScript.", error);
+    console.error("The engine failed to load.", error);
   }
 }
 
-/** The engine in use. */
+/** Null until the engine has loaded, and after a load failure. Pages that can render without it check this rather than throwing. */
+export function engineOrNull(): Engine | null {
+  return active;
+}
+
+/** Why the engine is unavailable, or null when it loaded. */
+export function engineFailure(): Error | null {
+  return failure;
+}
+
+/**
+ * The engine. Throws if it failed to load — call sites that run inside an
+ * event handler or a render path where there is nothing sensible to show
+ * should use {@link engineOrNull} instead.
+ */
 export function engine(): Engine {
+  if (!active) {
+    throw failure ?? new Error("The engine has not finished loading yet.");
+  }
   return active;
 }

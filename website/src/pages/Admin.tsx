@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { LexiconEntry, ProposalEntry } from "@engine/data.js";
+import type { LexiconEntry, ProposalEntry } from "../data";
 
 async function api<T>(path: string, body?: unknown): Promise<T> {
   const res = await fetch(`/api/lexicon/${path}`, {

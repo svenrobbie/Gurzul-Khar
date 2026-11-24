@@ -1,4 +1,4 @@
-import { grammar } from "@engine/data.js";
+import { grammar } from "../data";
 
 function Kv({ data }: { data: Record<string, string> }) {
   return (
