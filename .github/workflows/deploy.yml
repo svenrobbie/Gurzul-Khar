@@ -23,31 +23,77 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
       - run: npm install
       - run: npm install
         working-directory: website
       - name: Validate linguistic data
         run: npm run validate
-      - name: Run engine test suite
-        run: npm test
+      - name: Regenerate the compiled-in language data
+        run: npm run rust:data
+      - name: Fail if the generated data is stale
+        run: |
+          if ! git diff --quiet -- crates/; then
+            echo "::error::Generated Rust data is out of date. Run 'npm run rust:data' and commit the result."
+            git diff --stat -- crates/
+            exit 1
+          fi
+      - name: Run the engine test suite
+        run: cargo test --workspace
 
   build:
     needs: test-and-validate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "npm"
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Install wasm-pack
+        uses: jetli/wasm-pack-action@v0.4.0
+        with:
+          version: latest
+
+      # The site is built against the Rust core compiled to WebAssembly. There
+      # is no second engine to fall back to, so if this step fails the deploy
+      # fails — which is the point: a broken crate must not ship as a silently
+      # degraded site.
+      - name: Build the WebAssembly package
+        run: npm run build:wasm
+
+      - name: Report the artifact size
+        run: ls -la crates/gkh-wasm/pkg/
+
       - run: npm install
       - run: npm install
         working-directory: website
-      - name: Build site
+
+      - name: Build site on the Rust engine
         env:
           GITHUB_PAGES: "true"
+          GKH_ENGINE: "rust"
         run: npm run build
         working-directory: website
+
+      - name: Fail if the WebAssembly module did not make it into the bundle
+        # A missing alias or a stale stub would produce a site that builds and
+        # then has no engine at all. Cheaper to catch here than in a browser.
+        run: |
+          if ! ls website/dist/assets/*.wasm >/dev/null 2>&1; then
+            echo "::error::No .wasm in the built site — the Rust engine was not bundled."
+            exit 1
+          fi
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
