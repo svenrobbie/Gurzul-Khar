@@ -1,5 +1,5 @@
 {
-  "note": "Language-neutral phonotactic fixtures. Each word is checked against the documented rules in data/phonology/phonology.json; `codes` are the stable PhonotacticCode identifiers, in the order the validator emits them. The Rust port must reproduce this file exactly. Regenerate with `npm run fixtures:phonotactics` and review the diff.",
+  "note": "Language-neutral phonotactic fixtures. Each word is checked against the documented rules in data/phonology/phonology.json; `codes` are the stable PhonotacticCode identifiers, in the order the validator emits them. Compiled into the Rust test suite by scripts/buildRustData.mjs. Regenerate with `npm run fixtures:phonotactics` and review the diff.",
   "cases": [
     {
       "word": "khar",

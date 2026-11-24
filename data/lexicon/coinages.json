@@ -1,7 +1,7 @@
 {
   "version": "v1",
-  "note": "Reverse index for coined words: the coiner's hash cannot be inverted, so a coined form is only translatable back if it was written down here. Pre-seeded with the common vocabulary; the translator adds anything else it coins at runtime, for that session only. A coined word nobody has ever coined before still cannot be read back — that is a real limit, not a bug. Rebuild with `npm run coiner:index`.",
-  "generatedBy": "scripts/buildCoinageIndex.ts",
+  "note": "Reverse index for coined words: the coiner's hash cannot be inverted, so a coined form is only translatable back if it was written down here. Pre-seeded with the common vocabulary; the translator adds anything else it coins at runtime, for that session only. A coined word nobody has ever coined before still cannot be read back — that is a real limit, not a bug. Rebuild with `npm run coiner:index`, then `npm run rust:data`.",
+  "generatedBy": "scripts/buildCoinageIndex.mjs",
   "entryCount": 175,
   "entries": [
     {
