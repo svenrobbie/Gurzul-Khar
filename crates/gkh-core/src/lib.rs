@@ -21,4 +21,5 @@
 
 pub mod data;
 pub mod lexicon;
+pub mod morphology;
 pub mod phonology;
