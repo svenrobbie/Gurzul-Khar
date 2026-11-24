@@ -11,3 +11,4 @@ vitest.config.ts.timestamp-*.mjs
 
 # Rust build output
 crates/*/target/
+Phase2.md
