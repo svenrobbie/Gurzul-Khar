@@ -4,6 +4,7 @@ import Translator from "./pages/Translator";
 import Dictionary from "./pages/Dictionary";
 import Grammar from "./pages/Grammar";
 import Alphabet from "./pages/Alphabet";
+import { SHOW_NATIVE_SCRIPT } from "./features";
 import Pronunciation from "./pages/Pronunciation";
 import Learn from "./pages/Learn";
 import Lore from "./pages/Lore";
@@ -19,7 +20,7 @@ const NAV = [
   { to: "/dictionary", label: "Dictionary" },
   { to: "/propose", label: "Propose a word" },
   { to: "/grammar", label: "Grammar" },
-  { to: "/alphabet", label: "Alphabet" },
+  ...(SHOW_NATIVE_SCRIPT ? [{ to: "/alphabet", label: "Alphabet" }] : []),
   { to: "/pronunciation", label: "Pronunciation" },
   { to: "/learn", label: "Learn" },
   { to: "/lore", label: "Lore" },
@@ -59,7 +60,7 @@ export default function App() {
           <Route path="/propose" element={<Propose />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/grammar" element={<Grammar />} />
-          <Route path="/alphabet" element={<Alphabet />} />
+          {SHOW_NATIVE_SCRIPT && <Route path="/alphabet" element={<Alphabet />} />}
           <Route path="/pronunciation" element={<Pronunciation />} />
           <Route path="/learn" element={<Learn />} />
           <Route path="/lore" element={<Lore />} />

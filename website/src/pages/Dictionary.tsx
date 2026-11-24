@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { SHOW_NATIVE_SCRIPT } from "../features";
 import { lexicon, type LexiconEntry } from "@engine/data.js";
 import { latinToNative } from "@engine/generator/transliteration.js";
 import { ipaOfWord } from "@engine/translator/ipa.js";
@@ -122,7 +123,7 @@ export default function Dictionary() {
               <h3 style={{ margin: "0 0 0.3rem" }}>
                 {entry.gkh} {entry.status !== "official" && <span className="pill">{entry.status}</span>}
               </h3>
-              {svg && <div className="glyph-row" dangerouslySetInnerHTML={{ __html: svg }} />}
+              {SHOW_NATIVE_SCRIPT && svg && <div className="glyph-row" dangerouslySetInnerHTML={{ __html: svg }} />}
               <p className="pill">{entry.pos}</p> <p className="pill">{entry.domain}</p>
               <p style={{ fontFamily: "var(--font-mono)" }}>/{ipaOfWord(entry.gkh.replace(/-/g, ""))}/</p>
               <p>

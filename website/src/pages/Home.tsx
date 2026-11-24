@@ -8,7 +8,7 @@ export default function Home() {
         <h1>GURZÛL KHAR</h1>
         <p>
           An independent constructed language inspired by the linguistic atmosphere of Tolkien's Black Speech and
-          Mordor — with its own original phonology, writing system (the Khargûl script), grammar and vocabulary.
+          Mordor — with its own original phonology, grammar and vocabulary.
           GURZÛL KHAR is a fan creation: it is not an authentic Tolkien language and is not endorsed by the Tolkien
           Estate or any rights holder.
         </p>
@@ -21,9 +21,9 @@ export default function Home() {
         <div className="card">
           <h2>What this is</h2>
           <p>
-            A complete, internally consistent conlang: an original consonant/vowel inventory, a procedurally
-            generated writing system, a documented grammar (nouns, verbs, adjectives, pronouns, syntax), and a
-            deterministic rule-based translation engine covering English, Dutch and Gurzûl Khar.
+            A complete, internally consistent conlang: an original consonant/vowel inventory, a documented grammar
+            (nouns, verbs, adjectives, pronouns, syntax), and a deterministic rule-based translation engine covering
+            English, Dutch and Gurzûl Khar. Written in the Latin alphabet for now.
           </p>
         </div>
         <div className="card">
@@ -48,7 +48,6 @@ export default function Home() {
               <Link to="/grammar">Grammar reference</Link> — rendered directly from the language data.
             </li>
             <li>
-              <Link to="/alphabet">Alphabet</Link> — the Khargûl script, procedurally generated.
             </li>
             <li>
               <Link to="/pronunciation">Pronunciation</Link> — IPA chart and stress rules.

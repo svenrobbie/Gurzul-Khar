@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { translate, type Direction, type TranslationResult } from "@engine/translator/index.js";
+import { SHOW_NATIVE_SCRIPT } from "../features";
 
 const DIRECTIONS: { value: Direction; label: string }[] = [
   { value: "en-gkh", label: "English → Gurzûl Khar" },
@@ -184,7 +185,7 @@ export default function Translator() {
                   {result.pronunciation}
                 </p>
               )}
-              {result.nativeScript && (
+              {SHOW_NATIVE_SCRIPT && result.nativeScript && (
                 <div className="glyph-row" dangerouslySetInnerHTML={{ __html: result.nativeScript }} aria-label="Khargûl native script rendering" />
               )}
               <div style={{ marginTop: "0.5rem" }}>
