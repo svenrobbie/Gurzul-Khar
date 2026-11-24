@@ -23,7 +23,7 @@
     {
       "id": "ukh-001",
       "gkh": "ük",
-      "ipa": "ʊk",
+      "ipa": "ˈuːk",
       "pos": "pronoun",
       "en": "I",
       "nl": "ik",
@@ -32,7 +32,7 @@
     {
       "id": "tuu-001",
       "gkh": "tû",
-      "ipa": "tuː",
+      "ipa": "ˈtuː",
       "pos": "pronoun",
       "en": "you (sg.)",
       "nl": "jij",
@@ -41,7 +41,7 @@
     {
       "id": "zha-001",
       "gkh": "zhâ",
-      "ipa": "ʒaː",
+      "ipa": "ˈʒaː",
       "pos": "pronoun",
       "en": "he/she/it",
       "nl": "hij/zij/het",
@@ -50,7 +50,7 @@
     {
       "id": "ukn-001",
       "gkh": "ükûn",
-      "ipa": "ʊkuːn",
+      "ipa": "uːˈkuːn",
       "pos": "pronoun",
       "en": "we",
       "nl": "wij",
@@ -59,7 +59,7 @@
     {
       "id": "tkn-001",
       "gkh": "tûkûn",
-      "ipa": "tuːkuːn",
+      "ipa": "tuːˈkuːn",
       "pos": "pronoun",
       "en": "you (pl.)",
       "nl": "jullie",
@@ -68,7 +68,7 @@
     {
       "id": "zkn-001",
       "gkh": "zhâkûn",
-      "ipa": "ʒaːkuːn",
+      "ipa": "ʒaːˈkuːn",
       "pos": "pronoun",
       "en": "they",
       "nl": "zij (mv.)",
@@ -77,7 +77,7 @@
     {
       "id": "num-001",
       "gkh": "dush",
-      "ipa": "dʊʃ",
+      "ipa": "ˈdʊʃ",
       "pos": "numeral",
       "en": "one",
       "nl": "een",
@@ -86,7 +86,7 @@
     {
       "id": "num-002",
       "gkh": "tok",
-      "ipa": "tɔk",
+      "ipa": "ˈtɔk",
       "pos": "numeral",
       "en": "two",
       "nl": "twee",
@@ -95,7 +95,7 @@
     {
       "id": "num-003",
       "gkh": "rem",
-      "ipa": "rɛm",
+      "ipa": "ˈʀɛm",
       "pos": "numeral",
       "en": "three",
       "nl": "drie",
@@ -104,7 +104,7 @@
     {
       "id": "num-004",
       "gkh": "quz",
-      "ipa": "quz",
+      "ipa": "ˈqʊz",
       "pos": "numeral",
       "en": "four",
       "nl": "vier",
@@ -113,7 +113,7 @@
     {
       "id": "num-005",
       "gkh": "pâl",
-      "ipa": "paːl",
+      "ipa": "ˈpaːl",
       "pos": "numeral",
       "en": "five",
       "nl": "vijf",
@@ -122,7 +122,7 @@
     {
       "id": "num-006",
       "gkh": "sharn",
-      "ipa": "ʃarn",
+      "ipa": "ˈʃaʀn",
       "pos": "numeral",
       "en": "six",
       "nl": "zes",
@@ -131,7 +131,7 @@
     {
       "id": "num-007",
       "gkh": "vish",
-      "ipa": "vɪʃ",
+      "ipa": "ˈvɪʃ",
       "pos": "numeral",
       "en": "seven",
       "nl": "zeven",
@@ -140,7 +140,7 @@
     {
       "id": "num-008",
       "gkh": "drol",
-      "ipa": "drɔl",
+      "ipa": "ˈdʀɔl",
       "pos": "numeral",
       "en": "eight",
       "nl": "acht",
@@ -149,7 +149,7 @@
     {
       "id": "num-009",
       "gkh": "nathu",
-      "ipa": "naθʊ",
+      "ipa": "ˈnaθʊ",
       "pos": "numeral",
       "en": "nine",
       "nl": "negen",
@@ -158,7 +158,7 @@
     {
       "id": "num-010",
       "gkh": "ghazak",
-      "ipa": "ɣazak",
+      "ipa": "ˈɣazak",
       "pos": "numeral",
       "en": "ten",
       "nl": "tien",
@@ -167,7 +167,7 @@
     {
       "id": "grt-001",
       "gkh": "nâzgam",
-      "ipa": "naːzgam",
+      "ipa": "ˈnaːzgam",
       "pos": "interjection",
       "en": "hail / greetings",
       "nl": "gegroet",
@@ -176,7 +176,7 @@
     {
       "id": "grt-002",
       "gkh": "ash",
-      "ipa": "aʃ",
+      "ipa": "ˈaʃ",
       "pos": "particle/verb",
       "en": "yes / to be (aux.)",
       "nl": "ja / zijn",
@@ -185,7 +185,7 @@
     {
       "id": "grt-003",
       "gkh": "na",
-      "ipa": "na",
+      "ipa": "ˈna",
       "pos": "particle",
       "en": "no / not",
       "nl": "nee / niet",
@@ -194,7 +194,7 @@
     {
       "id": "grt-004",
       "gkh": "ghâr",
-      "ipa": "ɣaːr",
+      "ipa": "ˈɣaːʀ",
       "pos": "particle",
       "en": "very",
       "nl": "zeer",
@@ -203,7 +203,7 @@
     {
       "id": "grt-005",
       "gkh": "zan",
-      "ipa": "zan",
+      "ipa": "ˈzan",
       "pos": "particle",
       "en": "more",
       "nl": "meer",
@@ -212,7 +212,7 @@
     {
       "id": "grt-006",
       "gkh": "tar",
-      "ipa": "tar",
+      "ipa": "ˈtaʀ",
       "pos": "determiner",
       "en": "this",
       "nl": "dit/deze",
@@ -221,7 +221,7 @@
     {
       "id": "grt-007",
       "gkh": "dûr",
-      "ipa": "duːr",
+      "ipa": "ˈduːʀ",
       "pos": "determiner",
       "en": "that",
       "nl": "dat/die",
@@ -230,7 +230,7 @@
     {
       "id": "grt-008",
       "gkh": "izh",
-      "ipa": "ɪʒ",
+      "ipa": "ˈɪʒ",
       "pos": "adverb",
       "en": "here",
       "nl": "hier",
@@ -239,7 +239,7 @@
     {
       "id": "grt-009",
       "gkh": "dorizh",
-      "ipa": "dɔrɪʒ",
+      "ipa": "ˈdɔʀɪʒ",
       "pos": "adverb",
       "en": "there",
       "nl": "daar",
@@ -248,7 +248,7 @@
     {
       "id": "grt-010",
       "gkh": "nûth",
-      "ipa": "nuːθ",
+      "ipa": "ˈnuːθ",
       "pos": "adverb",
       "en": "now",
       "nl": "nu",
@@ -257,7 +257,7 @@
     {
       "id": "grt-011",
       "gkh": "sâth",
-      "ipa": "saːθ",
+      "ipa": "ˈsaːθ",
       "pos": "adverb",
       "en": "today",
       "nl": "vandaag",
@@ -266,7 +266,7 @@
     {
       "id": "grt-012",
       "gkh": "ag",
-      "ipa": "ag",
+      "ipa": "ˈag",
       "pos": "conjunction",
       "en": "and",
       "nl": "en",
@@ -275,7 +275,7 @@
     {
       "id": "grt-013",
       "gkh": "vo",
-      "ipa": "vɔ",
+      "ipa": "ˈvɔ",
       "pos": "conjunction",
       "en": "or",
       "nl": "of",
@@ -284,7 +284,7 @@
     {
       "id": "grt-014",
       "gkh": "nâth",
-      "ipa": "naːθ",
+      "ipa": "ˈnaːθ",
       "pos": "conjunction",
       "en": "but",
       "nl": "maar",
@@ -293,7 +293,7 @@
     {
       "id": "grt-015",
       "gkh": "ith",
-      "ipa": "ɪθ",
+      "ipa": "ˈɪθ",
       "pos": "conjunction",
       "en": "if",
       "nl": "als/indien",
@@ -302,7 +302,7 @@
     {
       "id": "grt-016",
       "gkh": "ghâsha",
-      "ipa": "ɣaːʃa",
+      "ipa": "ˈɣaːʃa",
       "pos": "conjunction",
       "en": "because",
       "nl": "omdat",
@@ -311,7 +311,7 @@
     {
       "id": "grt-017",
       "gkh": "sû",
-      "ipa": "suː",
+      "ipa": "ˈsuː",
       "pos": "conjunction",
       "en": "that (complementiser)",
       "nl": "dat (voegwoord)",
@@ -320,7 +320,7 @@
     {
       "id": "grt-018",
       "gkh": "kha",
-      "ipa": "xa",
+      "ipa": "ˈxa",
       "pos": "pronoun",
       "en": "who/which (relative)",
       "nl": "die/dat (betr.)",
@@ -329,7 +329,7 @@
     {
       "id": "grt-019",
       "gkh": "ma",
-      "ipa": "ma",
+      "ipa": "ˈma",
       "pos": "particle",
       "en": "(yes/no question marker)",
       "nl": "(ja/nee-vraagpartikel)",
@@ -338,7 +338,7 @@
     {
       "id": "grt-020",
       "gkh": "ta",
-      "ipa": "ta",
+      "ipa": "ˈta",
       "pos": "postposition",
       "en": "of",
       "nl": "van",
@@ -347,7 +347,7 @@
     {
       "id": "nou-001",
       "gkh": "dor",
-      "ipa": "dɔr",
+      "ipa": "ˈdɔʀ",
       "pos": "noun",
       "en": "land",
       "nl": "land",
@@ -356,7 +356,7 @@
     {
       "id": "nou-002",
       "gkh": "waz",
-      "ipa": "waz",
+      "ipa": "ˈwaz",
       "pos": "noun",
       "en": "water",
       "nl": "water",
@@ -365,7 +365,7 @@
     {
       "id": "nou-003",
       "gkh": "qâth",
-      "ipa": "qaːθ",
+      "ipa": "ˈqaːθ",
       "pos": "noun",
       "en": "fire",
       "nl": "vuur",
@@ -374,7 +374,7 @@
     {
       "id": "nou-004",
       "gkh": "bûr",
-      "ipa": "buːr",
+      "ipa": "ˈbuːʀ",
       "pos": "noun",
       "en": "stone",
       "nl": "steen",
@@ -383,7 +383,7 @@
     {
       "id": "nou-005",
       "gkh": "drol-oi",
-      "ipa": "drɔlɔɪ̯",
+      "ipa": "dʀɔˈlɔɪ̯",
       "pos": "noun",
       "en": "iron ore",
       "nl": "ijzererts",
@@ -393,7 +393,7 @@
     {
       "id": "nou-006",
       "gkh": "droish",
-      "ipa": "drɔɪ̯ʃ",
+      "ipa": "ˈdʀɔɪ̯ʃ",
       "pos": "noun",
       "en": "iron",
       "nl": "ijzer",
@@ -402,7 +402,7 @@
     {
       "id": "nou-007",
       "gkh": "yash",
-      "ipa": "jaʃ",
+      "ipa": "ˈjaʃ",
       "pos": "noun",
       "en": "eye",
       "nl": "oog",
@@ -411,7 +411,7 @@
     {
       "id": "nou-008",
       "gkh": "tûl",
-      "ipa": "tuːl",
+      "ipa": "ˈtuːl",
       "pos": "noun",
       "en": "hand",
       "nl": "hand",
@@ -420,7 +420,7 @@
     {
       "id": "nou-009",
       "gkh": "zûn",
-      "ipa": "zuːn",
+      "ipa": "ˈzuːn",
       "pos": "noun",
       "en": "blood",
       "nl": "bloed",
@@ -429,7 +429,7 @@
     {
       "id": "nou-010",
       "gkh": "mor",
-      "ipa": "mɔr",
+      "ipa": "ˈmɔʀ",
       "pos": "noun",
       "en": "death",
       "nl": "dood",
@@ -438,7 +438,7 @@
     {
       "id": "nou-011",
       "gkh": "nâz",
-      "ipa": "naːz",
+      "ipa": "ˈnaːz",
       "pos": "noun",
       "en": "name",
       "nl": "naam",
@@ -447,7 +447,7 @@
     {
       "id": "nou-012",
       "gkh": "lug",
-      "ipa": "lʊg",
+      "ipa": "ˈlʊg",
       "pos": "noun",
       "en": "word",
       "nl": "woord",
@@ -456,7 +456,7 @@
     {
       "id": "nou-013",
       "gkh": "sarn",
-      "ipa": "sarn",
+      "ipa": "ˈsaʀn",
       "pos": "noun",
       "en": "sword",
       "nl": "zwaard",
@@ -465,7 +465,7 @@
     {
       "id": "nou-014",
       "gkh": "shak",
-      "ipa": "ʃak",
+      "ipa": "ˈʃak",
       "pos": "noun",
       "en": "king",
       "nl": "koning",
@@ -474,7 +474,7 @@
     {
       "id": "nou-015",
       "gkh": "durang",
-      "ipa": "dʊraŋ",
+      "ipa": "ˈdʊʀaŋ",
       "pos": "noun",
       "en": "tower",
       "nl": "toren",
@@ -483,7 +483,7 @@
     {
       "id": "nou-016",
       "gkh": "rûk",
-      "ipa": "ruːk",
+      "ipa": "ˈʀuːk",
       "pos": "noun",
       "en": "army",
       "nl": "leger",
@@ -492,7 +492,7 @@
     {
       "id": "nou-017",
       "gkh": "hask",
-      "ipa": "hask",
+      "ipa": "ˈhask",
       "pos": "noun",
       "en": "fear",
       "nl": "angst",
@@ -501,7 +501,7 @@
     {
       "id": "nou-018",
       "gkh": "ghûl",
-      "ipa": "ɣuːl",
+      "ipa": "ˈɣuːl",
       "pos": "noun",
       "en": "shadow",
       "nl": "schaduw",
@@ -510,7 +510,7 @@
     {
       "id": "nou-019",
       "gkh": "ghûldor",
-      "ipa": "ɣuːldɔr",
+      "ipa": "ˈɣuːldɔʀ",
       "pos": "noun",
       "en": "shadowland",
       "nl": "schaduwland",
@@ -521,7 +521,7 @@
     {
       "id": "nou-020",
       "gkh": "khar",
-      "ipa": "xar",
+      "ipa": "ˈxaʀ",
       "pos": "noun",
       "en": "strength / power",
       "nl": "kracht / macht",
@@ -531,7 +531,7 @@
     {
       "id": "nou-021",
       "gkh": "khardûm",
-      "ipa": "xarduːm",
+      "ipa": "xaʀˈduːm",
       "pos": "noun",
       "en": "the mighty one",
       "nl": "de machtige",
@@ -542,7 +542,7 @@
     {
       "id": "nou-022",
       "gkh": "magdûm",
-      "ipa": "magduːm",
+      "ipa": "magˈduːm",
       "pos": "noun",
       "en": "servant / follower",
       "nl": "dienaar / volgeling",
@@ -553,7 +553,7 @@
     {
       "id": "nou-023",
       "gkh": "pâkûl",
-      "ipa": "paːkuːl",
+      "ipa": "paːˈkuːl",
       "pos": "noun",
       "en": "road / path",
       "nl": "weg / pad",
@@ -564,7 +564,7 @@
     {
       "id": "nou-024",
       "gkh": "zûrdûm",
-      "ipa": "zuːrduːm",
+      "ipa": "zuːʀˈduːm",
       "pos": "noun",
       "en": "the knowing one / sage",
       "nl": "de wetende / wijze",
@@ -575,7 +575,7 @@
     {
       "id": "nou-025",
       "gkh": "enemdûm",
-      "ipa": "ɛnɛmduːm",
+      "ipa": "ɛnɛmˈduːm",
       "pos": "noun",
       "en": "enemy",
       "nl": "vijand",
@@ -584,7 +584,7 @@
     {
       "id": "nou-026",
       "gkh": "garn",
-      "ipa": "garn",
+      "ipa": "ˈgaʀn",
       "pos": "noun",
       "en": "mountain",
       "nl": "berg",
@@ -593,7 +593,7 @@
     {
       "id": "nou-027",
       "gkh": "shelgh",
-      "ipa": "ʃɛlɣ",
+      "ipa": "ˈʃɛlɣ",
       "pos": "noun",
       "en": "sky",
       "nl": "lucht/hemel",
@@ -602,7 +602,7 @@
     {
       "id": "nou-028",
       "gkh": "thorn",
-      "ipa": "θɔrn",
+      "ipa": "ˈθɔʀn",
       "pos": "noun",
       "en": "wind",
       "nl": "wind",
@@ -611,7 +611,7 @@
     {
       "id": "nou-029",
       "gkh": "vel",
-      "ipa": "vɛl",
+      "ipa": "ˈvɛl",
       "pos": "noun",
       "en": "tree",
       "nl": "boom",
@@ -620,7 +620,7 @@
     {
       "id": "nou-030",
       "gkh": "krush",
-      "ipa": "krʊʃ",
+      "ipa": "ˈkʀʊʃ",
       "pos": "noun",
       "en": "beast",
       "nl": "beest",
@@ -629,7 +629,7 @@
     {
       "id": "nou-031",
       "gkh": "zherk",
-      "ipa": "ʒɛrk",
+      "ipa": "ˈʒɛʀk",
       "pos": "noun",
       "en": "bird",
       "nl": "vogel",
@@ -638,7 +638,7 @@
     {
       "id": "nou-032",
       "gkh": "plâsh",
-      "ipa": "plaːʃ",
+      "ipa": "ˈplaːʃ",
       "pos": "noun",
       "en": "rain",
       "nl": "regen",
@@ -647,7 +647,7 @@
     {
       "id": "nou-033",
       "gkh": "niru",
-      "ipa": "nɪrʊ",
+      "ipa": "ˈnɪʀʊ",
       "pos": "noun",
       "en": "snow",
       "nl": "sneeuw",
@@ -656,7 +656,7 @@
     {
       "id": "nou-034",
       "gkh": "khauril",
-      "ipa": "xaʊ̯rɪl",
+      "ipa": "ˈxaʊ̯ʀɪl",
       "pos": "noun",
       "en": "ash (cinder)",
       "nl": "as",
@@ -666,7 +666,7 @@
     {
       "id": "nou-035",
       "gkh": "morith",
-      "ipa": "mɔrɪθ",
+      "ipa": "ˈmɔʀɪθ",
       "pos": "noun",
       "en": "grave",
       "nl": "graf",
@@ -676,7 +676,7 @@
     {
       "id": "nou-036",
       "gkh": "nathdor",
-      "ipa": "naθdɔr",
+      "ipa": "ˈnaθdɔʀ",
       "pos": "noun",
       "en": "home / dwelling",
       "nl": "thuis / woning",
@@ -685,7 +685,7 @@
     {
       "id": "nou-037",
       "gkh": "shakdor",
-      "ipa": "ʃakdɔr",
+      "ipa": "ˈʃakdɔʀ",
       "pos": "noun",
       "en": "kingdom",
       "nl": "koninkrijk",
@@ -696,7 +696,7 @@
     {
       "id": "nou-038",
       "gkh": "vathel",
-      "ipa": "vaθɛl",
+      "ipa": "ˈvaθɛl",
       "pos": "noun",
       "en": "city",
       "nl": "stad",
@@ -705,7 +705,7 @@
     {
       "id": "nou-039",
       "gkh": "pelk",
-      "ipa": "pɛlk",
+      "ipa": "ˈpɛlk",
       "pos": "noun",
       "en": "gate",
       "nl": "poort",
@@ -714,7 +714,7 @@
     {
       "id": "nou-040",
       "gkh": "sharak",
-      "ipa": "ʃarak",
+      "ipa": "ˈʃaʀak",
       "pos": "noun",
       "en": "book / tablet",
       "nl": "boek / tablet",
@@ -723,7 +723,7 @@
     {
       "id": "nou-041",
       "gkh": "nirdûm",
-      "ipa": "nɪrduːm",
+      "ipa": "nɪʀˈduːm",
       "pos": "noun",
       "en": "friend",
       "nl": "vriend",
@@ -732,7 +732,7 @@
     {
       "id": "nou-042",
       "gkh": "golm",
-      "ipa": "gɔlm",
+      "ipa": "ˈgɔlm",
       "pos": "noun",
       "en": "gold",
       "nl": "goud",
@@ -741,7 +741,7 @@
     {
       "id": "nou-043",
       "gkh": "thasheth",
-      "ipa": "θaʃɛθ",
+      "ipa": "ˈθaʃɛθ",
       "pos": "noun",
       "en": "number",
       "nl": "getal",
@@ -750,7 +750,7 @@
     {
       "id": "nou-044",
       "gkh": "varneth",
-      "ipa": "varnɛθ",
+      "ipa": "ˈvaʀnɛθ",
       "pos": "noun",
       "en": "thought",
       "nl": "gedachte",
@@ -759,7 +759,7 @@
     {
       "id": "nou-045",
       "gkh": "driveth",
-      "ipa": "drɪvɛθ",
+      "ipa": "ˈdʀɪvɛθ",
       "pos": "noun",
       "en": "machine / device",
       "nl": "machine / apparaat",
@@ -768,7 +768,7 @@
     {
       "id": "vrb-001",
       "gkh": "dûn",
-      "ipa": "duːn",
+      "ipa": "ˈduːn",
       "pos": "verb",
       "en": "to have",
       "nl": "hebben",
@@ -777,7 +777,7 @@
     {
       "id": "vrb-002",
       "gkh": "mâg",
-      "ipa": "maːg",
+      "ipa": "ˈmaːg",
       "pos": "verb",
       "en": "to be able to / can",
       "nl": "kunnen",
@@ -786,7 +786,7 @@
     {
       "id": "vrb-003",
       "gkh": "pâk",
-      "ipa": "paːk",
+      "ipa": "ˈpaːk",
       "pos": "verb",
       "en": "to go",
       "nl": "gaan",
@@ -796,7 +796,7 @@
     {
       "id": "vrb-004",
       "gkh": "mag",
-      "ipa": "mag",
+      "ipa": "ˈmag",
       "pos": "verb",
       "en": "to follow / to serve",
       "nl": "volgen / dienen",
@@ -806,7 +806,7 @@
     {
       "id": "vrb-005",
       "gkh": "zûr",
-      "ipa": "zuːr",
+      "ipa": "ˈzuːʀ",
       "pos": "verb",
       "en": "to know",
       "nl": "weten",
@@ -816,7 +816,7 @@
     {
       "id": "vrb-006",
       "gkh": "khaur",
-      "ipa": "xaʊ̯r",
+      "ipa": "ˈxaʊ̯ʀ",
       "pos": "verb",
       "en": "to burn",
       "nl": "branden",
@@ -826,7 +826,7 @@
     {
       "id": "vrb-007",
       "gkh": "khar",
-      "ipa": "xar",
+      "ipa": "ˈxaʀ",
       "pos": "verb",
       "en": "to be strong",
       "nl": "sterk zijn",
@@ -836,7 +836,7 @@
     {
       "id": "vrb-008",
       "gkh": "ghûl",
-      "ipa": "ɣuːl",
+      "ipa": "ˈɣuːl",
       "pos": "verb",
       "en": "to darken / to shadow",
       "nl": "verduisteren",
@@ -846,7 +846,7 @@
     {
       "id": "vrb-009",
       "gkh": "sel",
-      "ipa": "sɛl",
+      "ipa": "ˈsɛl",
       "pos": "verb",
       "en": "to see",
       "nl": "zien",
@@ -855,7 +855,7 @@
     {
       "id": "vrb-010",
       "gkh": "varn",
-      "ipa": "varn",
+      "ipa": "ˈvaʀn",
       "pos": "verb",
       "en": "to speak",
       "nl": "spreken",
@@ -864,7 +864,7 @@
     {
       "id": "vrb-011",
       "gkh": "nash",
-      "ipa": "naʃ",
+      "ipa": "ˈnaʃ",
       "pos": "verb",
       "en": "to eat",
       "nl": "eten",
@@ -873,7 +873,7 @@
     {
       "id": "vrb-012",
       "gkh": "thul",
-      "ipa": "θʊl",
+      "ipa": "ˈθʊl",
       "pos": "verb",
       "en": "to drink",
       "nl": "drinken",
@@ -882,7 +882,7 @@
     {
       "id": "vrb-013",
       "gkh": "drash",
-      "ipa": "draʃ",
+      "ipa": "ˈdʀaʃ",
       "pos": "verb",
       "en": "to fight",
       "nl": "vechten",
@@ -891,7 +891,7 @@
     {
       "id": "vrb-014",
       "gkh": "kûl",
-      "ipa": "kuːl",
+      "ipa": "ˈkuːl",
       "pos": "verb",
       "en": "to kill",
       "nl": "doden",
@@ -900,7 +900,7 @@
     {
       "id": "vrb-015",
       "gkh": "garth",
-      "ipa": "garθ",
+      "ipa": "ˈgaʀθ",
       "pos": "verb",
       "en": "to build",
       "nl": "bouwen",
@@ -909,7 +909,7 @@
     {
       "id": "vrb-016",
       "gkh": "rûkh",
-      "ipa": "ruːx",
+      "ipa": "ˈʀuːx",
       "pos": "verb",
       "en": "to rule",
       "nl": "heersen",
@@ -918,7 +918,7 @@
     {
       "id": "vrb-017",
       "gkh": "nirith",
-      "ipa": "nɪrɪθ",
+      "ipa": "ˈnɪʀɪθ",
       "pos": "verb",
       "en": "to love",
       "nl": "liefhebben",
@@ -927,7 +927,7 @@
     {
       "id": "vrb-018",
       "gkh": "haskith",
-      "ipa": "haskɪθ",
+      "ipa": "ˈhaskɪθ",
       "pos": "verb",
       "en": "to hate",
       "nl": "haten",
@@ -937,7 +937,7 @@
     {
       "id": "vrb-019",
       "gkh": "gib",
-      "ipa": "gɪb",
+      "ipa": "ˈgɪb",
       "pos": "verb",
       "en": "to give",
       "nl": "geven",
@@ -946,7 +946,7 @@
     {
       "id": "vrb-020",
       "gkh": "tok-ash",
-      "ipa": "tɔkaʃ",
+      "ipa": "ˈtɔkaʃ",
       "pos": "verb",
       "en": "to take",
       "nl": "nemen",
@@ -955,7 +955,7 @@
     {
       "id": "vrb-021",
       "gkh": "varneth-u",
-      "ipa": "varnɛθʊ",
+      "ipa": "vaʀnˈɛθʊ",
       "pos": "verb",
       "en": "to want",
       "nl": "willen",
@@ -964,7 +964,7 @@
     {
       "id": "vrb-022",
       "gkh": "garn-ash",
-      "ipa": "garnaʃ",
+      "ipa": "ˈgaʀnaʃ",
       "pos": "verb",
       "en": "to live",
       "nl": "leven",
@@ -973,7 +973,7 @@
     {
       "id": "vrb-023",
       "gkh": "pâkith",
-      "ipa": "paːkɪθ",
+      "ipa": "ˈpaːkɪθ",
       "pos": "verb",
       "en": "to walk",
       "nl": "lopen",
@@ -983,7 +983,7 @@
     {
       "id": "vrb-024",
       "gkh": "drolith",
-      "ipa": "drɔlɪθ",
+      "ipa": "ˈdʀɔlɪθ",
       "pos": "verb",
       "en": "to run",
       "nl": "rennen",
@@ -992,7 +992,7 @@
     {
       "id": "vrb-025",
       "gkh": "zherkith",
-      "ipa": "ʒɛrkɪθ",
+      "ipa": "ˈʒɛʀkɪθ",
       "pos": "verb",
       "en": "to fly",
       "nl": "vliegen",
@@ -1002,7 +1002,7 @@
     {
       "id": "vrb-026",
       "gkh": "driv",
-      "ipa": "drɪv",
+      "ipa": "ˈdʀɪv",
       "pos": "verb",
       "en": "to bring",
       "nl": "brengen",
@@ -1011,7 +1011,7 @@
     {
       "id": "vrb-027",
       "gkh": "nairgh",
-      "ipa": "naɪ̯rɣ",
+      "ipa": "ˈnaɪ̯ʀɣ",
       "pos": "verb",
       "en": "to cry out / to call",
       "nl": "roepen",
@@ -1020,7 +1020,7 @@
     {
       "id": "vrb-028",
       "gkh": "shelm",
-      "ipa": "ʃɛlm",
+      "ipa": "ˈʃɛlm",
       "pos": "verb",
       "en": "to ask",
       "nl": "vragen",
@@ -1029,7 +1029,7 @@
     {
       "id": "vrb-029",
       "gkh": "varnak",
-      "ipa": "varnak",
+      "ipa": "ˈvaʀnak",
       "pos": "verb",
       "en": "to answer",
       "nl": "antwoorden",
@@ -1039,7 +1039,7 @@
     {
       "id": "vrb-030",
       "gkh": "mordith",
-      "ipa": "mɔrdɪθ",
+      "ipa": "ˈmɔʀdɪθ",
       "pos": "verb",
       "en": "to die",
       "nl": "sterven",
@@ -1049,7 +1049,7 @@
     {
       "id": "adj-001",
       "gkh": "khar",
-      "ipa": "xar",
+      "ipa": "ˈxaʀ",
       "pos": "adjective",
       "en": "strong",
       "nl": "sterk",
@@ -1059,7 +1059,7 @@
     {
       "id": "adj-002",
       "gkh": "kharith",
-      "ipa": "xarɪθ",
+      "ipa": "ˈxaʀɪθ",
       "pos": "adverb",
       "en": "strongly",
       "nl": "sterk (bijw.)",
@@ -1070,7 +1070,7 @@
     {
       "id": "adj-003",
       "gkh": "gurz",
-      "ipa": "gʊrz",
+      "ipa": "ˈgʊʀz",
       "pos": "adjective",
       "en": "dark",
       "nl": "donker",
@@ -1079,7 +1079,7 @@
     {
       "id": "adj-004",
       "gkh": "shelath",
-      "ipa": "ʃɛlaθ",
+      "ipa": "ˈʃɛlaθ",
       "pos": "adjective",
       "en": "bright / light",
       "nl": "licht / helder",
@@ -1088,7 +1088,7 @@
     {
       "id": "adj-005",
       "gkh": "gan",
-      "ipa": "gan",
+      "ipa": "ˈgan",
       "pos": "adjective",
       "en": "big",
       "nl": "groot",
@@ -1097,7 +1097,7 @@
     {
       "id": "adj-006",
       "gkh": "pish",
-      "ipa": "pɪʃ",
+      "ipa": "ˈpɪʃ",
       "pos": "adjective",
       "en": "small",
       "nl": "klein",
@@ -1106,7 +1106,7 @@
     {
       "id": "adj-007",
       "gkh": "ushen",
-      "ipa": "ʊʃɛn",
+      "ipa": "ˈʊʃɛn",
       "pos": "adjective",
       "en": "good",
       "nl": "goed",
@@ -1115,7 +1115,7 @@
     {
       "id": "adj-008",
       "gkh": "morgath",
-      "ipa": "mɔrgaθ",
+      "ipa": "ˈmɔʀgaθ",
       "pos": "adjective",
       "en": "evil / bad",
       "nl": "slecht / kwaadaardig",
@@ -1124,7 +1124,7 @@
     {
       "id": "adj-009",
       "gkh": "varak",
-      "ipa": "varak",
+      "ipa": "ˈvaʀak",
       "pos": "adjective",
       "en": "old",
       "nl": "oud",
@@ -1133,7 +1133,7 @@
     {
       "id": "adj-010",
       "gkh": "nivash",
-      "ipa": "nɪvaʃ",
+      "ipa": "ˈnɪvaʃ",
       "pos": "adjective",
       "en": "new",
       "nl": "nieuw",
@@ -1142,7 +1142,7 @@
     {
       "id": "adj-011",
       "gkh": "drelk",
-      "ipa": "drɛlk",
+      "ipa": "ˈdʀɛlk",
       "pos": "adjective",
       "en": "fast",
       "nl": "snel",
@@ -1151,7 +1151,7 @@
     {
       "id": "adj-012",
       "gkh": "thuleth",
-      "ipa": "θʊlɛθ",
+      "ipa": "ˈθʊlɛθ",
       "pos": "adjective",
       "en": "slow",
       "nl": "langzaam",
@@ -1160,7 +1160,7 @@
     {
       "id": "adj-013",
       "gkh": "zunath",
-      "ipa": "zʊnaθ",
+      "ipa": "ˈzʊnaθ",
       "pos": "adjective",
       "en": "red",
       "nl": "rood",
@@ -1169,7 +1169,7 @@
     {
       "id": "adj-014",
       "gkh": "ghulath",
-      "ipa": "ɣʊlaθ",
+      "ipa": "ˈɣʊlaθ",
       "pos": "adjective",
       "en": "black",
       "nl": "zwart",
@@ -1179,7 +1179,7 @@
     {
       "id": "adj-015",
       "gkh": "shelgath",
-      "ipa": "ʃɛlgaθ",
+      "ipa": "ˈʃɛlgaθ",
       "pos": "adjective",
       "en": "white",
       "nl": "wit",
@@ -1188,7 +1188,7 @@
     {
       "id": "adj-016",
       "gkh": "qathel",
-      "ipa": "qaθɛl",
+      "ipa": "ˈqaθɛl",
       "pos": "adjective",
       "en": "hot",
       "nl": "heet",
@@ -1198,7 +1198,7 @@
     {
       "id": "adj-017",
       "gkh": "nirel",
-      "ipa": "nɪrɛl",
+      "ipa": "ˈnɪʀɛl",
       "pos": "adjective",
       "en": "cold",
       "nl": "koud",
@@ -1207,7 +1207,7 @@
     {
       "id": "adj-018",
       "gkh": "burath",
-      "ipa": "bʊraθ",
+      "ipa": "ˈbʊʀaθ",
       "pos": "adjective",
       "en": "hard",
       "nl": "hard",
@@ -1217,7 +1217,7 @@
     {
       "id": "adj-019",
       "gkh": "velath",
-      "ipa": "vɛlaθ",
+      "ipa": "ˈvɛlaθ",
       "pos": "adjective",
       "en": "soft",
       "nl": "zacht",
@@ -1226,7 +1226,7 @@
     {
       "id": "adj-020",
       "gkh": "zûrar",
-      "ipa": "zuːrar",
+      "ipa": "ˈzuːʀaʀ",
       "pos": "adjective",
       "en": "wise",
       "nl": "wijs",
@@ -1236,7 +1236,7 @@
     {
       "id": "adj-021",
       "gkh": "haskar",
-      "ipa": "haskar",
+      "ipa": "ˈhaskaʀ",
       "pos": "adjective",
       "en": "fearsome / terrifying",
       "nl": "angstaanjagend",
@@ -1246,7 +1246,7 @@
     {
       "id": "adj-022",
       "gkh": "golmath",
-      "ipa": "gɔlmaθ",
+      "ipa": "ˈgɔlmaθ",
       "pos": "adjective",
       "en": "golden",
       "nl": "gouden",
@@ -1256,7 +1256,7 @@
     {
       "id": "ppl-001",
       "gkh": "dagor",
-      "ipa": "dagɔr",
+      "ipa": "ˈdagɔʀ",
       "pos": "noun",
       "en": "father",
       "nl": "vader",
@@ -1265,7 +1265,7 @@
     {
       "id": "ppl-002",
       "gkh": "nami",
-      "ipa": "nami",
+      "ipa": "ˈnamɪ",
       "pos": "noun",
       "en": "mother",
       "nl": "moeder",
@@ -1274,7 +1274,7 @@
     {
       "id": "ppl-003",
       "gkh": "zurna",
-      "ipa": "zʊrna",
+      "ipa": "ˈzʊʀna",
       "pos": "noun",
       "en": "son",
       "nl": "zoon",
@@ -1283,7 +1283,7 @@
     {
       "id": "ppl-004",
       "gkh": "zurnath",
-      "ipa": "zʊrnaθ",
+      "ipa": "ˈzʊʀnaθ",
       "pos": "noun",
       "en": "daughter",
       "nl": "dochter",
@@ -1293,7 +1293,7 @@
     {
       "id": "ppl-005a",
       "gkh": "bak",
-      "ipa": "bak",
+      "ipa": "ˈbak",
       "pos": "noun",
       "en": "sibling",
       "nl": "broer of zus",
@@ -1302,7 +1302,7 @@
     {
       "id": "ppl-005",
       "gkh": "bakrun",
-      "ipa": "bakrʊn",
+      "ipa": "ˈbakʀʊn",
       "pos": "noun",
       "en": "brother",
       "nl": "broer",
@@ -1312,7 +1312,7 @@
     {
       "id": "ppl-006",
       "gkh": "bakna",
-      "ipa": "bakna",
+      "ipa": "ˈbakna",
       "pos": "noun",
       "en": "sister",
       "nl": "zus",
@@ -1322,7 +1322,7 @@
     {
       "id": "ppl-007",
       "gkh": "pelu",
-      "ipa": "pɛlʊ",
+      "ipa": "ˈpɛlʊ",
       "pos": "noun",
       "en": "child",
       "nl": "kind",
@@ -1331,7 +1331,7 @@
     {
       "id": "ppl-008",
       "gkh": "dromak",
-      "ipa": "drɔmak",
+      "ipa": "ˈdʀɔmak",
       "pos": "noun",
       "en": "elder / chieftain",
       "nl": "oudste / stamhoofd",
@@ -1340,7 +1340,7 @@
     {
       "id": "ppl-009",
       "gkh": "vashna",
-      "ipa": "vaʃna",
+      "ipa": "ˈvaʃna",
       "pos": "noun",
       "en": "stranger",
       "nl": "vreemdeling",
@@ -1349,7 +1349,7 @@
     {
       "id": "ppl-010",
       "gkh": "sornu",
-      "ipa": "sɔrnʊ",
+      "ipa": "ˈsɔʀnʊ",
       "pos": "noun",
       "en": "ally",
       "nl": "bondgenoot",
@@ -1358,7 +1358,7 @@
     {
       "id": "ppl-011",
       "gkh": "ghelum",
-      "ipa": "ɣɛlʊm",
+      "ipa": "ˈɣɛlʊm",
       "pos": "noun",
       "en": "clan / tribe",
       "nl": "stam",
@@ -1367,7 +1367,7 @@
     {
       "id": "ppl-012",
       "gkh": "zarnol",
-      "ipa": "zarnɔl",
+      "ipa": "ˈzaʀnɔl",
       "pos": "noun",
       "en": "warrior",
       "nl": "krijger",
@@ -1376,7 +1376,7 @@
     {
       "id": "ppl-013",
       "gkh": "mirak",
-      "ipa": "mɪrak",
+      "ipa": "ˈmɪʀak",
       "pos": "noun",
       "en": "mate / spouse",
       "nl": "partner / echtgenoot",
@@ -1385,7 +1385,7 @@
     {
       "id": "ppl-014",
       "gkh": "tanor",
-      "ipa": "tanɔr",
+      "ipa": "ˈtanɔʀ",
       "pos": "noun",
       "en": "neighbour",
       "nl": "buur",
@@ -1394,7 +1394,7 @@
     {
       "id": "ppl-015",
       "gkh": "shelan",
-      "ipa": "ʃɛlan",
+      "ipa": "ˈʃɛlan",
       "pos": "noun",
       "en": "messenger",
       "nl": "boodschapper",
@@ -1403,7 +1403,7 @@
     {
       "id": "tim-001",
       "gkh": "zurath",
-      "ipa": "zʊraθ",
+      "ipa": "ˈzʊʀaθ",
       "pos": "noun",
       "en": "year",
       "nl": "jaar",
@@ -1412,7 +1412,7 @@
     {
       "id": "tim-002",
       "gkh": "mathu",
-      "ipa": "maθʊ",
+      "ipa": "ˈmaθʊ",
       "pos": "noun",
       "en": "month",
       "nl": "maand",
@@ -1421,7 +1421,7 @@
     {
       "id": "tim-003",
       "gkh": "kelish",
-      "ipa": "kɛlɪʃ",
+      "ipa": "ˈkɛlɪʃ",
       "pos": "noun",
       "en": "hour",
       "nl": "uur",
@@ -1430,7 +1430,7 @@
     {
       "id": "tim-004",
       "gkh": "morith",
-      "ipa": "mɔrɪθ",
+      "ipa": "ˈmɔʀɪθ",
       "pos": "noun",
       "en": "morning",
       "nl": "ochtend",
@@ -1439,7 +1439,7 @@
     {
       "id": "tim-005",
       "gkh": "sarûn",
-      "ipa": "sarʊːn",
+      "ipa": "saˈʀuːn",
       "pos": "noun",
       "en": "evening",
       "nl": "avond",
@@ -1448,7 +1448,7 @@
     {
       "id": "tim-006",
       "gkh": "naroth",
-      "ipa": "narɔθ",
+      "ipa": "ˈnaʀɔθ",
       "pos": "noun",
       "en": "night",
       "nl": "nacht",
@@ -1457,7 +1457,7 @@
     {
       "id": "tim-007",
       "gkh": "pâsu",
-      "ipa": "paːsʊ",
+      "ipa": "ˈpaːsʊ",
       "pos": "noun",
       "en": "past",
       "nl": "verleden",
@@ -1466,7 +1466,7 @@
     {
       "id": "tim-008",
       "gkh": "tûrath",
-      "ipa": "tuːraθ",
+      "ipa": "ˈtuːʀaθ",
       "pos": "noun",
       "en": "future",
       "nl": "toekomst",
@@ -1475,7 +1475,7 @@
     {
       "id": "tim-009",
       "gkh": "belor",
-      "ipa": "bɛlɔr",
+      "ipa": "ˈbɛlɔʀ",
       "pos": "noun",
       "en": "distance",
       "nl": "afstand",
@@ -1484,7 +1484,7 @@
     {
       "id": "tim-010",
       "gkh": "ganesh",
-      "ipa": "ganɛʃ",
+      "ipa": "ˈganɛʃ",
       "pos": "noun",
       "en": "border / edge",
       "nl": "grens / rand",
@@ -1493,7 +1493,7 @@
     {
       "id": "tim-011",
       "gkh": "voril",
-      "ipa": "vɔrɪl",
+      "ipa": "ˈvɔʀɪl",
       "pos": "noun",
       "en": "center / middle",
       "nl": "midden",
@@ -1502,7 +1502,7 @@
     {
       "id": "tim-012",
       "gkh": "nûrath",
-      "ipa": "nuːraθ",
+      "ipa": "ˈnuːʀaθ",
       "pos": "adverb",
       "en": "always",
       "nl": "altijd",
@@ -1511,7 +1511,7 @@
     {
       "id": "tim-013",
       "gkh": "kaneth",
-      "ipa": "kanɛθ",
+      "ipa": "ˈkanɛθ",
       "pos": "adverb",
       "en": "never",
       "nl": "nooit",
@@ -1520,7 +1520,7 @@
     {
       "id": "tim-014",
       "gkh": "shuril",
-      "ipa": "ʃʊrɪl",
+      "ipa": "ˈʃʊʀɪl",
       "pos": "adverb",
       "en": "soon",
       "nl": "binnenkort",
@@ -1529,7 +1529,7 @@
     {
       "id": "tim-015",
       "gkh": "dasor",
-      "ipa": "dasɔr",
+      "ipa": "ˈdasɔʀ",
       "pos": "adverb",
       "en": "yesterday",
       "nl": "gisteren",
@@ -1538,7 +1538,7 @@
     {
       "id": "tim-016",
       "gkh": "tovak",
-      "ipa": "tɔvak",
+      "ipa": "ˈtɔvak",
       "pos": "adverb",
       "en": "tomorrow",
       "nl": "morgen",
@@ -1547,7 +1547,7 @@
     {
       "id": "emo-001",
       "gkh": "sharith",
-      "ipa": "ʃarɪθ",
+      "ipa": "ˈʃaʀɪθ",
       "pos": "noun",
       "en": "love",
       "nl": "liefde",
@@ -1556,7 +1556,7 @@
     {
       "id": "emo-002",
       "gkh": "voranu",
-      "ipa": "vɔranʊ",
+      "ipa": "vɔˈʀanʊ",
       "pos": "noun",
       "en": "hate",
       "nl": "haat",
@@ -1565,7 +1565,7 @@
     {
       "id": "emo-003",
       "gkh": "delana",
-      "ipa": "dɛlana",
+      "ipa": "dɛˈlana",
       "pos": "noun",
       "en": "joy",
       "nl": "vreugde",
@@ -1574,7 +1574,7 @@
     {
       "id": "emo-004",
       "gkh": "morun",
-      "ipa": "mɔrʊn",
+      "ipa": "ˈmɔʀʊn",
       "pos": "noun",
       "en": "grief / sorrow",
       "nl": "verdriet",
@@ -1583,7 +1583,7 @@
     {
       "id": "emo-005",
       "gkh": "garosh",
-      "ipa": "garɔʃ",
+      "ipa": "ˈgaʀɔʃ",
       "pos": "noun",
       "en": "anger",
       "nl": "woede",
@@ -1592,7 +1592,7 @@
     {
       "id": "emo-006",
       "gkh": "nelûm",
-      "ipa": "nɛluːm",
+      "ipa": "nɛˈluːm",
       "pos": "noun",
       "en": "hope",
       "nl": "hoop",
@@ -1601,7 +1601,7 @@
     {
       "id": "emo-007",
       "gkh": "tharak",
-      "ipa": "θarak",
+      "ipa": "ˈθaʀak",
       "pos": "noun",
       "en": "shame",
       "nl": "schaamte",
@@ -1610,7 +1610,7 @@
     {
       "id": "emo-008",
       "gkh": "belanu",
-      "ipa": "bɛlanʊ",
+      "ipa": "bɛˈlanʊ",
       "pos": "noun",
       "en": "pride",
       "nl": "trots",
@@ -1619,7 +1619,7 @@
     {
       "id": "emo-009",
       "gkh": "zelith",
-      "ipa": "zɛlɪθ",
+      "ipa": "ˈzɛlɪθ",
       "pos": "noun",
       "en": "envy",
       "nl": "afgunst",
@@ -1628,7 +1628,7 @@
     {
       "id": "emo-010",
       "gkh": "kavor",
-      "ipa": "kavɔr",
+      "ipa": "ˈkavɔʀ",
       "pos": "noun",
       "en": "courage",
       "nl": "moed",
@@ -1637,7 +1637,7 @@
     {
       "id": "emo-011",
       "gkh": "sharak",
-      "ipa": "ʃarak",
+      "ipa": "ˈʃaʀak",
       "pos": "verb",
       "en": "to love",
       "nl": "liefhebben",
@@ -1647,7 +1647,7 @@
     {
       "id": "emo-012",
       "gkh": "voran",
-      "ipa": "vɔran",
+      "ipa": "ˈvɔʀan",
       "pos": "verb",
       "en": "to hate",
       "nl": "haten",
@@ -1657,7 +1657,7 @@
     {
       "id": "emo-013",
       "gkh": "haskith",
-      "ipa": "haskɪθ",
+      "ipa": "ˈhaskɪθ",
       "pos": "adjective",
       "en": "afraid",
       "nl": "bang",
@@ -1667,7 +1667,7 @@
     {
       "id": "emo-014",
       "gkh": "delan",
-      "ipa": "dɛlan",
+      "ipa": "ˈdɛlan",
       "pos": "adjective",
       "en": "joyful",
       "nl": "blij",
@@ -1677,7 +1677,7 @@
     {
       "id": "emo-015",
       "gkh": "morel",
-      "ipa": "mɔrɛl",
+      "ipa": "ˈmɔʀɛl",
       "pos": "adjective",
       "en": "sorrowful",
       "nl": "treurig",
@@ -1687,7 +1687,7 @@
     {
       "id": "pow-001",
       "gkh": "zarkhan",
-      "ipa": "zarxan",
+      "ipa": "ˈzaʀxan",
       "pos": "noun",
       "en": "throne",
       "nl": "troon",
@@ -1696,7 +1696,7 @@
     {
       "id": "pow-002",
       "gkh": "shakdom",
-      "ipa": "ʃakdɔm",
+      "ipa": "ˈʃakdɔm",
       "pos": "noun",
       "en": "kingdom / realm",
       "nl": "koninkrijk",
@@ -1706,7 +1706,7 @@
     {
       "id": "pow-003",
       "gkh": "nûrdûm",
-      "ipa": "nuːrduːm",
+      "ipa": "nuːʀˈduːm",
       "pos": "noun",
       "en": "ruler / overlord",
       "nl": "heerser",
@@ -1715,7 +1715,7 @@
     {
       "id": "pow-004",
       "gkh": "gashul",
-      "ipa": "gaʃʊl",
+      "ipa": "ˈgaʃʊl",
       "pos": "noun",
       "en": "slave",
       "nl": "slaaf",
@@ -1724,7 +1724,7 @@
     {
       "id": "pow-005",
       "gkh": "mashul",
-      "ipa": "maʃʊl",
+      "ipa": "ˈmaʃʊl",
       "pos": "noun",
       "en": "master / lord",
       "nl": "meester / heer",
@@ -1733,7 +1733,7 @@
     {
       "id": "pow-006",
       "gkh": "vorel",
-      "ipa": "vɔrɛl",
+      "ipa": "ˈvɔʀɛl",
       "pos": "noun",
       "en": "servant",
       "nl": "dienaar",
@@ -1742,7 +1742,7 @@
     {
       "id": "pow-007",
       "gkh": "khanath",
-      "ipa": "xanaθ",
+      "ipa": "ˈxanaθ",
       "pos": "noun",
       "en": "law / decree",
       "nl": "wet / bevel",
@@ -1751,7 +1751,7 @@
     {
       "id": "pow-008",
       "gkh": "rashul",
-      "ipa": "raʃʊl",
+      "ipa": "ˈʀaʃʊl",
       "pos": "noun",
       "en": "rebellion",
       "nl": "opstand",
@@ -1760,7 +1760,7 @@
     {
       "id": "pow-009",
       "gkh": "tanak",
-      "ipa": "tanak",
+      "ipa": "ˈtanak",
       "pos": "noun",
       "en": "treaty / oath",
       "nl": "verdrag / eed",
@@ -1769,7 +1769,7 @@
     {
       "id": "pow-010",
       "gkh": "khanu",
-      "ipa": "xanʊ",
+      "ipa": "ˈxanʊ",
       "pos": "verb",
       "en": "to command",
       "nl": "bevelen",
@@ -1779,7 +1779,7 @@
     {
       "id": "pow-011",
       "gkh": "mashu",
-      "ipa": "maʃʊ",
+      "ipa": "ˈmaʃʊ",
       "pos": "verb",
       "en": "to rule",
       "nl": "heersen",
@@ -1789,7 +1789,7 @@
     {
       "id": "pow-012",
       "gkh": "gashu",
-      "ipa": "gaʃʊ",
+      "ipa": "ˈgaʃʊ",
       "pos": "verb",
       "en": "to obey",
       "nl": "gehoorzamen",
@@ -1799,7 +1799,7 @@
     {
       "id": "war-001",
       "gkh": "khazor",
-      "ipa": "xazɔr",
+      "ipa": "ˈxazɔʀ",
       "pos": "noun",
       "en": "battle",
       "nl": "veldslag",
@@ -1808,7 +1808,7 @@
     {
       "id": "war-002",
       "gkh": "zagrath",
-      "ipa": "zagraθ",
+      "ipa": "ˈzagʀaθ",
       "pos": "noun",
       "en": "war",
       "nl": "oorlog",
@@ -1817,7 +1817,7 @@
     {
       "id": "war-003",
       "gkh": "shelath",
-      "ipa": "ʃɛlaθ",
+      "ipa": "ˈʃɛlaθ",
       "pos": "noun",
       "en": "shield",
       "nl": "schild",
@@ -1826,7 +1826,7 @@
     {
       "id": "war-004",
       "gkh": "tharn",
-      "ipa": "θarn",
+      "ipa": "ˈθaʀn",
       "pos": "noun",
       "en": "spear",
       "nl": "speer",
@@ -1835,7 +1835,7 @@
     {
       "id": "war-005",
       "gkh": "zelum",
-      "ipa": "zɛlʊm",
+      "ipa": "ˈzɛlʊm",
       "pos": "noun",
       "en": "bow (weapon)",
       "nl": "boog",
@@ -1844,7 +1844,7 @@
     {
       "id": "war-006",
       "gkh": "khorak",
-      "ipa": "xɔrak",
+      "ipa": "ˈxɔʀak",
       "pos": "noun",
       "en": "arrow",
       "nl": "pijl",
@@ -1853,7 +1853,7 @@
     {
       "id": "war-007",
       "gkh": "garnath",
-      "ipa": "garnaθ",
+      "ipa": "ˈgaʀnaθ",
       "pos": "noun",
       "en": "axe",
       "nl": "bijl",
@@ -1862,7 +1862,7 @@
     {
       "id": "war-008",
       "gkh": "nagrol",
-      "ipa": "nagrɔl",
+      "ipa": "ˈnagʀɔl",
       "pos": "noun",
       "en": "siege",
       "nl": "beleg",
@@ -1871,7 +1871,7 @@
     {
       "id": "war-009",
       "gkh": "khazu",
-      "ipa": "xazʊ",
+      "ipa": "ˈxazʊ",
       "pos": "verb",
       "en": "to fight",
       "nl": "vechten",
@@ -1881,7 +1881,7 @@
     {
       "id": "war-010",
       "gkh": "zagru",
-      "ipa": "zagrʊ",
+      "ipa": "ˈzagʀʊ",
       "pos": "verb",
       "en": "to attack",
       "nl": "aanvallen",
@@ -1891,7 +1891,7 @@
     {
       "id": "war-011",
       "gkh": "shelu",
-      "ipa": "ʃɛlʊ",
+      "ipa": "ˈʃɛlʊ",
       "pos": "verb",
       "en": "to defend",
       "nl": "verdedigen",
@@ -1901,7 +1901,7 @@
     {
       "id": "war-012",
       "gkh": "dralu",
-      "ipa": "dralʊ",
+      "ipa": "ˈdʀalʊ",
       "pos": "verb",
       "en": "to conquer",
       "nl": "veroveren",
@@ -1910,7 +1910,7 @@
     {
       "id": "war-013",
       "gkh": "khazith",
-      "ipa": "xazɪθ",
+      "ipa": "ˈxazɪθ",
       "pos": "adjective",
       "en": "victorious",
       "nl": "zegevierend",
@@ -1920,7 +1920,7 @@
     {
       "id": "war-014",
       "gkh": "garnel",
-      "ipa": "garnɛl",
+      "ipa": "ˈgaʀnɛl",
       "pos": "noun",
       "en": "banner / standard",
       "nl": "vaandel",
@@ -1929,7 +1929,7 @@
     {
       "id": "crf-001",
       "gkh": "velkar",
-      "ipa": "vɛlkar",
+      "ipa": "ˈvɛlkaʀ",
       "pos": "noun",
       "en": "wood (material)",
       "nl": "hout",
@@ -1939,7 +1939,7 @@
     {
       "id": "crf-002",
       "gkh": "sharnu",
-      "ipa": "ʃarnʊ",
+      "ipa": "ˈʃaʀnʊ",
       "pos": "noun",
       "en": "leather",
       "nl": "leer",
@@ -1948,7 +1948,7 @@
     {
       "id": "crf-003",
       "gkh": "tolum",
-      "ipa": "tɔlʊm",
+      "ipa": "ˈtɔlʊm",
       "pos": "noun",
       "en": "rope",
       "nl": "touw",
@@ -1957,7 +1957,7 @@
     {
       "id": "crf-004",
       "gkh": "gharnu",
-      "ipa": "ɣarnʊ",
+      "ipa": "ˈɣaʀnʊ",
       "pos": "noun",
       "en": "hammer",
       "nl": "hamer",
@@ -1966,7 +1966,7 @@
     {
       "id": "crf-005",
       "gkh": "zelbu",
-      "ipa": "zɛlbʊ",
+      "ipa": "ˈzɛlbʊ",
       "pos": "noun",
       "en": "knife",
       "nl": "mes",
@@ -1975,7 +1975,7 @@
     {
       "id": "crf-006",
       "gkh": "miral",
-      "ipa": "mɪral",
+      "ipa": "ˈmɪʀal",
       "pos": "noun",
       "en": "silver",
       "nl": "zilver",
@@ -1984,7 +1984,7 @@
     {
       "id": "crf-007",
       "gkh": "tanul",
-      "ipa": "tanʊl",
+      "ipa": "ˈtanʊl",
       "pos": "noun",
       "en": "clay",
       "nl": "klei",
@@ -1993,7 +1993,7 @@
     {
       "id": "crf-008",
       "gkh": "khelum",
-      "ipa": "xɛlʊm",
+      "ipa": "ˈxɛlʊm",
       "pos": "noun",
       "en": "forge",
       "nl": "smidse",
@@ -2002,7 +2002,7 @@
     {
       "id": "crf-009",
       "gkh": "garu",
-      "ipa": "garʊ",
+      "ipa": "ˈgaʀʊ",
       "pos": "verb",
       "en": "to forge / to craft",
       "nl": "smeden",
@@ -2012,7 +2012,7 @@
     {
       "id": "crf-010",
       "gkh": "sheldu",
-      "ipa": "ʃɛldʊ",
+      "ipa": "ˈʃɛldʊ",
       "pos": "verb",
       "en": "to weave",
       "nl": "weven",
@@ -2021,7 +2021,7 @@
     {
       "id": "crf-011",
       "gkh": "velkel",
-      "ipa": "vɛlkɛl",
+      "ipa": "ˈvɛlkɛl",
       "pos": "noun",
       "en": "wagon / cart",
       "nl": "wagen / kar",
@@ -2030,7 +2030,7 @@
     {
       "id": "crf-012",
       "gkh": "nagul",
-      "ipa": "nagʊl",
+      "ipa": "ˈnagʊl",
       "pos": "noun",
       "en": "tool",
       "nl": "gereedschap",
@@ -2039,7 +2039,7 @@
     {
       "id": "evd-001",
       "gkh": "shelva",
-      "ipa": "ʃɛlva",
+      "ipa": "ˈʃɛlva",
       "pos": "noun",
       "en": "food",
       "nl": "voedsel",
@@ -2048,7 +2048,7 @@
     {
       "id": "evd-002",
       "gkh": "varnu",
-      "ipa": "varnʊ",
+      "ipa": "ˈvaʀnʊ",
       "pos": "noun",
       "en": "bread",
       "nl": "brood",
@@ -2057,7 +2057,7 @@
     {
       "id": "evd-003",
       "gkh": "venol",
-      "ipa": "vɛnɔl",
+      "ipa": "ˈvɛnɔl",
       "pos": "noun",
       "en": "drinking water (stored/carried)",
       "nl": "drinkwater",
@@ -2068,7 +2068,7 @@
     {
       "id": "evd-004",
       "gkh": "tanesh",
-      "ipa": "tanɛʃ",
+      "ipa": "ˈtanɛʃ",
       "pos": "noun",
       "en": "meat",
       "nl": "vlees",
@@ -2077,7 +2077,7 @@
     {
       "id": "evd-005",
       "gkh": "golath",
-      "ipa": "gɔlaθ",
+      "ipa": "ˈgɔlaθ",
       "pos": "noun",
       "en": "clothing / garment",
       "nl": "kleding",
@@ -2086,7 +2086,7 @@
     {
       "id": "evd-006",
       "gkh": "dorven",
-      "ipa": "dɔrvɛn",
+      "ipa": "ˈdɔʀvɛn",
       "pos": "noun",
       "en": "village",
       "nl": "dorp",
@@ -2095,7 +2095,7 @@
     {
       "id": "evd-007",
       "gkh": "khelath",
-      "ipa": "xɛlaθ",
+      "ipa": "ˈxɛlaθ",
       "pos": "noun",
       "en": "house / dwelling",
       "nl": "huis / woning",
@@ -2104,7 +2104,7 @@
     {
       "id": "evd-008",
       "gkh": "pâkel",
-      "ipa": "paːkɛl",
+      "ipa": "ˈpaːkɛl",
       "pos": "noun",
       "en": "path / road (small)",
       "nl": "pad",
@@ -2114,7 +2114,7 @@
     {
       "id": "evd-009",
       "gkh": "zundor",
-      "ipa": "zʊndɔr",
+      "ipa": "ˈzʊndɔʀ",
       "pos": "noun",
       "en": "market",
       "nl": "markt",
@@ -2123,7 +2123,7 @@
     {
       "id": "evd-010",
       "gkh": "tharvu",
-      "ipa": "θarvʊ",
+      "ipa": "ˈθaʀvʊ",
       "pos": "noun",
       "en": "lamp / light (source)",
       "nl": "lamp / licht",
@@ -2132,7 +2132,7 @@
     {
       "id": "evd-011",
       "gkh": "shelnu",
-      "ipa": "ʃɛlnʊ",
+      "ipa": "ˈʃɛlnʊ",
       "pos": "noun",
       "en": "bed",
       "nl": "bed",
@@ -2141,7 +2141,7 @@
     {
       "id": "evd-012",
       "gkh": "varu",
-      "ipa": "varʊ",
+      "ipa": "ˈvaʀʊ",
       "pos": "verb",
       "en": "to eat",
       "nl": "eten",
@@ -2150,7 +2150,7 @@
     {
       "id": "evd-013",
       "gkh": "nelu",
-      "ipa": "nɛlʊ",
+      "ipa": "ˈnɛlʊ",
       "pos": "verb",
       "en": "to drink",
       "nl": "drinken",
@@ -2159,7 +2159,7 @@
     {
       "id": "evd-014",
       "gkh": "tharven",
-      "ipa": "θarvɛn",
+      "ipa": "ˈθaʀvɛn",
       "pos": "noun",
       "en": "blanket",
       "nl": "deken",
@@ -2168,7 +2168,7 @@
     {
       "id": "evd-015",
       "gkh": "ganu",
-      "ipa": "ganʊ",
+      "ipa": "ˈganʊ",
       "pos": "verb",
       "en": "to sleep",
       "nl": "slapen",
@@ -2177,7 +2177,7 @@
     {
       "id": "evd-016",
       "gkh": "tolu",
-      "ipa": "tɔlʊ",
+      "ipa": "ˈtɔlʊ",
       "pos": "verb",
       "en": "to cook",
       "nl": "koken",
@@ -2186,7 +2186,7 @@
     {
       "id": "evd-017",
       "gkh": "belu",
-      "ipa": "bɛlʊ",
+      "ipa": "ˈbɛlʊ",
       "pos": "verb",
       "en": "to build",
       "nl": "bouwen",
@@ -2195,7 +2195,7 @@
     {
       "id": "evd-018",
       "gkh": "zendu",
-      "ipa": "zɛndʊ",
+      "ipa": "ˈzɛndʊ",
       "pos": "verb",
       "en": "to buy",
       "nl": "kopen",
@@ -2204,7 +2204,7 @@
     {
       "id": "evd-019",
       "gkh": "garthu",
-      "ipa": "garθʊ",
+      "ipa": "ˈgaʀθʊ",
       "pos": "verb",
       "en": "to sell",
       "nl": "verkopen",
@@ -2213,7 +2213,7 @@
     {
       "id": "evd-020",
       "gkh": "khelu",
-      "ipa": "xɛlʊ",
+      "ipa": "ˈxɛlʊ",
       "pos": "verb",
       "en": "to live (dwell)",
       "nl": "wonen",
@@ -2223,7 +2223,7 @@
     {
       "id": "abs-001",
       "gkh": "khâra",
-      "ipa": "xaːra",
+      "ipa": "ˈxaːʀa",
       "pos": "noun",
       "en": "wisdom",
       "nl": "wijsheid",
@@ -2232,7 +2232,7 @@
     {
       "id": "abs-002",
       "gkh": "tûrel",
-      "ipa": "tuːrɛl",
+      "ipa": "ˈtuːʀɛl",
       "pos": "noun",
       "en": "truth",
       "nl": "waarheid",
@@ -2241,7 +2241,7 @@
     {
       "id": "abs-003",
       "gkh": "velash",
-      "ipa": "vɛlaʃ",
+      "ipa": "ˈvɛlaʃ",
       "pos": "noun",
       "en": "lie / falsehood",
       "nl": "leugen",
@@ -2250,7 +2250,7 @@
     {
       "id": "abs-004",
       "gkh": "sharûl",
-      "ipa": "ʃaruːl",
+      "ipa": "ʃaˈʀuːl",
       "pos": "noun",
       "en": "freedom",
       "nl": "vrijheid",
@@ -2259,7 +2259,7 @@
     {
       "id": "abs-005",
       "gkh": "vaneth",
-      "ipa": "vanɛθ",
+      "ipa": "ˈvanɛθ",
       "pos": "noun",
       "en": "memory",
       "nl": "herinnering",
@@ -2269,7 +2269,7 @@
     {
       "id": "abs-006",
       "gkh": "nûrash",
-      "ipa": "nuːraʃ",
+      "ipa": "ˈnuːʀaʃ",
       "pos": "noun",
       "en": "justice",
       "nl": "rechtvaardigheid",
@@ -2278,7 +2278,7 @@
     {
       "id": "abs-007",
       "gkh": "mirath",
-      "ipa": "mɪraθ",
+      "ipa": "ˈmɪʀaθ",
       "pos": "noun",
       "en": "fate / destiny",
       "nl": "lot",
@@ -2287,7 +2287,7 @@
     {
       "id": "abs-008",
       "gkh": "gharesh",
-      "ipa": "ɣarɛʃ",
+      "ipa": "ˈɣaʀɛʃ",
       "pos": "noun",
       "en": "honor",
       "nl": "eer",
@@ -2296,7 +2296,7 @@
     {
       "id": "abs-009",
       "gkh": "golen",
-      "ipa": "gɔlɛn",
+      "ipa": "ˈgɔlɛn",
       "pos": "noun",
       "en": "beauty",
       "nl": "schoonheid",
@@ -2305,7 +2305,7 @@
     {
       "id": "abs-010",
       "gkh": "khorel",
-      "ipa": "xɔrɛl",
+      "ipa": "ˈxɔʀɛl",
       "pos": "noun",
       "en": "chaos",
       "nl": "chaos",
@@ -2314,7 +2314,7 @@
     {
       "id": "abs-011",
       "gkh": "golrath",
-      "ipa": "gɔlraθ",
+      "ipa": "ˈgɔlʀaθ",
       "pos": "noun",
       "en": "knowledge",
       "nl": "kennis",
@@ -2324,7 +2324,7 @@
     {
       "id": "abs-012",
       "gkh": "belash",
-      "ipa": "bɛlaʃ",
+      "ipa": "ˈbɛlaʃ",
       "pos": "noun",
       "en": "order (stability)",
       "nl": "orde",
@@ -2333,7 +2333,7 @@
     {
       "id": "vb2-001",
       "gkh": "thun",
-      "ipa": "θʊn",
+      "ipa": "ˈθʊn",
       "pos": "verb",
       "en": "to think",
       "nl": "denken",
@@ -2342,7 +2342,7 @@
     {
       "id": "vb2-002",
       "gkh": "velu",
-      "ipa": "vɛlʊ",
+      "ipa": "ˈvɛlʊ",
       "pos": "verb",
       "en": "to remember",
       "nl": "onthouden",
@@ -2351,7 +2351,7 @@
     {
       "id": "vb2-003",
       "gkh": "shunu",
-      "ipa": "ʃʊnʊ",
+      "ipa": "ˈʃʊnʊ",
       "pos": "verb",
       "en": "to forget",
       "nl": "vergeten",
@@ -2360,7 +2360,7 @@
     {
       "id": "vb2-004",
       "gkh": "garnu",
-      "ipa": "garnʊ",
+      "ipa": "ˈgaʀnʊ",
       "pos": "verb",
       "en": "to teach",
       "nl": "onderwijzen",
@@ -2369,7 +2369,7 @@
     {
       "id": "vb2-005",
       "gkh": "tanu",
-      "ipa": "tanʊ",
+      "ipa": "ˈtanʊ",
       "pos": "verb",
       "en": "to learn",
       "nl": "leren",
@@ -2378,7 +2378,7 @@
     {
       "id": "vb2-006",
       "gkh": "khelish",
-      "ipa": "xɛlɪʃ",
+      "ipa": "ˈxɛlɪʃ",
       "pos": "verb",
       "en": "to choose",
       "nl": "kiezen",
@@ -2387,7 +2387,7 @@
     {
       "id": "vb2-007",
       "gkh": "zendith",
-      "ipa": "zɛndɪθ",
+      "ipa": "ˈzɛndɪθ",
       "pos": "verb",
       "en": "to begin",
       "nl": "beginnen",
@@ -2396,7 +2396,7 @@
     {
       "id": "vb2-008",
       "gkh": "belnu",
-      "ipa": "bɛlnʊ",
+      "ipa": "ˈbɛlnʊ",
       "pos": "verb",
       "en": "to finish / end",
       "nl": "eindigen",
@@ -2405,7 +2405,7 @@
     {
       "id": "vb2-009",
       "gkh": "nelash",
-      "ipa": "nɛlaʃ",
+      "ipa": "ˈnɛlaʃ",
       "pos": "verb",
       "en": "to wait",
       "nl": "wachten",
@@ -2414,7 +2414,7 @@
     {
       "id": "vb2-010",
       "gkh": "garesh",
-      "ipa": "garɛʃ",
+      "ipa": "ˈgaʀɛʃ",
       "pos": "verb",
       "en": "to carry",
       "nl": "dragen",
@@ -2423,7 +2423,7 @@
     {
       "id": "dsc-001",
       "gkh": "velith",
-      "ipa": "vɛlɪθ",
+      "ipa": "ˈvɛlɪθ",
       "pos": "adjective",
       "en": "wise",
       "nl": "wijs",
@@ -2433,7 +2433,7 @@
     {
       "id": "dsc-002",
       "gkh": "tanith",
-      "ipa": "tanɪθ",
+      "ipa": "ˈtanɪθ",
       "pos": "adjective",
       "en": "true",
       "nl": "waar",
@@ -2443,7 +2443,7 @@
     {
       "id": "dsc-003",
       "gkh": "velashith",
-      "ipa": "vɛlaʃɪθ",
+      "ipa": "vɛˈlaʃɪθ",
       "pos": "adjective",
       "en": "false / untrue",
       "nl": "onwaar",
@@ -2453,7 +2453,7 @@
     {
       "id": "dsc-004",
       "gkh": "golith",
-      "ipa": "gɔlɪθ",
+      "ipa": "ˈgɔlɪθ",
       "pos": "adjective",
       "en": "beautiful",
       "nl": "mooi",
@@ -2463,7 +2463,7 @@
     {
       "id": "dsc-005",
       "gkh": "khorith",
-      "ipa": "xɔrɪθ",
+      "ipa": "ˈxɔʀɪθ",
       "pos": "adjective",
       "en": "chaotic",
       "nl": "chaotisch",
@@ -2473,7 +2473,7 @@
     {
       "id": "dsc-006",
       "gkh": "gharith",
-      "ipa": "ɣarɪθ",
+      "ipa": "ˈɣaʀɪθ",
       "pos": "adjective",
       "en": "honorable",
       "nl": "eervol",
@@ -2483,7 +2483,7 @@
     {
       "id": "dsc-007",
       "gkh": "nagith",
-      "ipa": "nagɪθ",
+      "ipa": "ˈnagɪθ",
       "pos": "adjective",
       "en": "swift / fast",
       "nl": "snel",
@@ -2492,7 +2492,7 @@
     {
       "id": "dsc-008",
       "gkh": "beloth",
-      "ipa": "bɛlɔθ",
+      "ipa": "ˈbɛlɔθ",
       "pos": "adjective",
       "en": "slow",
       "nl": "langzaam",
@@ -2501,7 +2501,7 @@
     {
       "id": "dsc-009",
       "gkh": "garnoth",
-      "ipa": "garnɔθ",
+      "ipa": "ˈgaʀnɔθ",
       "pos": "adjective",
       "en": "heavy",
       "nl": "zwaar",
@@ -2510,7 +2510,7 @@
     {
       "id": "dsc-010",
       "gkh": "velnoth",
-      "ipa": "vɛlnɔθ",
+      "ipa": "ˈvɛlnɔθ",
       "pos": "adjective",
       "en": "light (weight)",
       "nl": "licht (gewicht)",
@@ -2519,7 +2519,7 @@
     {
       "id": "dsc-011",
       "gkh": "khazoth",
-      "ipa": "xazɔθ",
+      "ipa": "ˈxazɔθ",
       "pos": "adjective",
       "en": "sharp",
       "nl": "scherp",
@@ -2528,7 +2528,7 @@
     {
       "id": "dsc-012",
       "gkh": "morvoth",
-      "ipa": "mɔrvɔθ",
+      "ipa": "ˈmɔʀvɔθ",
       "pos": "adjective",
       "en": "dull / blunt",
       "nl": "bot (niet scherp)",
@@ -2537,7 +2537,7 @@
     {
       "id": "dsc-013",
       "gkh": "zelnoth",
-      "ipa": "zɛlnɔθ",
+      "ipa": "ˈzɛlnɔθ",
       "pos": "adjective",
       "en": "bright",
       "nl": "helder",
@@ -2546,7 +2546,7 @@
     {
       "id": "dsc-014",
       "gkh": "golnoth",
-      "ipa": "gɔlnɔθ",
+      "ipa": "ˈgɔlnɔθ",
       "pos": "adjective",
       "en": "soft",
       "nl": "zacht",
@@ -2555,7 +2555,7 @@
     {
       "id": "dsc-015",
       "gkh": "tharoth",
-      "ipa": "θarɔθ",
+      "ipa": "ˈθaʀɔθ",
       "pos": "adjective",
       "en": "cold",
       "nl": "koud",
@@ -2564,7 +2564,7 @@
     {
       "id": "dsc-016",
       "gkh": "khauroth",
-      "ipa": "xaʊ̯rɔθ",
+      "ipa": "ˈxaʊ̯ʀɔθ",
       "pos": "adjective",
       "en": "hot / warm",
       "nl": "warm",
@@ -2573,7 +2573,7 @@
     {
       "id": "dsc-017",
       "gkh": "khelnoth",
-      "ipa": "xɛlnɔθ",
+      "ipa": "ˈxɛlnɔθ",
       "pos": "adjective",
       "en": "wet / damp",
       "nl": "nat / vochtig",
@@ -2582,7 +2582,7 @@
     {
       "id": "dsc-018",
       "gkh": "dornoth",
-      "ipa": "dɔrnɔθ",
+      "ipa": "ˈdɔʀnɔθ",
       "pos": "adjective",
       "en": "dry",
       "nl": "droog",
@@ -2591,7 +2591,7 @@
     {
       "id": "nat-010",
       "gkh": "khelor",
-      "ipa": "xɛlɔr",
+      "ipa": "ˈxɛlɔʀ",
       "pos": "noun",
       "en": "valley",
       "nl": "vallei",
@@ -2600,7 +2600,7 @@
     {
       "id": "nat-011",
       "gkh": "garven",
-      "ipa": "garvɛn",
+      "ipa": "ˈgaʀvɛn",
       "pos": "noun",
       "en": "desert",
       "nl": "woestijn",
@@ -2609,7 +2609,7 @@
     {
       "id": "nat-012",
       "gkh": "shelven",
-      "ipa": "ʃɛlvɛn",
+      "ipa": "ˈʃɛlvɛn",
       "pos": "noun",
       "en": "lake",
       "nl": "meer (water)",
@@ -2618,7 +2618,7 @@
     {
       "id": "nat-013",
       "gkh": "dravith",
-      "ipa": "dravɪθ",
+      "ipa": "ˈdʀavɪθ",
       "pos": "noun",
       "en": "cave",
       "nl": "grot",
@@ -2627,7 +2627,7 @@
     {
       "id": "nat-014",
       "gkh": "golur",
-      "ipa": "gɔlʊr",
+      "ipa": "ˈgɔlʊʀ",
       "pos": "noun",
       "en": "cloud",
       "nl": "wolk",
@@ -2636,7 +2636,7 @@
     {
       "id": "nat-015",
       "gkh": "khâlu",
-      "ipa": "xaːlʊ",
+      "ipa": "ˈxaːlʊ",
       "pos": "noun",
       "en": "thunder",
       "nl": "donder",
@@ -2645,7 +2645,7 @@
     {
       "id": "nat-016",
       "gkh": "zelâth",
-      "ipa": "zɛlaːθ",
+      "ipa": "zɛˈlaːθ",
       "pos": "noun",
       "en": "lightning",
       "nl": "bliksem",
@@ -2654,7 +2654,7 @@
     {
       "id": "nat-017",
       "gkh": "vornu",
-      "ipa": "vɔrnʊ",
+      "ipa": "ˈvɔʀnʊ",
       "pos": "noun",
       "en": "root (of a plant)",
       "nl": "wortel",
@@ -2663,7 +2663,7 @@
     {
       "id": "nat-018",
       "gkh": "nagûl",
-      "ipa": "naguːl",
+      "ipa": "naˈguːl",
       "pos": "noun",
       "en": "wolf",
       "nl": "wolf",
@@ -2672,7 +2672,7 @@
     {
       "id": "nat-019",
       "gkh": "khornu",
-      "ipa": "xɔrnʊ",
+      "ipa": "ˈxɔʀnʊ",
       "pos": "noun",
       "en": "bear",
       "nl": "beer",
@@ -2681,7 +2681,7 @@
     {
       "id": "nat-020",
       "gkh": "shârnu",
-      "ipa": "ʃaːrnʊ",
+      "ipa": "ˈʃaːʀnʊ",
       "pos": "noun",
       "en": "eagle",
       "nl": "arend",
@@ -2690,7 +2690,7 @@
     {
       "id": "nat-021",
       "gkh": "velnu",
-      "ipa": "vɛlnʊ",
+      "ipa": "ˈvɛlnʊ",
       "pos": "noun",
       "en": "snake",
       "nl": "slang",
@@ -2699,7 +2699,7 @@
     {
       "id": "nat-022",
       "gkh": "dravul",
-      "ipa": "dravʊl",
+      "ipa": "ˈdʀavʊl",
       "pos": "noun",
       "en": "horse",
       "nl": "paard",
@@ -2708,7 +2708,7 @@
     {
       "id": "nat-023",
       "gkh": "shunath",
-      "ipa": "ʃʊnaθ",
+      "ipa": "ˈʃʊnaθ",
       "pos": "noun",
       "en": "fox",
       "nl": "vos",

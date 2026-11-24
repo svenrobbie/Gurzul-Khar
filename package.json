@@ -15,7 +15,8 @@
     "coiner:weights": "tsx scripts/buildCoinerWeights.ts",
     "coiner:golden": "tsx scripts/buildCoinerGolden.ts",
     "coiner:sample": "tsx scripts/sampleCoinages.ts > COINER_SAMPLE.md",
-    "coiner:index": "tsx scripts/buildCoinageIndex.ts"
+    "coiner:index": "tsx scripts/buildCoinageIndex.ts",
+    "lexicon:ipa": "tsx scripts/syncLexiconIpa.ts"
   },
   "devDependencies": {
     "typescript": "^5.6.3",
