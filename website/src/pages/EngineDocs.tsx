@@ -9,6 +9,23 @@ export default function EngineDocs() {
       </p>
 
       <section className="card" style={{ marginTop: "1rem" }}>
+        <h2>0. Two implementations, one specification</h2>
+        <p>
+          The pipeline below exists twice: in TypeScript under <code>engine/</code>, and in Rust under{" "}
+          <code>crates/gkh-core</code>. The Rust crate is the one that will eventually run here (compiled to
+          WebAssembly) and in the Android app, so that a bug fixed in the translator is fixed on every platform at
+          once rather than drifting between two codebases.
+        </p>
+        <p>
+          They are kept in agreement by data, not by review: the inputs and expected outputs live in
+          <code>tests/fixtures/*.json</code>, and both test suites assert the same files. A divergence fails a build.
+          The Rust crate has no dependencies and reads no files at runtime — the JSON in <code>/data</code> is
+          generated into Rust constants at build time, so <code>/data</code> stays the single source of truth for
+          both engines.
+        </p>
+      </section>
+
+      <section className="card" style={{ marginTop: "1rem" }}>
         <h2>1. Tokenize</h2>
         <p>
           The input sentence is split into words (<code>engine/morphology/tokenizer.ts</code>), punctuation is

@@ -116,12 +116,14 @@ Some honest warnings, since this is your first real Rust project:
 | --- | --- | --- |
 | 1 · Lock the contract — **done** | Shared JSON fixtures, the 10,549-case golden file, `coiner_v1` measured from the lexicon, tuned by ear and frozen | **Passed 2026-11-23.** The coined words read like Gurzûl Khar, and the algorithm is versioned and frozen |
 | 2 · Finish the language — **lemmatiser, grammar and reverse coining done; see BACKLOG.md** | Lemmatiser and Dutch compound splitting, the four open grammar patterns (prepositional phrases, imperatives and modals, relative clauses, subordinate clauses), reverse coining through a coinage index | Ordinary Dutch and English sentences translate in full, both directions, nothing bracketed |
-| 3 · Port the engine to Rust | `gkh-core` bottom-up: data loading, phonology, coiner, transliteration, lemmatiser, morphology, translator | Rust and TypeScript return identical output on every fixture, checked in CI |
-| 4 · Move the website onto WASM | wasm-bindgen build behind a flag; React pages call the crate | The site runs on the Rust engine and the TypeScript engine is deleted |
+| 3 · Port the engine to Rust — **done** | `gkh-core` bottom-up: data loading, phonology, coiner, transliteration, lemmatiser, morphology, translator | **Passed 2026-11-24.** 24 Rust tests, zero dependencies, zero warnings; both engines assert the same fixtures |
+| 4 · Move the website onto WASM — **in progress** | wasm-bindgen build behind a flag; React pages call the crate | The site runs on the Rust engine and the TypeScript engine is deleted |
 | 5 · Build the Android app | UniFFI bindings, Kotlin + Compose: translator, dictionary, alphabet | A phone in flight mode translates a sentence and shows it in Khargûl |
 | 6 · Grow the language | Promote the most-used coined words into the lexicon; extend lessons, lore, script | Ongoing — no end gate |
 
-Phase 1 is done: the fixtures, the golden file and a frozen `coiner_v1` exist, so the language's behaviour is pinned rather than remembered. The port then moved behind phase 2 deliberately — porting a half-finished language means porting it twice, and every grammar pattern added after the port has to be written in Rust by someone still learning Rust. Finish the language in TypeScript, where it is cheap to change, and the port becomes mechanical. Phase 6 runs in parallel with everything from phase 3 onward — it needs no code, only words.
+Phases 1 to 3 are done. The fixtures, the golden file and a frozen `coiner_v1` pin the language's behaviour rather than leaving it remembered, and `gkh-core` now reproduces all of it in Rust: 24 tests, no dependencies, the data compiled in by a generator rather than parsed at runtime. Phase 4 is partly built — `crates/gkh-wasm` wraps the core for the browser and the website has an engine adapter that selects TypeScript or Rust at build time — and ends when a wasm build is verified in a browser and the TypeScript engine is deleted.
+
+The port moved behind phase 2 deliberately — porting a half-finished language means porting it twice, and every grammar pattern added after the port has to be written in Rust by someone still learning Rust. Finish the language in TypeScript, where it is cheap to change, and the port becomes mechanical. Phase 6 runs in parallel with everything from phase 3 onward — it needs no code, only words.
 
 ## Risks and open questions
 

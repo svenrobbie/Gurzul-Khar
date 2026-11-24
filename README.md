@@ -12,7 +12,8 @@ Current status / what is and isn't done: [BACKLOG.md](BACKLOG.md)
 | Path | Contents |
 |---|---|
 | `data/` | Single source of truth for all linguistic data (phonology, orthography, morphology/grammar, lexicon) — JSON, validated by schema + tests |
-| `engine/` | Deterministic translation engine (tokeniser, morphological analyser, EN/NL ⇄ Gurzûl Khar translator, native-script generator) |
+| `engine/` | Deterministic translation engine in TypeScript (tokeniser, morphological analyser, lemmatiser, coiner, EN/NL ⇄ Gurzûl Khar translator, native-script generator) |
+| `crates/` | The same engine in Rust. `gkh-core` is the portable, dependency-free core; `gkh-wasm` wraps it for the browser |
 | `website/` | The public site (Home, Translator, Dictionary, Grammar, Alphabet, Pronunciation, Learn, Lore, Engine docs, About) |
 | `learning/` | Course structure, lesson content and exercise data |
 | `alphabet/` | Khargûl script documentation and the procedural glyph generator |
@@ -42,8 +43,39 @@ The website uses React Router's `HashRouter` (URLs like `/#/translator`), a deli
 correctly on GitHub Pages' static hosting — deep links and page refreshes resolve without needing a 404.html
 SPA-redirect trick or a base-path-aware browser router. See `website/vite.config.ts` and the Engine docs page.
 
-Deployment to GitHub Pages runs automatically on push to `main` via `.github/workflows/deploy.yml`, once this
-repository has a GitHub remote. That push has not been performed from this environment — see BACKLOG.md.
+Deployment to GitHub Pages runs automatically on push to `main` via `.github/workflows/deploy.yml`. The repository
+lives at [github.com/svenrobbie/Gurzul-Khar](https://github.com/svenrobbie/Gurzul-Khar) and the site is live.
+
+## Two engines
+
+The engine exists twice on purpose. `engine/` (TypeScript) is the original and is still what the site ships with;
+`crates/gkh-core` (Rust) is the port that will replace it and that the Android app will use. They are kept honest by
+shared, language-neutral fixtures in `tests/fixtures/*.json` — the same inputs and expected outputs are asserted by
+Vitest and by `cargo test`, so a divergence fails a build rather than surfacing months later on a phone.
+
+The Rust crate reads no files at runtime. `scripts/buildRustData.mjs` turns `data/*.json` into Rust constants at build
+time, which is why `gkh-core` has zero dependencies and compiles unchanged to WebAssembly. CI regenerates that data and
+fails if the checked-in copy is stale, so `data/` stays the single source of truth.
+
+```powershell
+npm run rust:data    # regenerate the Rust data + fixtures from data/
+npm run rust:test    # cargo test --workspace
+```
+
+### Building the site on the Rust engine
+
+The website picks its engine at build time. Without the WebAssembly artifact it builds and runs on TypeScript as
+before; with it, `vite.config.ts` aliases the engine adapter to the compiled crate.
+
+```powershell
+rustup target add wasm32-unknown-unknown
+cargo install wasm-pack
+npm run build:wasm        # wasm-pack build crates/gkh-wasm
+npm run build:rust-site   # GKH_ENGINE=rust vite build
+```
+
+If the WebAssembly module fails to load at runtime, `website/src/engine/index.ts` falls back to the TypeScript engine
+rather than leaving the Translator dead.
 
 ## Contributing
 

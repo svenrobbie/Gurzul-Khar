@@ -6,7 +6,36 @@ This mirrors the "Definition of a completed initial release" checklist in the Ma
 
 > **Note on history:** an earlier version of this file claimed the engine, tests, and website were complete when no code for any of them existed in the repository yet — only the `/data` JSON files and this documentation. That was inaccurate. This revision reflects what has actually been implemented and verified (typechecked, tested, built, and manually exercised in a browser) as of this pass.
 
-## Phase 2 of the roadmap — finish the language (in progress)
+## Phase 3 of the roadmap — the Rust port — complete
+
+`crates/gkh-core` is the TypeScript engine ported module by module, bottom up, each layer finished before the next needed it. 24 tests, zero dependencies, zero warnings under `-D warnings`.
+
+Done:
+
+- Phonology (`phonemes`, `syllabify`, `phonotactics`, `stress`, `ipa`), the coiner, closed-class and lexicon lookup, inflection, the lemmatiser, and the full translator — analyzer, both renderers, both parsers.
+- `scripts/buildRustData.mjs` generates the Rust data *and* the Rust test fixtures from the same `data/` and `tests/fixtures/` the TypeScript suite reads, so neither engine can drift without failing a build. See DESIGN_DECISIONS.md D18/D19.
+- `.github/workflows/rust.yml` regenerates the data, fails if the checked-in copy is stale, and runs `cargo test --workspace`.
+- One real divergence found and fixed: the Rust translator was falling back word-for-word on grammar it does not support, where the TypeScript one refuses. D20.
+
+Deliberately not ported:
+
+- The Khargûl glyph generator and the coinage index. The site renders glyphs client-side in TypeScript and will keep doing so; the coinage index is a runtime record, not engine behaviour.
+
+## Phase 4 of the roadmap — the website on WebAssembly — in progress
+
+Done:
+
+- `crates/gkh-wasm` — a `wasm-bindgen` wrapper exporting `translate`, `word_ipa`, `sentence_ipa`, `lemmatize`, `coin`, `lemma_guess`, `analyze_sentence` across a hand-rolled JSON boundary (no `serde`, so the core keeps its zero-dependency guarantee). 8 boundary tests covering diacritics, refusals, coined words and the word-by-word analysis table.
+- A workspace `Cargo.toml` over `gkh-core` and `gkh-wasm`.
+- `website/src/engine/` — one `Engine` interface, a TypeScript implementation and a Rust one. Vite picks between them at build time via `GKH_ENGINE`; without the wasm artifact a stub keeps the site building, and `initEngine()` falls back to TypeScript if the module fails to load. The Translator page now talks to the adapter rather than the engine directly. See DESIGN_DECISIONS.md D21.
+- Verified in a browser on the TypeScript path through the new adapter: `the king who has strength` → `shak kha khar dûnu`, `Ik zie de draak` → `ük sel han` with `han` marked as coined, the five-row analysis table intact, no console errors.
+
+Still not done:
+
+- **The wasm artifact has never been built or run.** `rustup target add wasm32-unknown-unknown` could not reach `static.rust-lang.org` from the environment this pass ran in, so `npm run build:wasm` has not executed anywhere. The gate for this phase is a browser running the compiled crate, and it has not been met.
+- **The TypeScript engine is therefore still in place.** Deleting it before its replacement is proven would leave the live site with no working engine and no fallback. It is also a wider job than swapping the translator: seven website pages import `@engine/data.js` for display data, and the Alphabet, Pronunciation and Dictionary pages use `glyphGenerator`, `transliteration`, `ipa`, `phonotacticValidator` and `phonemes` directly. Removing `engine/` means repointing those at `@data` JSON and at the wasm exports, not deleting a folder.
+
+## Phase 2 of the roadmap — finish the language — complete
 
 Reordered on Sven's call: the Rust port now waits until the language is finished, so it is a mechanical translation rather than a rewrite that has to keep absorbing new grammar.
 
@@ -67,10 +96,10 @@ Gate passed, 2026-11-23: the `COINER_SAMPLE.md` ear test was reviewed and accept
 
 Still not done:
 
-- The reverse direction cannot be coined: the hash is not invertible, so an unrecognised Gurzûl Khar word stays bracketed when translating to EN/NL. Resolving that needs a persisted coinage index, which is one of ROADMAP.md's open questions.
-- No lemmatiser. Tiers 2 and 3 of the plan (derivation from known roots, Dutch compound splitting) do not exist, so `huis` and `huizen` resolve through the inflection heuristics above but a genuinely unknown compound like `nachtwacht` is coined whole rather than built from `nacht` + `wacht`.
+- *Superseded in phase 2 by `engine/lexicon/coinageIndex.ts`.* The reverse direction cannot be coined: the hash is not invertible, so an unrecognised Gurzûl Khar word stays bracketed when translating to EN/NL. Resolving that needs a persisted coinage index, which is one of ROADMAP.md's open questions.
+- ~~No lemmatiser.~~ *Superseded — built in phase 2, see above.* Tiers 2 and 3 of the plan (derivation from known roots, Dutch compound splitting) do not exist, so `huis` and `huizen` resolve through the inflection heuristics above but a genuinely unknown compound like `nachtwacht` is coined whole rather than built from `nacht` + `wacht`.
 - Coined words are not surfaced in the website UI yet — the engine reports them, no page renders the distinction.
-- Nothing Rust exists yet. That is phase 2, and it can now start against a fully pinned specification.
+- ~~Nothing Rust exists yet.~~ *Superseded — `crates/gkh-core` is complete, see phase 3 above.*
 
 ## Phase 2 — audit-and-improve pass (status by brief section)
 `Phase2.md` itself was not present in the repository when this pass began (confirmed by a recursive search); this pass worked from the detailed task description supplied directly for it, which was presented as a faithful translation of that brief — see DESIGN_DECISIONS.md D17.
@@ -142,7 +171,7 @@ Still not done:
 - [x] Language engine documentation page — plain-language explanation of the real tokenize→analyze→transform→generate pipeline
 - [x] About and contribution pages — links to `docs/CONTRIBUTING.md` and `docs/LICENSE_NOTES.md` (both written this pass)
 - [x] Responsive layout (CSS Grid/flex, mobile nav wraps, no horizontal scroll at phone width) and semantic HTML/keyboard navigation (skip link, visible focus rings)
-- [x] GitHub Pages deployment workflow (`.github/workflows/deploy.yml`) and CI workflow (`.github/workflows/ci.yml`) authored this pass — **not yet triggered**: this repository has not been pushed to a GitHub remote from this environment, so no deployment has actually occurred. That push requires the project owner's explicit action.
+- [x] GitHub Pages deployment workflow (`.github/workflows/deploy.yml`) and CI workflow (`.github/workflows/ci.yml`) — pushed and running; the site is live. `.github/workflows/rust.yml` added for the Rust workspace and the wasm build.
 
 ## Quality
 - [x] Automated tests — 51 Vitest tests (up from 38) across phonotactic validation, dictionary schema, determinism, Latin↔native round-trip, a 28-case translation regression suite covering all 4 directions (including unknown-word partial translation and an unsupported-pattern case), and Phase 2's new lexicon-lifecycle suite (conflict detection, word-generator validity/determinism, merged-view filtering). All passing.
@@ -156,7 +185,8 @@ Still not done:
 ## Explicitly NOT done yet (do not claim otherwise)
 - No OpenType/TrueType font file for the Khargûl script — native script is generated inline SVG only.
 - No recorded human pronunciation audio — SpeechSynthesis is used as a clearly labelled synthetic aid only.
-- No deployed, publicly reachable GitHub Pages URL — the workflow exists but this repository has not been pushed to a GitHub remote from this environment.
+- The WebAssembly build has never been produced or run — see phase 4 above. The site still ships the TypeScript engine.
+- No Android app. That is phase 5 (UniFFI + Kotlin/Compose) and no code for it exists.
 - Lexicon is a 292-entry set after Phase 2 (up from the 133-word v0.1 seed), not the full 500–1000 target.
 - Learning course Levels 2–5 are documented in `/data`/the spec but not built into interactive lessons; shown as an honest roadmap.
 - The translator supports a deliberately scoped grammatical subset (see `engine/translator/`); it does not handle relative clauses, conditionals, or arbitrary free-form sentences — unsupported input fails with an explanation rather than guessing. Phase 2 added unknown-*vocabulary* partial translation (see above), which is a different thing from unsupported *grammar* — a relative clause with every word known still fails honestly, by test.
